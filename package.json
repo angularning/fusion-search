@@ -107,8 +107,7 @@
     "pre-commit": "lint-staged"
   },
   "husky": {
-    "hooks": {
-    }
+    "hooks": {}
   },
   "lint-staged": {
     "src/**/*.{js}": [

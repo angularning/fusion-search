@@ -1,34 +1,34 @@
 <template>
-  <div
-    :class="[config.THEME]"
-    class="fusion-search-wrap"
-  >
-    13333333
+  <div :class="[config.THEME]" class="fusion-search-wrap">
     <!--    搜索框组件-->
-    <template v-if="config&&config.showInput">
-      <input
-        v-model="keyword"
-        type="text"
-      >
-      <button @click="mixSearch(keyword)">
-        搜索
-      </button>
+    <template v-if="config && config.showInput">
+      <FusionInput @search="search"></FusionInput>
     </template>
     <!--    命中详情卡片-->
-    <template v-if="config&&config.showMix">
+    <template v-if="config && config.showMix">
       <FusionMix :data="{}" />
+    </template>
+    <!--    命中列表组件-->
+    <template>
+      <FusionList />
     </template>
   </div>
 </template>
 
 <script>
+// 首页搜索框
+import FusionInput from '../components/FusionInput'
+//
 import FusionMix from '../components/FusionMix'
+import FusionList from '../components/FusionList'
 import defaultMixins from '../minxins/default'
 
 export default {
   name: 'FusionSearch',
   components: {
-    FusionMix
+    FusionMix,
+    FusionInput,
+    FusionList
   },
   mixins: [defaultMixins],
   props: {
@@ -48,11 +48,9 @@ export default {
       keyword: null
     }
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
-    fusionSearch() {
-    },
+    fusionSearch() {},
     mixSearch(value) {
       this.search(value)
     }

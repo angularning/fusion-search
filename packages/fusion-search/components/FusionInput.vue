@@ -1,10 +1,20 @@
 <template>
   <div class="search-input-container">
-    <span class="search-input-title"><img style="width: 100%;" src="" alt=""/></span>
-    <input v-model="keyword" clearable @keyup.enter.native="toSearchList" />
-    <button @click.stop="toSearchList">
+    <!-- <span class="search-input-title"><img style="width: 100%;" src="" alt=""/></span> -->
+    <el-input
+      placeholder="请输入内容"
+      v-model="keyword"
+      class="input-with-select"
+      keyup.enter.native="toSearchList"
+    >
+      <el-select v-model="select" slot="prepend" placeholder="请选择">
+        <el-option label="查系统" value="1"></el-option>
+        <el-option label="查委办局" value="2"></el-option>
+      </el-select>
+    </el-input>
+    <el-button @click.stop="toSearchList" type="primary" class="searchButton">
       搜索
-    </button>
+    </el-button>
   </div>
 </template>
 
@@ -20,7 +30,8 @@ export default {
   components: {},
   data() {
     return {
-      keyword: null
+      keyword: null,
+      select: '1'
     }
   },
   methods: {
@@ -37,4 +48,65 @@ export default {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style lang="scss">
+.search-input-container .el-input-group__prepend {
+  padding: 0;
+  width: 70px;
+  background-color: #fbfcff;
+  text-align: right;
+  .el-select {
+    width: 66px;
+    margin: 0;
+    height: 26px;
+    background-color: #e2e2e7;
+    border-radius: 4px;
+  }
+  .el-input,
+  .el-input__inner {
+    height: 26px;
+    line-height: 26px;
+  }
+  .el-input__inner {
+    padding-left: 8px;
+    padding-right: 0px;
+    font-size: 12px;
+    font-family: MicrosoftYaqiHei;
+    color: #1c2d5a !important;
+  }
+  .el-input__icon {
+    line-height: 26px;
+    width: 12px;
+    color: #1c2d5a !important;
+    font-size: 12px !important;
+  }
+  .el-icon-arrow-up:before {
+    content: '\E78F';
+  }
+}
+.search-input-container .el-input__inner {
+  border-left: none;
+  background: #fbfcff;
+  height: 34px;
+}
+</style>
+<style scoped lang="scss">
+.search-input-container {
+  width: 100%;
+  height: 74px;
+  background: #ffffff;
+  border-radius: 4px;
+  line-height: 74px;
+  .input-with-select {
+    width: 712px;
+    margin-left: 20px;
+  }
+  .searchButton {
+    width: 168px;
+    height: 34px;
+    background: #3a72ff;
+    border-radius: 4px;
+    margin-left: 20px;
+    line-height: 0;
+  }
+}
+</style>

@@ -2,10 +2,13 @@
 // import TestModule from '../packages/test-module/index'
 import FusionSearch from '../packages/fusion-search/index'
 import { version } from '../package.json'
-
+import Vue from 'vue'
+import element from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+Vue.use(element)
 // const components = [FileHandle, TestModule, FusionSearch]
 const components = [FusionSearch]
-const install = function (Vue) {
+const install = function(Vue) {
   // 判断是否安装
   if (install.installed) {
     return

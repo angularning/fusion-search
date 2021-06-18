@@ -43,6 +43,7 @@ export default {
 
 <style scoped lang="scss">
 .MallCaseLocation {
+  margin-left: 10px;
   font-size: 14px;
   font-family: MicrosoftYaqiHei;
   color: #1c2d5a;

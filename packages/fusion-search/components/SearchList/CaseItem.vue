@@ -1,15 +1,17 @@
 <template>
-  <div class="SupplierItem" v-loading="loading">
+  <div class="CaseItem">
     <div class="listItemLeft">
       <div class="orgTop">
-        <img
-          class="orgImg"
-          src="http://cdn-caigou.shuniucloud.com/img/kg-cloud-pc-fe.aside_logoafff22c.png"
-          alt=""
-        />
         <div class="orgDes">
           <div class="orgDesTitle">
-            <div class="titleName">北京众标智能科技有限公司</div>
+            <span
+              class="titleName"
+              v-html="
+                shortWordStringAndHeight(
+                  '安源区卫生和计划生育委员会本级手机于2021年03月30日一笔交易'
+                )
+              "
+            />
             <Location :item="item"></Location>
           </div>
           <div>
@@ -17,21 +19,23 @@
           </div>
         </div>
       </div>
-      <OrgProperty />
+      <OrgProperty style="margin: 10px 0;" />
+      <OrgTag />
     </div>
     <div class="listItemRight">
-      <SupplierCaseItem />
+      <button class="plainBtn" :class="[theme + '-buttonPlain']">查看详情</button>
     </div>
   </div>
 </template>
 
 <script>
 import HitTag from '../HitMix/HitTag'
+import OrgTag from './OrgTag'
 import Location from './Location'
 import OrgProperty from './OrgProperty'
 import SupplierCaseItem from './SupplierCaseItem'
 export default {
-  name: 'SupplierItem',
+  name: 'CaseItem',
   inject: ['theme', 'hit'],
   props: {
     item: {
@@ -50,21 +54,35 @@ export default {
     OrgProperty,
     Location,
     HitTag,
+    OrgTag,
     SupplierCaseItem
   },
-  methods: {}
+  methods: {
+    shortWordStringAndHeight(value) {
+      const keyword = '手机'
+      const filter = new RegExp(keyword)
+      if (value && value.length > 42) {
+        return (value.substring(0, 42) + '...').replace(
+          filter,
+          `<span style="color: #F13D3D;">${keyword}</span>`
+        )
+      } else {
+        return value && value.replace(filter, `<span style="color: #F13D3D;">${keyword}</span>`)
+      }
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
 @import '../../common/common';
-.SupplierItem {
+.CaseItem {
   width: calc(100% - 40px);
   padding: 0 20px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: flex-start;
   border-top: 1px #eee solid;
   margin-top: 20px;
   .listItemLeft {
@@ -76,7 +94,6 @@ export default {
       flex-flow: row nowrap;
       justify-content: flex-start;
       align-items: center;
-      margin-bottom: 15px;
       padding-top: 20px;
       .orgImg {
         width: 54px;
@@ -107,6 +124,7 @@ export default {
   }
   .listItemRight {
     flex: 2;
+    text-align: right;
     width: 100%;
     margin-top: 15px;
   }

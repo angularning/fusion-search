@@ -1,24 +1,30 @@
 <template>
   <div class="CaseList" v-loading="loading">
-    caseList
+    <CaseItem v-for="(item, i) in list" :key="i" :item="item" />
   </div>
 </template>
 
 <script>
+import CaseItem from './CaseItem'
 export default {
   name: 'CaseList',
+  inject: ['theme', 'hit'],
   props: {
-    theme: {
-      type: String,
-      default: () => 'XUNYUAN'
+    list: {
+      type: Array,
+      default: () => [{ location: 654223 }, { location: 654223 }, { location: 654223 }]
     }
   },
   data() {
     return {
-      loading: false
+      loading: false,
+      theme: this.theme,
+      hit: this.hit
     }
   },
-  computed: {},
+  components: {
+    CaseItem
+  },
   methods: {}
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="SupplierItem" v-loading="loading">
+  <div class="PurchaserItem" v-loading="loading">
     <div class="listItemLeft">
       <div class="orgTop">
         <img
@@ -31,7 +31,7 @@ import Location from './Location'
 import OrgProperty from './OrgProperty'
 import SupplierCaseItem from './SupplierCaseItem'
 export default {
-  name: 'SupplierItem',
+  name: 'PurchaserItem',
   inject: ['theme', 'hit'],
   props: {
     item: {
@@ -58,7 +58,7 @@ export default {
 
 <style scoped lang="scss">
 @import '../../common/common';
-.SupplierItem {
+.PurchaserItem {
   width: calc(100% - 40px);
   padding: 0 20px;
   display: flex;

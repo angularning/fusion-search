@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'HitTag',
+  name: 'OrgTag',
   inject: {
     theme: {
       from: 'theme',
@@ -40,7 +40,7 @@ export default {
     return {
       first_list: [],
       second_list: [],
-      tagList: ['供应商', '案例'],
+      tagList: ['北京众标之后能科技有限公司', '北京众标之后能科技有限公司'],
       theme: this.theme
     }
   },
@@ -68,11 +68,11 @@ export default {
 @import '../../common/common';
 .HitTag {
   .tags-container {
-    font-size: 12px;
+    font-size: 14px;
     .tag {
       border-radius: 2px;
       display: inline-block;
-      padding: 4px 10px;
+      padding: 8px 20px;
       margin: 5px;
       //font-weight: bold;
     }

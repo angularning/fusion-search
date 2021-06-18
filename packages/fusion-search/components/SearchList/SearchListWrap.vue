@@ -51,8 +51,8 @@ export default {
       loading: false,
       theme: this.theme,
       hit: this.hit,
-      type: null,
-      active: 0,
+      type: 'case',
+      active: 1,
       tabNav: {
         product: [
           {
@@ -134,6 +134,7 @@ export default {
     flex-flow: row nowrap;
     align-items: center;
     justify-content: flex-start;
+    padding: 10px 20px 0 20px;
   }
   .searchNav {
     .nav {
@@ -149,9 +150,10 @@ export default {
     }
   }
   .listWrap {
-    padding: 20px;
+    padding: 20px 0;
     border-top: 1px rgba(38, 38, 38, 0.08) solid;
     .sortList {
+      padding: 0 20px;
       display: flex;
       flex-flow: row nowrap;
       justify-content: space-between;

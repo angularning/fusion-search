@@ -1,24 +1,32 @@
 <template>
-  <div class="PurchaserList" v-loading="loading">
-    PurchaserList
+  <div class="SupplierList" v-loading="loading">
+    <div>
+      <PurchaserItem v-for="(item, i) in list" :key="i" :item="item" />
+    </div>
   </div>
 </template>
 
 <script>
+import PurchaserItem from './PurchaserItem'
 export default {
   name: 'PurchaserList',
+  inject: ['theme', 'hit'],
   props: {
-    theme: {
-      type: String,
-      default: () => 'XUNYUAN'
+    list: {
+      type: Array,
+      default: () => [{ location: 654223 }, { location: 654223 }, { location: 654223 }]
     }
   },
   data() {
     return {
-      loading: false
+      loading: false,
+      theme: this.theme,
+      hit: this.hit
     }
   },
-  computed: {},
+  components: {
+    PurchaserItem
+  },
   methods: {}
 }
 </script>

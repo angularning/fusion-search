@@ -13,7 +13,12 @@
         <div class="item-label">
           {{ item.label }}
         </div>
-        <div>{{ item.value }}</div>
+        <div v-if="item.label !== '机构官网'">{{ item.value }}</div>
+        <div v-else
+          ><a :class="[theme + '-color1']" :href="item.value" target="_blank">{{
+            item.value
+          }}</a></div
+        >
       </div>
     </div>
   </div>
@@ -248,6 +253,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '../../common/common';
 .OrgProperty {
   width: calc(100% - 40px);
   background: rgba(0, 0, 0, 0.02);
@@ -264,17 +270,18 @@ export default {
       flex-flow: row nowrap;
       justify-content: flex-start;
       align-items: center;
+      a {
+        text-decoration: underline;
+      }
       &:last-child {
-        color: rgba(38, 38, 38, 0.5);
+        color: rgba(51, 51, 51, 0.5);
         font-size: 12px;
         //margin-right: 0;
       }
 
       .item-label {
-        font-size: 16px;
-        color: rgba(38, 38, 38, 1);
-
-        font-weight: bold;
+        font-size: 12px;
+        color: rgba(51, 51, 51, 1);
         margin-right: 15px;
       }
     }

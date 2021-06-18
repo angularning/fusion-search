@@ -3,7 +3,7 @@
     <div
       class="tags"
       @click="toSort(item, i)"
-      v-for="(item, i) in sortList[hit]"
+      v-for="(item, i) in sortList[type]"
       :class="[active === i ? theme + '-activeSort' : '']"
     >
       {{ item.name }}

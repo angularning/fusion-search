@@ -1,16 +1,23 @@
 <template>
   <div class="SupplierCaseItem">
-    <div>
-      <span>成交案例</span>
-      <span v-html="shortWordStringAndHeight(item.case_name)" />
+    <div class="sCaseTop">
+      <span :class="[theme + '-color1']">成交案例</span>
+      <span v-html="shortWordStringAndHeight('安源区卫生和计划生手机育委员会安源区卫生和计划生')" />
     </div>
-    <div>
+    <div class="sCaseTime">
       <span>案例时间</span>
       <span>2020-10-10</span>
     </div>
-    <div>
-      <span>成交内容</span>
-      <span>打印机 计算机 </span>
+    <div class="sCaseCon">
+      <div class="sCaseLastDes">
+        <span>成交业主</span>
+        <span v-html="filterData('打印机 计算机')"> </span>
+      </div>
+      <div class="sCasePage">
+        <span class="sCaseLeftClick"><img src="../../static/pagesIcon.png" alt=""/></span>
+        <span class="sCaseCurrentPage" :class="[theme + '-color1']">1</span>
+        <span class="sCaseRightClick"><img src="../../static/pagesIcon.png" alt=""/></span>
+      </div>
     </div>
   </div>
 </template>
@@ -25,15 +32,16 @@ export default {
   inject: ['theme', 'hit'],
   props: {
     item: {
-      type: Object,
-      default: () => {}
+      type: Array,
+      default: () => [{}]
     }
   },
   data() {
     return {
       loading: false,
       theme: this.theme,
-      hit: this.hit
+      hit: this.hit,
+      totalList: JSON.parse(JSON.stringify(this.item))
     }
   },
   components: {
@@ -42,8 +50,11 @@ export default {
     HitTag
   },
   methods: {
+    filterData(value) {
+      return `<span>${value}</span>`
+    },
     shortWordStringAndHeight(value) {
-      const keyword = '计算机'
+      const keyword = '手机'
       const filter = new RegExp(keyword)
       if (value && value.length > 42) {
         return (value.substring(0, 42) + '...').replace(
@@ -51,7 +62,7 @@ export default {
           `<span style="color: #F13D3D;">${keyword}</span>`
         )
       } else {
-        return value.replace(filter, `<span style="color: #F13D3D;">${keyword}</span>`)
+        return value && value.replace(filter, `<span style="color: #F13D3D;">${keyword}</span>`)
       }
     }
   }
@@ -61,13 +72,75 @@ export default {
 <style scoped lang="scss">
 @import '../../common/common';
 
-.SupplierItem {
-  width: 100%;
+.SupplierCaseItem {
+  padding: 12px;
+  width: calc(100% - 24px);
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px #eee solid;
-  margin-top: 20px;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: rgba(243, 245, 248, 0.6);
+  .sCaseTop {
+    font-size: 14px;
+    font-family: MicrosoftYaqiHei-Bold, MicrosoftYaqiHei;
+    font-weight: bold;
+    color: #333333;
+    span {
+      &:first-child {
+        margin-right: 10px;
+      }
+    }
+  }
+  .caseColor-XUNYUAN {
+    color: $blue1;
+  }
+  .caseColor-JFH {
+    color: $green1;
+  }
+  .sCaseTime {
+    font-size: 12px;
+    font-family: MicrosoftYaqiHei;
+    color: rgba(51, 51, 51, 0.5);
+    padding: 15px 0;
+    span {
+      &:first-child {
+        margin-right: 5px;
+      }
+    }
+  }
+  .sCaseCon {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    .sCaseLastDes {
+      font-size: 12px;
+      font-family: MicrosoftYaqiHei;
+      span {
+        &:first-child {
+          color: #333;
+          margin-right: 5px;
+        }
+        &:last-child {
+          color: rgba(51, 51, 51, 0.5);
+        }
+      }
+    }
+    .sCasePage {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      font-size: 12px;
+      span {
+        margin: 0 3px;
+      }
+      img {
+        width: 32px;
+        height: 18px;
+        vertical-align: middle;
+      }
+    }
+  }
 }
 </style>

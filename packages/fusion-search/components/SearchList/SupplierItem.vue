@@ -9,7 +9,7 @@
         />
         <div class="orgDes">
           <div class="orgDesTitle">
-            <h3>北京众标智能科技有限公司</h3>
+            <div class="titleName">北京众标智能科技有限公司</div>
             <Location :item="item"></Location>
           </div>
           <div>
@@ -35,7 +35,7 @@ export default {
   inject: ['theme', 'hit'],
   props: {
     item: {
-      type: String,
+      type: Object,
       default: () => {}
     }
   },
@@ -63,7 +63,7 @@ export default {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   border-top: 1px #eee solid;
   margin-top: 20px;
   .listItemLeft {
@@ -76,6 +76,7 @@ export default {
       justify-content: flex-start;
       align-items: center;
       margin-bottom: 15px;
+      padding-top: 20px;
       .orgImg {
         width: 54px;
         height: 54px;
@@ -86,7 +87,8 @@ export default {
           display: flex;
           justify-content: flex-start;
           align-items: center;
-          h3 {
+          margin-bottom: 10px;
+          .titleName {
             margin-right: 20px;
             height: 20px;
             line-height: 20px;
@@ -105,6 +107,7 @@ export default {
   .listItemRight {
     flex: 2;
     width: 100%;
+    margin-top: 15px;
   }
 }
 </style>

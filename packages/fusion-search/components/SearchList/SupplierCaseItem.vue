@@ -10,7 +10,8 @@
     </div>
     <div class="sCaseCon">
       <div class="sCaseLastDes">
-        <span>成交业主</span>
+        <span v-if="type === 'supplier'">成交业主</span>
+        <span v-else>供应商</span>
         <span v-html="filterData('打印机 计算机')"> </span>
       </div>
       <div class="sCasePage">
@@ -34,6 +35,10 @@ export default {
     item: {
       type: Array,
       default: () => [{}]
+    },
+    type: {
+      type: String,
+      default: () => 'supplier'
     }
   },
   data() {

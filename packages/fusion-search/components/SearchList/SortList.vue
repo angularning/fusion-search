@@ -1,13 +1,21 @@
 <template>
   <div class="SortList">
-    <div
-      class="tags"
-      @click="toSort(item, i)"
-      v-for="(item, i) in sortList[type]"
-      :class="[active === i ? theme + '-activeSort' : '']"
-    >
-      {{ item.name }}
-    </div>
+    <!--    <div-->
+    <!--      class="tags"-->
+    <!--      @click="toSort(item, i)"-->
+    <!--      v-for="(item, i) in sortList[type]"-->
+    <!--      :class="[active === i ? theme + '-activeSort' : '']"-->
+    <!--    >-->
+    <!--      {{ item.name }}-->
+    <!--    </div>-->
+    <el-select class="sortSelectList" v-model="current" size="mini" placeholder="请选择">
+      <el-option
+        v-for="(item, i) in sortList[type]"
+        :key="i"
+        :label="item.name"
+        :value="item.prop"
+      />
+    </el-select>
   </div>
 </template>
 
@@ -26,6 +34,7 @@ export default {
       theme: this.theme,
       hit: this.hit,
       active: 0,
+      current: null,
       sortList: {
         supplier: [
           {
@@ -173,7 +182,19 @@ export default {
       }
     }
   },
-  computed: {},
+  watch: {
+    type: {
+      immediate: true,
+      handler() {
+        this.current = this.sortList[this.type][0]['prop']
+      }
+    }
+  },
+  created() {
+    // current(){
+    //   return this.sortList[this.type][0].prop
+    // }
+  },
   methods: {
     toSort(item, i) {
       this.active = i
@@ -192,6 +213,9 @@ export default {
   flex-flow: row nowrap;
   align-items: center;
   justify-content: flex-start;
+  .sortSelectList {
+    width: 120px !important;
+  }
   .tags {
     font-size: 12px;
     font-family: MicrosoftYaqiHei;

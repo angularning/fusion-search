@@ -29,4 +29,10 @@ export default {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.FusionList {
+  margin-top: 20px;
+  background: #ffffff;
+  border-radius: 4px;
+}
+</style>

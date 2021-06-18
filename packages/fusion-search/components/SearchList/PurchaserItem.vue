@@ -20,7 +20,7 @@
       <OrgProperty />
     </div>
     <div class="listItemRight">
-      <SupplierCaseItem />
+      <SupplierCaseItem :type="'purchaser'" />
     </div>
   </div>
 </template>

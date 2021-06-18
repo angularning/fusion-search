@@ -51,8 +51,8 @@ export default {
       loading: false,
       theme: this.theme,
       hit: this.hit,
-      type: 'case',
-      active: 1,
+      type: 'supplier',
+      active: 0,
       tabNav: {
         product: [
           {

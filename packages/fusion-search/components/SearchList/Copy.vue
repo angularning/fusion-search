@@ -1,20 +1,20 @@
 <template>
-  <div class="SupplierList" v-loading="loading">
+  <div class="Copy" v-loading="loading">
     1
   </div>
 </template>
 
 <script>
 export default {
-  name: 'SupplierList',
-  props: {
-    theme: {
-      type: String,
-      default: () => 'XUNYUAN'
-    }
-  },
+  name: 'Copy',
+  inject: ['theme', 'hit'],
+  props: {},
   data() {
-    return {}
+    return {
+      loading: false,
+      hit: this.hit,
+      theme: this.theme
+    }
   },
   computed: {},
   methods: {}

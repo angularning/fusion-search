@@ -1,10 +1,14 @@
 <template>
   <div class="CaseList" v-loading="loading">
-    <CaseItem v-for="(item, i) in list" :key="i" :item="item" />
+    <div>
+      <CaseItem v-for="(item, i) in list" :key="i" :item="item" />
+    </div>
+    <SearchPagination :total="total" @change-page="changePage" />
   </div>
 </template>
 
 <script>
+import SearchPagination from './SearchPagination'
 import CaseItem from './CaseItem'
 export default {
   name: 'CaseList',
@@ -19,13 +23,17 @@ export default {
     return {
       loading: false,
       theme: this.theme,
-      hit: this.hit
+      hit: this.hit,
+      total: 1000
     }
   },
   components: {
-    CaseItem
+    CaseItem,
+    SearchPagination
   },
-  methods: {}
+  methods: {
+    changePage() {}
+  }
 }
 </script>
 

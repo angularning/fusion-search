@@ -3,10 +3,12 @@
     <div>
       <PurchaserItem v-for="(item, i) in list" :key="i" :item="item" />
     </div>
+    <SearchPagination :total="total" @change-page="changePage" />
   </div>
 </template>
 
 <script>
+import SearchPagination from './SearchPagination'
 import PurchaserItem from './PurchaserItem'
 export default {
   name: 'PurchaserList',
@@ -21,13 +23,17 @@ export default {
     return {
       loading: false,
       theme: this.theme,
-      hit: this.hit
+      hit: this.hit,
+      total: 1000
     }
   },
   components: {
+    SearchPagination,
     PurchaserItem
   },
-  methods: {}
+  methods: {
+    changePage(value) {}
+  }
 }
 </script>
 

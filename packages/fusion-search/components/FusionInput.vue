@@ -5,7 +5,7 @@
       placeholder="请输入内容"
       v-model="keyword"
       class="input-with-select"
-      keyup.enter.native="toSearchList"
+      @keyup.enter.native="toSearchList"
     >
       <el-select v-model="select" slot="prepend" placeholder="请选择">
         <el-option label="查系统" value="1"></el-option>

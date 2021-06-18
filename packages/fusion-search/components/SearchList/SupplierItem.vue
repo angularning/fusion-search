@@ -1,0 +1,110 @@
+<template>
+  <div class="SupplierItem" v-loading="loading">
+    <div class="listItemLeft">
+      <div class="orgTop">
+        <img
+          class="orgImg"
+          src="http://cdn-caigou.shuniucloud.com/img/kg-cloud-pc-fe.aside_logoafff22c.png"
+          alt=""
+        />
+        <div class="orgDes">
+          <div class="orgDesTitle">
+            <h3>北京众标智能科技有限公司</h3>
+            <Location :item="item"></Location>
+          </div>
+          <div>
+            <HitTag />
+          </div>
+        </div>
+      </div>
+      <OrgProperty />
+    </div>
+    <div class="listItemRight">
+      <SupplierCaseItem />
+    </div>
+  </div>
+</template>
+
+<script>
+import HitTag from '../HitMix/HitTag'
+import Location from './Location'
+import OrgProperty from './OrgProperty'
+import SupplierCaseItem from './SupplierCaseItem'
+export default {
+  name: 'SupplierItem',
+  inject: ['theme', 'hit'],
+  props: {
+    item: {
+      type: String,
+      default: () => {}
+    }
+  },
+  data() {
+    return {
+      loading: false,
+      theme: this.theme,
+      hit: this.hit
+    }
+  },
+  components: {
+    OrgProperty,
+    Location,
+    HitTag,
+    SupplierCaseItem
+  },
+  methods: {}
+}
+</script>
+
+<style scoped lang="scss">
+@import '../../common/common';
+.SupplierItem {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px #eee solid;
+  margin-top: 20px;
+  .listItemLeft {
+    flex: 3;
+    width: 100%;
+    .orgTop {
+      width: 100%;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 15px;
+      .orgImg {
+        width: 54px;
+        height: 54px;
+        vertical-align: middle;
+      }
+      .orgDes {
+        .orgDesTitle {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          h3 {
+            margin-right: 20px;
+            height: 20px;
+            line-height: 20px;
+            font-size: 20px;
+            font-family: MicrosoftYaqiHei-Bold, MicrosoftYaqiHei;
+            font-weight: bold;
+            color: #333;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+  .listItemRight {
+    flex: 2;
+    width: 100%;
+  }
+}
+</style>

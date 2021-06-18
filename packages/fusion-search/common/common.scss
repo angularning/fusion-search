@@ -1,0 +1,85 @@
+$blue1: rgba(58, 114, 255, 1);
+$blue16: rgba(58, 114, 255, 0.16);
+$green1: rgba(26, 188, 155, 1);
+$green16: rgba(26, 188, 155, 0.16);
+
+//@each $color in  1, 2, 3, 4, 5, 6, 7, 8, 9 {
+//  .XUNYUAN-background#{$color} { background: rgba(58,114,255,#{$color}); }
+//}
+
+.XUNYUAN-color1 {
+  color: $blue1;
+}
+.XUNYUAN-background16 {
+  background: $blue16;
+}
+.JFH-color1 {
+  color: $green1;
+}
+.JFH-background16 {
+  background: $green16;
+}
+
+.XUNYUAN-activeNav{
+  color: $blue1 !important;
+  border-bottom: 4px $blue1 solid !important;
+}
+.JFH-activeNav{
+  color: $green1 !important;;
+  border-bottom: 4px $green1 solid !important;
+}
+
+@mixin addFusedSearchColors($class, $theme) {
+  @if $theme {
+    &.#{$theme}.primary {
+      color: white;
+      background: nth(blue1, 1);
+    }
+  }
+  //@else {
+  //  color: #1ABC9B;
+  //  background: nth($blue1, 1);
+  //  background: rgba(26, 188, 155, 0.16);
+  //}
+}
+
+// 清除浮动
+@mixin clearfix {
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+    zoom: 1;
+  }
+}
+
+// 限制一行字显示
+@mixin limit1line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+
+// 限制两行字显示
+@mixin limit2line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+
+@mixin clickable($transition: true) {
+  cursor: pointer;
+  @if $transition {
+    transition: all .3s;
+  }
+  user-select: none;
+  &:hover {
+    opacity: .8;
+  }
+}

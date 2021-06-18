@@ -1,34 +1,31 @@
 <template>
-  <div class="FusionMix">
-    <div>
-      <div>
-        <span>手机</span>
-        <span>产品</span>
-      </div>
-      <div>
-        描述文字
-      </div>
-    </div>
+  <div class="FusionList">
+    <SearchListWrap />
   </div>
 </template>
 
 <script>
+import SearchListWrap from './SearchList/SearchListWrap'
 export default {
   name: 'FusionList',
+  inject: ['theme', 'hit'],
   props: {
     data: {
       type: Object,
       default: () => {}
     }
   },
-  mounted() {
-    this.$EventBus.$on('fusion-search', (value) => {
-      console.log('fusion-search', value)
-    })
+  data() {
+    return {
+      theme: this.theme,
+      hit: this.hit
+    }
   },
-  beforeDestroy() {
-    this.$EventBus.$off('fusion-search')
-  }
+  components: {
+    SearchListWrap
+  },
+  mounted() {},
+  beforeDestroy() {}
 }
 </script>
 

@@ -31,21 +31,23 @@ export default {
     FusionList
   },
   mixins: [defaultMixins],
-  props: {
-    config: {
-      type: Object,
-      default: () => ({
-        THEME: 'XUYUAN',
+  data() {
+    return {
+      keyword: null,
+      config: {
+        THEME: 'XUNYUAN',
         APIHOST: '',
         LOGIN: true,
         showInput: true,
         showMix: true
-      })
+      },
+      hit: 'product'
     }
   },
-  data() {
+  provide() {
     return {
-      keyword: null
+      hit: this.hit,
+      theme: this.config.THEME
     }
   },
   mounted() {},
@@ -57,7 +59,7 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style>
 .fusion-search-wrap {
   width: 100%;
 }

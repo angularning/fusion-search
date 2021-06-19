@@ -87,7 +87,7 @@ export default {
       margin-right: 20px;
     }
     .fusionRight {
-      flex: 2;
+      flex: 1;
     }
   }
 }

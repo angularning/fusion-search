@@ -1,28 +1,28 @@
 <template>
   <div class="FusionDescription">
-    <div>
-      <h2>产品概览</h2>
-      <div>
-        服务地区
-      </div>
-      <div>
-        服务领域
-      </div>
-      <div>
-        合作业主分布
-      </div>
-    </div>
+    <HitProductDescription v-if="hit === 'product'" />
   </div>
 </template>
 
 <script>
+import HitProductDescription from './Description/HitProductDescription'
 export default {
   name: 'FusionDescription',
+  inject: ['theme', 'hit'],
   props: {
     data: {
       type: Object,
       default: () => {}
     }
+  },
+  data() {
+    return {
+      hit: this.hit,
+      theme: this.theme
+    }
+  },
+  components: {
+    HitProductDescription
   },
   mounted() {},
   beforeDestroy() {}

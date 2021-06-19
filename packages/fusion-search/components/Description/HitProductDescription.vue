@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import ZbChart from '../Echarts/Chart'
+import ZbChart from '../Echarts/ZbChart'
 import DescriptionTag from './DescriptionTag'
 import SameProductList from './SameProductList'
 import { city_group } from '../../common/city'

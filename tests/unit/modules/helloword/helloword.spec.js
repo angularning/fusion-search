@@ -1,6 +1,5 @@
 // jest api https://jestjs.io/docs/zh-Hans/expect#expectvalue
 
-import Vue from 'vue'
 import { shallowMount, mount } from '@vue/test-utils'
 import HelloWorld from '@e/components/HelloWorld.vue'
 

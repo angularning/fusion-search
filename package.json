@@ -1,6 +1,6 @@
 {
   "name": "vue-fusion-search",
-  "version": "0.0.2",
+  "version": "0.0.8x",
   "description": "A library packaging tool based on rollup and vue-cli3",
   "private": false,
   "author": "weining@chinasofti.com",

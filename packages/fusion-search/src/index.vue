@@ -105,9 +105,8 @@ export default {
   },
   mounted() {},
   methods: {
-    fusionSearch(value) {
+    fusionSearch() {
       console.log(this.searchValue)
-
       // 搜索之后把值设置为false
       this.$emit('change-search', false)
     },

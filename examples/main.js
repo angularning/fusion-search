@@ -2,9 +2,14 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import FusionSearch from '../lib/index.js'
-Vue.use(FusionSearch)
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 import '../lib/theme/index.css'
+// import FusionSearch from '../lib/index.js'
+// import FusionSearch from '../packages/fusion-search/src/index'
+// Vue.use(FusionSearch)
+Vue.use(ElementUI)
+Vue.prototype.$EventBus = new Vue()
 Vue.config.productionTip = false
 new Vue({
   router,

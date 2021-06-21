@@ -105,22 +105,4 @@
     "webpack-cli": "^3.3.8",
     "webpack-merge": "^4.2.2"
   },
-  "lint-staged": {
-    "src/**/*.{js}": [
-      "eslint --fix",
-      "git add"
-    ],
-    "packages/**/*.{js,jsx,vue}": [
-      "eslint --fix",
-      "git add"
-    ],
-    "examples/**/*.{js,jsx,vue}": [
-      "eslint --fix",
-      "git add"
-    ],
-    "examples/**/*.{html,vue,css,less,scss,styl}": [
-      "stylelint --fix",
-      "git add"
-    ]
-  }
 }

@@ -12,25 +12,36 @@
       <div class="sCaseLastDes">
         <span v-if="type === 'supplier'">成交业主</span>
         <span v-else>供应商</span>
-        <span v-html="filterData('打印机 计算机')"> </span>
+        <span v-html="filterData('打印机 计算机')" />
       </div>
       <div class="sCasePage">
-        <span class="sCaseLeftClick"><img src="../../static/pagesIcon.png" alt=""/></span>
-        <span class="sCaseCurrentPage" :class="[theme + '-color1']">1</span>
-        <span class="sCaseRightClick"><img src="../../static/pagesIcon.png" alt=""/></span>
+        <span class="sCaseLeftClick"><img
+          src="../../static/pagesIcon.png"
+          alt=""
+        ></span>
+
+        <span
+          class="sCaseCurrentPage"
+          :class="[theme + '-color1']"
+        >1</span>
+        <span class="sCaseRightClick"><img
+          src="../../static/pagesIcon.png"
+          alt=""
+        ></span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import HitTag from '../HitMix/HitTag'
-import Location from './Location'
-import OrgProperty from './OrgProperty'
+// import HitTag from '../HitMix/HitTag'
+// import Location from './Location'
+// import OrgProperty from './OrgProperty'
 
 export default {
   name: 'SupplierCaseItem',
   inject: ['theme', 'hit'],
+  components: {},
   props: {
     item: {
       type: Array,
@@ -48,11 +59,6 @@ export default {
       hit: this.hit,
       totalList: JSON.parse(JSON.stringify(this.item))
     }
-  },
-  components: {
-    OrgProperty,
-    Location,
-    HitTag
   },
   methods: {
     filterData(value) {
@@ -76,7 +82,22 @@ export default {
 
 <style scoped lang="scss">
 @import '../../common/common';
-
+.sCasePage {
+  img {
+    cursor: pointer;
+    width: 24px;
+    height: 18px;
+    vertical-align: middle;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+  .sCaseRightClick {
+    img {
+      transform: rotate(180deg);
+    }
+  }
+}
 .SupplierCaseItem {
   padding: 12px;
   width: calc(100% - 24px);

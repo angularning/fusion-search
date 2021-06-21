@@ -1,15 +1,19 @@
 <template>
   <div class="HitProperty">
     <div
-      class="HitPropertyList"
       v-for="(item, i) in supplierProperties"
+      v-show="item.value && item.value.length > 0"
       :key="i"
+      class="HitPropertyList"
       :label="item.label"
       :value="item.value"
       :full-width="item.fullWidth"
-      v-show="item.value && item.value.length > 0"
     >
-      <div v-if="item.value && item.value.length > 0" class="propertyItem" :class="containerStyle">
+      <div
+        v-if="item.value && item.value.length > 0"
+        class="propertyItem"
+        :class="containerStyle"
+      >
         <div class="item-label">
           {{ item.label }}
         </div>
@@ -314,7 +318,7 @@ export default {
     width: 31%;
     margin-right: 2%;
     margin-bottom: 10px;
-    height: 40px;
+    //height: 40px;
 
     .propertyItem-supplier {
       display: flex;

@@ -1,25 +1,49 @@
 <template>
-  <div class="SupplierList" v-loading="loading">
-    SameSupplierList
+  <div
+    v-loading="loading"
+    class="SupplierList"
+  >
+    <div>
+      <SupplierItem
+        v-for="(item, i) in list"
+        :key="i"
+        :item="item"
+      />
+    </div>
+    <SearchPagination
+      :total="total"
+      @change-page="changePage"
+    />
   </div>
 </template>
 
 <script>
+import SearchPagination from './SearchPagination'
+import SupplierItem from './SupplierItem'
 export default {
   name: 'SameSupplierList',
+  inject: ['theme', 'hit'],
+  components: {
+    SupplierItem,
+    SearchPagination
+  },
   props: {
-    theme: {
-      type: String,
-      default: () => 'XUNYUAN'
+    list: {
+      type: Array,
+      default: () => [{ location: 654223 }, { location: 654223 }, { location: 654223 }]
     }
   },
   data() {
     return {
-      loading: false
+      loading: false,
+      theme: this.theme,
+      hit: this.hit,
+      total: 1000
     }
   },
-  computed: {},
-  methods: {}
+  methods: {
+    changePage(value) {}
+  }
 }
 </script>
 

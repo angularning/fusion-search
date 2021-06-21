@@ -28,7 +28,7 @@
     "serve": "cross-env NODE_ENV=development && vue-cli-service serve --copy",
     "lib:cli": "cross-env rimraf ./lib && node ./build/cli.build.js",
     "lib": "cross-env NODE_ENV=production rimraf ./lib && node ./build/rollup.build",
-    "lint:prettier": "cross-env prettier --write \"src/**/*.js\" \"src/**/*.vue\" --loglevel warn",
+    "lint:prettier": "cross-env prettier --write \"packages/**/*.js\" \"packages/**/*.vue\" --loglevel warn",
     "lint:css": "cross-env  stylelint 'packages/**/*.{html,vue,css,less,scss,styl}' --fix && stylelint 'examples/**/*.{html,vue,css,less,scss,styl}' --fix && stylelint 'src/**/*.{html,vue,css,less,scss,styl}' --fix && stylelint 'docs/.vuepress/**/*.{html,vue,css,less,scss,styl}' --fix",
     "test:unit": "vue-cli-service test:unit",
     "docs:dev": "vuepress dev docs",
@@ -65,7 +65,6 @@
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "highlight.js": "^9.15.10",
-    "husky": "^3.0.5",
     "image-webpack-loader": "^6.0.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
@@ -104,35 +103,5 @@
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.8",
     "webpack-merge": "^4.2.2"
-  },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
-  "husky": {
-    "hooks": {}
-  },
-  "lint-staged": {
-    "src/**/*.{js}": [
-      "prettier --write",
-      "git add"
-    ],
-    "packages/**/*.{js,jsx,vue}": [
-      "prettier --write",
-      "git add"
-    ],
-    "pageages/**/*.{html,vue,css,less,scss,styl}": [
-      "git add"
-    ],
-    "examples/**/*.{js,jsx,vue}": [
-      "prettier --write",
-      "git add"
-    ],
-    "examples/**/*.{html,vue,css,less,scss,styl}": [
-      "git add"
-    ],
-    "docs/**/*.{js,jsx,vue}": [
-      "prettier --write",
-      "git add"
-    ]
   }
 }

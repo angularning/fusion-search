@@ -1,8 +1,11 @@
 <template>
-  <div :class="[config.THEME]" class="fusion-search-wrap">
+  <div
+    :class="[config.THEME]"
+    class="fusion-search-wrap"
+  >
     <!--    搜索框组件-->
     <template v-if="config && config.showInput">
-      <FusionInput @search="search"></FusionInput>
+      <FusionInput />
     </template>
     <div class="fusionContent">
       <div class="fusionLeft">
@@ -11,13 +14,13 @@
           <FusionMix :data="{}" />
         </template>
         <!--    命中列表组件-->
-        <template>
+        <template v-if="config && config.showList">
           <FusionList />
         </template>
       </div>
       <div class="fusionRight">
         <!--    右侧概览，分产品，供应商，业主-->
-        <template>
+        <template v-if="config && config.showDescription">
           <FusionDescription />
         </template>
       </div>
@@ -43,30 +46,73 @@ export default {
     FusionDescription
   },
   mixins: [defaultMixins],
+  props: {
+    emitSearch: {
+      type: Boolean,
+      default: () => false
+    },
+    searchValue: {
+      type: String,
+      default: () => null
+    },
+    config: {
+      type: Object,
+      default: () => {
+        return {
+          THEME: 'XUNYUAN',
+          APIHOST: '',
+          LOGIN: true,
+          showInput: true,
+          showMix: true,
+          showList: true,
+          showDescription: true
+        }
+      }
+    }
+  },
   data() {
     return {
       keyword: null,
-      config: {
-        THEME: 'XUNYUAN',
-        APIHOST: '',
-        LOGIN: true,
-        showInput: true,
-        showMix: true
-      },
-      hit: 'product'
+      configData: {},
+      // config: {
+      //   THEME: 'XUNYUAN',
+      //   APIHOST: '',
+      //   LOGIN: true,
+      //   showInput: true,
+      //   showMix: true,
+      //   showList: true,
+      //   showDescription: true,
+      // },
+      hit: 'supplier'
+    }
+  },
+  watch: {
+    emitSearch: {
+      immediate: true,
+      handler(val) {
+        if (val) {
+          // 触发搜索
+          this.fusionSearch()
+        }
+      }
     }
   },
   provide() {
     return {
       hit: this.hit,
-      theme: this.config.THEME
+      theme: this.config && this.config.THEME
     }
   },
   mounted() {},
   methods: {
-    fusionSearch() {},
+    fusionSearch(value) {
+      console.log(this.searchValue)
+
+      // 搜索之后把值设置为false
+      this.$emit('change-search', false)
+    },
     mixSearch(value) {
-      this.search(value)
+      // this.search(value)
     }
   }
 }

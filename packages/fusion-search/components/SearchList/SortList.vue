@@ -8,7 +8,12 @@
     <!--    >-->
     <!--      {{ item.name }}-->
     <!--    </div>-->
-    <el-select class="sortSelectList" v-model="current" size="mini" placeholder="请选择">
+    <el-select
+      v-model="current"
+      class="sortSelectList"
+      size="mini"
+      placeholder="请选择"
+    >
       <el-option
         v-for="(item, i) in sortList[type]"
         :key="i"
@@ -78,14 +83,14 @@ export default {
             prop: 'reg_cap'
           } */
         ],
-        same_supplier: [
+        sameSupplier: [
           {
-            type: 'same_supplier',
+            type: 'sameSupplier',
             name: '综合排序',
             prop: '-default'
           },
           {
-            type: 'same_supplier',
+            type: 'sameSupplier',
             name: '注册资本降序',
             prop: '-reg_cap'
           }
@@ -186,6 +191,7 @@ export default {
     type: {
       immediate: true,
       handler() {
+        console.log(this.type)
         this.current = this.sortList[this.type][0]['prop']
       }
     }

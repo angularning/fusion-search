@@ -5,23 +5,27 @@
         class="supAndPruImg"
         src="http://img14.360buyimg.com/n0/jfs/t12124/15/2052292482/257261/402cce28/5a30c54fN5e5f155e.jpg"
         alt=""
-      />
+      >
       <div class="hitSupAndPurDes">
         <div class="hitTitle">
           <span class="title">
             供应商标题
           </span>
-          <span class="hitTagSpan" v-if="true">业主</span>
-          <span class="hitTagSpan" v-else>供应商</span>
+          <span
+            v-if="true"
+            class="hitTagSpan"
+          >业主</span>
+          <span
+            v-else
+            class="hitTagSpan"
+          >供应商</span>
         </div>
         <div class="hitTag">
-          <HitTag :theme="'JFH'" />
+          <HitTag />
         </div>
       </div>
     </div>
-    <div>
-      <HitPropertyList :type="'supplier'"></HitPropertyList>
-    </div>
+    <HitPropertyList :type="'supplier'" />
   </div>
 </template>
 
@@ -31,16 +35,16 @@ import HitPropertyList from './HitPropertyList'
 export default {
   name: 'HitSupAndPurMix',
   inject: ['theme', 'hit'],
+  components: {
+    HitTag,
+    HitPropertyList
+  },
   props: {},
   data() {
     return {
       hit: this.hit,
       theme: this.theme
     }
-  },
-  components: {
-    HitTag,
-    HitPropertyList
   },
   methods: {}
 }
@@ -54,6 +58,7 @@ export default {
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
+    margin-bottom: 25px;
     .supAndPruImg {
       width: 54px;
       height: 54px;

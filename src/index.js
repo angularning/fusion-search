@@ -4,13 +4,11 @@ import FusionSearch from '../packages/fusion-search/index'
 import { version } from '../package.json'
 import element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import GlobalModal from './global-modal'
 // const components = [FileHandle, TestModule, FusionSearch]
 const components = [FusionSearch];
 const install = function(Vue) {
   Vue.prototype.$EventBus = new Vue()
   Vue.use(element);
-  Vue.use(GlobalModal);
   // 判断是否安装
   if (install.installed) {
     return

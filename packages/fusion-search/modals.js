@@ -1,4 +1,4 @@
-const iterator = require.context('../packages/fusion-search/modals', true, /\.(vue)/)
+const iterator = require.context('./modals', true, /\.(vue)/)
 const keys = iterator.keys()
 const modals = {}
 keys.map(iterator).forEach((_item, i) => {

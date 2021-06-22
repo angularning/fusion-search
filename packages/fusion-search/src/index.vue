@@ -95,6 +95,12 @@ export default {
           this.fusionSearch()
         }
       }
+    },
+    config:{
+      immediate: true,
+      handler(val) {
+        console.log(val);
+      }
     }
   },
   provide() {

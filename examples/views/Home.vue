@@ -36,7 +36,7 @@ export default {
         THEME: 'JFH',
         APIHOST: '',
         LOGIN: true,
-        showInput: false,
+        showInput: true,
         showMix: true,
         showList: true,
         showDescription: true

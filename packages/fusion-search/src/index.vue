@@ -146,10 +146,12 @@ export default {
       // 获取到搜索的值，做请求
       console.log(this.keyword)
       this.hit = this.keyword
+      this.mixSearch()
       // 搜索之后把值设置为false
       this.$emit('change-search', false)
     },
     mixSearch(value) {
+      this.$axios.get('')
       // this.search(value)
     },
     searchResult() {

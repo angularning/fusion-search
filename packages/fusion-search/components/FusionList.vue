@@ -9,6 +9,9 @@ import SearchListWrap from './SearchList/SearchListWrap'
 export default {
   name: 'FusionList',
   inject: ['theme', 'hit'],
+  components: {
+    SearchListWrap
+  },
   props: {
     data: {
       type: Object,
@@ -20,9 +23,6 @@ export default {
       theme: this.theme,
       hit: this.hit
     }
-  },
-  components: {
-    SearchListWrap
   },
   mounted() {},
   beforeDestroy() {}

@@ -45,21 +45,67 @@ $green16: rgba(26, 188, 155, 0.16);
   cursor: pointer;
 }
 .XUNYUAN-buttonPlain{
-  background: #ffffff;
-  color: $blue1;
-  border: 1px $blue1 solid;
+  background: #ffffff !important;
+  color: $blue1  !important;;
+  border: 1px $blue1 solid  !important;;
   &:hover{
-    color: $blue6;
-    border: 1px $blue6 solid;
+    color: $blue6  !important;;
+    border: 1px $blue6 solid  !important;;
   }
 }
 .JFH-buttonPlain{
-  background: #ffffff;
-  color: $green1;
-  border: 1px $green1 solid;
+  background: #ffffff  !important;;
+  color: $green1  !important;;
+  border: 1px $green1 solid  !important;;
   &:hover{
-    color: $green6;
-    border: 1px $green6 solid;
+    color: $green6  !important;;
+    border: 1px $green6 solid  !important;;
+  }
+}
+.XUNYUAN-buttonNormal{
+  background: $blue1 !important;
+  color: #ffffff  !important;;
+  border: 1px $blue1 solid  !important;;
+  &:hover{
+    background: $blue6 !important;
+    color: #ffffff  !important;;
+    border: 1px $blue1 solid  !important;;
+  }
+}
+.JFH-buttonNormal{
+  background: $green1  !important;;
+  color: #ffffff  !important;;
+  border: 1px $green1 solid  !important;;
+  &:hover{
+    background: $green6  !important;;
+    color: #ffffff  !important;;
+    border: 1px $green6 solid  !important;;
+  }
+}
+.XUNYUAN-planPagination{
+  //li{
+  //  &:hover{
+  //    color: $blue1  !important;;
+  //  }
+  //  &:active{
+  //    color: #ffffff;
+  //  }
+  //}
+  .active{
+    background: $blue1 !important;
+  }
+}
+.JFH-planPagination{
+  //li{
+  //  &:hover{
+  //    color: $green1  !important;;
+  //  }
+  //  &:active{
+  //    color: #ffffff;
+  //  }
+  //}
+  .active{
+    background: $green1  !important;;
   }
 }
 

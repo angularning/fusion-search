@@ -6,7 +6,7 @@ const components = [FusionSearch]
 const install = function(Vue) {
   Vue.prototype.$EventBus = new Vue()
   Vue.use(element)
-  Vue.use(GlobalModal);
+  Vue.use(GlobalModal)
   // 判断是否安装
   if (install.installed) {
     return

@@ -1,11 +1,12 @@
 <template>
   <div class="SearchPagination">
-    <span class="total" v-show="total > 0"
-      >总共<span :class="[theme + '-color1']">{{ total }}</span
-      >条</span
-    >
+    <span
+      v-show="total > 0"
+      class="total"
+    >总共<span :class="[theme + '-color1']">{{ total }}</span>条</span>
     <el-pagination
-      class="planPagination mt30"
+      class="mt30"
+      :class="[theme+'-planPagination']"
       layout="prev, pager, next"
       :total="total"
       :page="page"

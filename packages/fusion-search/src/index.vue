@@ -7,7 +7,10 @@
     <template v-if="config && config.showInput">
       <FusionInput />
     </template>
-    <div class="fusionContent">
+    <div
+      v-if="hit!=='noHit'"
+      class="fusionContent"
+    >
       <div class="fusionLeft">
         <!--    命中详情卡片-->
         <template v-if="config && config.showMix">
@@ -25,6 +28,21 @@
         </template>
       </div>
     </div>
+    <!--    未命中-->
+    <div
+      v-if="hit==='noHit'"
+      class="fusionContent"
+    >
+      <div class="fusionLeft">
+        <div class="tipTitle">
+          为您找到如下相关内容：
+        </div>
+        <FusionList />
+      </div>
+      <div class="fusionRight">
+        <NoHitRight />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -35,6 +53,7 @@ import FusionInput from '../components/FusionInput'
 import FusionMix from '../components/FusionMix'
 import FusionList from '../components/FusionList'
 import FusionDescription from '../components/FusionDescription'
+import NoHitRight from '../components/NoHit/NoHitRight'
 import defaultMixins from '../minxins/default'
 
 export default {
@@ -43,7 +62,8 @@ export default {
     FusionMix,
     FusionInput,
     FusionList,
-    FusionDescription
+    FusionDescription,
+    NoHitRight
   },
   mixins: [defaultMixins],
   props: {
@@ -83,7 +103,7 @@ export default {
       //   showList: true,
       //   showDescription: true,
       // },
-      hit: 'supplier'
+      hit: 'noHit'
     }
   },
   watch: {
@@ -96,10 +116,10 @@ export default {
         }
       }
     },
-    config:{
+    config: {
       immediate: true,
       handler(val) {
-        console.log(val);
+        console.log(val)
       }
     }
   },
@@ -109,7 +129,8 @@ export default {
       theme: this.config && this.config.THEME
     }
   },
-  mounted() {},
+  mounted() {
+  },
   methods: {
     fusionSearch() {
       console.log(this.searchValue)
@@ -123,22 +144,34 @@ export default {
 }
 </script>
 <style lang="scss">
+@import "../common/common";
 .fusion-search-wrap {
   width: calc(100% - 40px);
   height: calc(100% - 40px);
   padding: 20px;
   background: #f8f8fa;
+
   .fusionContent {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     margin-top: 20px;
+    .tipTitle{
+      font-size: 14px;
+      font-family: MicrosoftYaqiHei-Bold, MicrosoftYaqiHei;
+      padding: 0 15px;
+      color: #1C2D5A;
+    }
     .fusionLeft {
       flex: 3;
       margin-right: 20px;
     }
+
     .fusionRight {
       flex: 1;
+    }
+    .noHitLeft{
+      background: #ffffff;
     }
   }
 }

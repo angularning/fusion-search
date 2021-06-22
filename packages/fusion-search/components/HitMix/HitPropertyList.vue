@@ -17,7 +17,12 @@
         <div class="item-label">
           {{ item.label }}
         </div>
-        <div>{{ item.value }}</div>
+        <div
+          class="shortWord75"
+          :title="item.value"
+        >
+          {{ item.value }}
+        </div>
       </div>
     </div>
   </div>
@@ -305,6 +310,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "../../common/common";
 .HitProperty {
   width: calc(100% - 40px);
   background: rgba(0, 0, 0, 0.02);
@@ -347,6 +353,10 @@ export default {
     //    font-weight: bold;
     //  }
     //}
+    .shortWord75{
+      @include limit1line;
+      width: 60%;
+    }
   }
 }
 </style>

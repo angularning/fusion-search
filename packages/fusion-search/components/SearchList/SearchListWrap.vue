@@ -1,13 +1,18 @@
 <template>
-  <div class="SearchListWrap" v-loading="loading">
+  <div
+    v-loading="loading"
+    class="SearchListWrap"
+  >
     <div class="SearchListNav">
-      <div class="searchNav" v-for="(item, i) in tabNav[hit]">
+      <div
+        v-for="(item, i) in tabNav[hit]"
+        class="searchNav"
+      >
         <a
-          @click="showNav(item, i)"
           class="nav"
           :class="[active === i ? theme + '-activeNav' : '']"
-          >{{ item.value }}</a
-        >
+          @click="showNav(item, i)"
+        >{{ item.value }}</a>
       </div>
     </div>
     <div class="listWrap">
@@ -31,6 +36,14 @@ import SortFilter from './SortFilter'
 export default {
   name: 'SearchListWrap',
   inject: ['theme', 'hit'],
+  components: {
+    SupplierList,
+    CaseList,
+    PurchaserList,
+    SameSupplierList,
+    SortList,
+    SortFilter
+  },
   props: {
     // datalist: {
     //   type: Object,
@@ -54,6 +67,23 @@ export default {
       type: 'supplier',
       active: 0,
       tabNav: {
+        noHit: [
+          {
+            name: 'SupplierList',
+            key: 'supplier',
+            value: '找供应商'
+          },
+          {
+            name: 'CaseList',
+            key: 'case',
+            value: '找案例'
+          },
+          {
+            name: 'PurchaserList',
+            key: 'purchaser',
+            value: '找采购业主'
+          }
+        ],
         product: [
           {
             name: 'SupplierList',
@@ -102,14 +132,6 @@ export default {
         ]
       }
     }
-  },
-  components: {
-    SupplierList,
-    CaseList,
-    PurchaserList,
-    SameSupplierList,
-    SortList,
-    SortFilter
   },
   computed: {
     activeComponent() {

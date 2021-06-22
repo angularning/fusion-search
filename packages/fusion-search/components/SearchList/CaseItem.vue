@@ -12,7 +12,7 @@
                 )
               "
             />
-            <Location :item="item"></Location>
+            <Location :item="item" />
           </div>
           <div>
             <HitTag />
@@ -23,7 +23,13 @@
       <OrgTag />
     </div>
     <div class="listItemRight">
-      <button class="plainBtn" :class="[theme + '-buttonPlain']">查看详情</button>
+      <button
+        class="plainBtn"
+        :class="[theme + '-buttonPlain']"
+        @click="toSeeDetail"
+      >
+        查看详情
+      </button>
     </div>
   </div>
 </template>
@@ -37,6 +43,13 @@ import SupplierCaseItem from './SupplierCaseItem'
 export default {
   name: 'CaseItem',
   inject: ['theme', 'hit'],
+  components: {
+    OrgProperty,
+    Location,
+    HitTag,
+    OrgTag,
+    SupplierCaseItem
+  },
   props: {
     item: {
       type: Object,
@@ -50,14 +63,18 @@ export default {
       hit: this.hit
     }
   },
-  components: {
-    OrgProperty,
-    Location,
-    HitTag,
-    OrgTag,
-    SupplierCaseItem
-  },
   methods: {
+    toSeeDetail() {
+      this.$modal('CaseDetail', {
+        data () {
+          return {
+            allowSelectTemplate: true,
+          }
+        },
+        $store: this.$store,
+        $router: this.$router
+      })
+    },
     shortWordStringAndHeight(value) {
       const keyword = '手机'
       const filter = new RegExp(keyword)

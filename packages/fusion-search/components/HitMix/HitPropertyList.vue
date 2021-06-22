@@ -31,7 +31,7 @@
 <script>
 export default {
   name: 'HitPropertyList',
-  inject: ['theme', 'hit'],
+  inject: ['provideData'],
   props: {
     // datalist: {
     //   type: Object,
@@ -111,8 +111,6 @@ export default {
       }
     ]
     return {
-      theme: this.theme,
-      hit: this.hit,
       supplierPropertyMap,
       datalist: {
         id: '8f609cbd-7aea-c34a-c604-311efdeb178f',

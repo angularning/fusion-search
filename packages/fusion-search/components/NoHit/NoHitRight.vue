@@ -9,7 +9,7 @@
     <div class="noHitRightBody">
       <div
         class="noHitThree"
-        :class="[theme+'-color1']"
+        :class="[provideData.theme+'-color1']"
       >
         比报价 ｜ 找供应商 ｜ 采购咨询
       </div>
@@ -40,14 +40,14 @@
           <el-button
             type="primary"
             plain
-            :class="[theme+'-buttonPlain', 'noHitBtn1']"
+            :class="[provideData.theme+'-buttonPlain', 'noHitBtn1']"
             @click="cancel"
           >
             重置
           </el-button>
           <el-button
             type="primary"
-            :class="[theme+'-buttonNormal', 'noHitBtn2']"
+            :class="[provideData.theme+'-buttonNormal', 'noHitBtn2']"
             @click="enter"
           >
             提交
@@ -61,7 +61,7 @@
 <script>
 export default {
   name: 'NoHitRight',
-  inject: ['theme', 'hit'],
+  inject: ['provideData'],
   props: {
   },
   data() {
@@ -69,8 +69,6 @@ export default {
       first_list: [],
       second_list: [],
       tagList: ['供应商', '案例'],
-      theme: this.theme,
-      hit: this.hit,
       demand: null,
       mobile: null
     }

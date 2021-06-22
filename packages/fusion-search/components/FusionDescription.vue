@@ -1,7 +1,7 @@
 <template>
   <div class="FusionDescription">
     <!--    <HitProductDescription v-if="hit === 'product'" />-->
-    <component :is="configList[hit]" />
+    <component :is="configList[provideData.hit]" />
   </div>
 </template>
 
@@ -10,7 +10,7 @@ import HitProductDescription from './Description/HitProductDescription'
 import HitSupplierDescription from './Description/HitSupplierDescription'
 export default {
   name: 'FusionDescription',
-  inject: ['theme', 'hit'],
+  inject: ['provideData'],
   components: {
     HitProductDescription,
     HitSupplierDescription
@@ -23,8 +23,6 @@ export default {
   },
   data() {
     return {
-      hit: this.hit,
-      theme: this.theme,
       configList: {
         product: 'HitProductDescription',
         supplier: 'HitSupplierDescription'

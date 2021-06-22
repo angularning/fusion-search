@@ -2,17 +2,31 @@
   <div class="search-input-container">
     <!-- <span class="search-input-title"><img style="width: 100%;" src="" alt=""/></span> -->
     <el-input
-      placeholder="请输入内容"
       v-model="keyword"
+      placeholder="请输入内容"
       class="input-with-select"
       @keyup.enter.native="toSearchList"
     >
-      <el-select v-model="select" slot="prepend" placeholder="请选择">
-        <el-option label="查系统" value="1"></el-option>
-        <el-option label="查委办局" value="2"></el-option>
+      <el-select
+        slot="prepend"
+        v-model="select"
+        placeholder="请选择"
+      >
+        <el-option
+          label="查系统"
+          value="1"
+        />
+        <el-option
+          label="查委办局"
+          value="2"
+        />
       </el-select>
     </el-input>
-    <el-button @click.stop="toSearchList" type="primary" class="searchButton">
+    <el-button
+      type="primary"
+      class="searchButton"
+      @click.stop="toSearchList"
+    >
       搜索
     </el-button>
   </div>
@@ -21,21 +35,18 @@
 <script>
 export default {
   name: 'FusionInput',
+  components: {},
   props: {
     data: {
       type: Object,
       default: () => {}
     }
   },
-  components: {},
   data() {
     return {
       keyword: null,
       select: '1'
     }
-  },
-  methods: {
-    toSearchList() {}
   },
   mounted() {
     this.$EventBus.$on('fusion-search', (value) => {
@@ -44,6 +55,11 @@ export default {
   },
   beforeDestroy() {
     this.$EventBus.$off('fusion-search')
+  },
+  methods: {
+    toSearchList() {
+      this.$emit('search', this.keyword)
+    }
   }
 }
 </script>

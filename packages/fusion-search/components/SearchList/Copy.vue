@@ -7,13 +7,11 @@
 <script>
 export default {
   name: 'Copy',
-  inject: ['theme', 'hit'],
+  inject: ['provideData'],
   props: {},
   data() {
     return {
       loading: false,
-      hit: this.hit,
-      theme: this.theme
     }
   },
   computed: {},

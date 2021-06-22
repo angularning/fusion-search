@@ -60,7 +60,7 @@ import { city_group } from '../../common/city'
 
 export default {
   name: 'HitSupplierDescription',
-  inject: ['theme', 'hit'],
+  inject: ['provideData'],
   components: {
     DescriptionTag,
     SameProductList,
@@ -71,8 +71,6 @@ export default {
     return {
       city_group,
       loading: false,
-      hit: this.hit,
-      theme: this.theme,
       list1: [
         { tag_name: '屋面防水工程', count: 4 },
         { tag_name: '防水工程', count: 3 },

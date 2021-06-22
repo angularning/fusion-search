@@ -35,18 +35,17 @@
 import ZbChart from '../Echarts/ZbChart'
 import DescriptionTag from './DescriptionTag'
 import SameProductList from './SameProductList'
+// eslint-disable-next-line camelcase
 import { city_group } from '../../common/city'
 
 export default {
   name: 'HitProductDescription',
-  inject: ['theme', 'hit'],
+  inject: ['provideData'],
   props: {},
   data() {
     return {
       city_group,
       loading: false,
-      hit: this.hit,
-      theme: this.theme,
       list: [
         { release_date: '2018Q2', count: 146 },
         { release_date: '2018Q3', count: 1477 },

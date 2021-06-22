@@ -27,7 +27,7 @@
 <script>
 export default {
   name: 'SortList',
-  inject: ['theme', 'hit'],
+  inject: ['provideData'],
   props: {
     type: {
       type: String,
@@ -36,8 +36,6 @@ export default {
   },
   data() {
     return {
-      theme: this.theme,
-      hit: this.hit,
       active: 0,
       current: null,
       sortList: {
@@ -191,7 +189,6 @@ export default {
     type: {
       immediate: true,
       handler() {
-        console.log(this.type)
         this.current = this.sortList[this.type][0]['prop']
       }
     }

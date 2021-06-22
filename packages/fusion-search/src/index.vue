@@ -5,10 +5,11 @@
   >
     <!--    搜索框组件-->
     <template v-if="config && config.showInput">
-      <FusionInput />
+      <FusionInput @search="fusionSearch" />
     </template>
+    <!--    命中显示-->
     <div
-      v-if="hit!=='noHit'"
+      v-if="hit==='product'||hit==='supplier'||hit==='purchaser'"
       class="fusionContent"
     >
       <div class="fusionLeft">
@@ -41,6 +42,13 @@
       </div>
       <div class="fusionRight">
         <NoHitRight />
+      </div>
+    </div>
+    <!--    完全不命中-->
+    <div v-if="hit==='completeNoHit'">
+      <div class="no-results">
+        <img src="http://cdn-caigou.shuniucloud.com/img/kg-cloud-pc-fe.no-searche7dfd1a.png">
+        <div>暂未搜索到相关信息</div>
       </div>
     </div>
   </div>
@@ -79,7 +87,7 @@ export default {
       type: Object,
       default: () => {
         return {
-          THEME: 'XUNYUAN',
+          THEME: 'JFH',
           APIHOST: '',
           LOGIN: true,
           showInput: true,
@@ -94,16 +102,8 @@ export default {
     return {
       keyword: null,
       configData: {},
-      // config: {
-      //   THEME: 'XUNYUAN',
-      //   APIHOST: '',
-      //   LOGIN: true,
-      //   showInput: true,
-      //   showMix: true,
-      //   showList: true,
-      //   showDescription: true,
-      // },
-      hit: 'noHit'
+      hit: 'product',
+      count: '1'
     }
   },
   watch: {
@@ -119,32 +119,51 @@ export default {
     config: {
       immediate: true,
       handler(val) {
-        console.log(val)
+        // console.log(val)
       }
     }
   },
   provide() {
+    let provideData = {
+      hit: '',
+      theme: ''
+    }
+    Object.defineProperty(provideData, 'hit', {
+      get: () => this.hit
+    })
+    Object.defineProperty(provideData, 'theme', {
+      get: () => this.config.THEME
+    })
     return {
-      hit: this.hit,
-      theme: this.config && this.config.THEME
+      provideData
     }
   },
   mounted() {
   },
   methods: {
-    fusionSearch() {
-      console.log(this.searchValue)
+    fusionSearch(val) {
+      this.keyword = val || this.searchValue
+      // 获取到搜索的值，做请求
+      console.log(this.keyword)
+      this.hit = this.keyword
       // 搜索之后把值设置为false
       this.$emit('change-search', false)
     },
     mixSearch(value) {
       // this.search(value)
+    },
+    searchResult() {
+
+    },
+    getList(type) {
+
     }
   }
 }
 </script>
 <style lang="scss">
 @import "../common/common";
+
 .fusion-search-wrap {
   width: calc(100% - 40px);
   height: calc(100% - 40px);
@@ -156,12 +175,14 @@ export default {
     align-items: flex-start;
     justify-content: space-between;
     margin-top: 20px;
-    .tipTitle{
+
+    .tipTitle {
       font-size: 14px;
       font-family: MicrosoftYaqiHei-Bold, MicrosoftYaqiHei;
       padding: 0 15px;
       color: #1C2D5A;
     }
+
     .fusionLeft {
       flex: 3;
       margin-right: 20px;
@@ -170,8 +191,25 @@ export default {
     .fusionRight {
       flex: 1;
     }
-    .noHitLeft{
+
+    .noHitLeft {
       background: #ffffff;
+    }
+  }
+  .no-results {
+    position: absolute;
+    top: 200px;
+    left: calc(50% - 158px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: #B3B9C6;
+    img {
+      width: 316px;
+      height: 290px;
+      margin-bottom: 50px;
     }
   }
 }

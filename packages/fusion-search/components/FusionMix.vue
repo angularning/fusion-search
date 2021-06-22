@@ -2,7 +2,7 @@
   <div class="FusionMix">
     <!--    <HitProductMix v-if="hit === 'product'" />-->
     <!--    <HitSupAndPurMix v-else />-->
-    <component :is="hitData[hit]" />
+    <component :is="hitData[provideData.hit]" />
   </div>
 </template>
 
@@ -11,7 +11,7 @@ import HitProductMix from '../components/HitMix/HitProductMix'
 import HitSupAndPurMix from '../components/HitMix/HitSupAndPurMix'
 export default {
   name: 'FusionMix',
-  inject: ['theme', 'hit'],
+  inject: ['provideData'],
   components: {
     HitProductMix,
     HitSupAndPurMix
@@ -24,8 +24,6 @@ export default {
   },
   data() {
     return {
-      hit: this.hit,
-      theme: this.theme,
       hitData: {
         product: 'HitProductMix',
         supplier: 'HitSupAndPurMix',

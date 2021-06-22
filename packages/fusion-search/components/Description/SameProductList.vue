@@ -14,7 +14,7 @@
         <div class="hitDesBody">
           <div class="hitTitle">
             <span class="title">手机</span>
-            <span class="hitTagSpan" :class="[theme + '-color1', theme + '-background16']"
+            <span class="hitTagSpan" :class="[provideData.theme + '-color1', provideData.theme + '-background16']"
               >产品</span
             >
           </div>
@@ -30,7 +30,7 @@
 <script>
 export default {
   name: 'SameProductList',
-  inject: ['theme', 'hit'],
+  inject: ['provideData'],
   props: {
     list: {
       type: Array,
@@ -39,9 +39,7 @@ export default {
   },
   data() {
     return {
-      loading: false,
-      hit: this.hit,
-      theme: this.theme
+      loading: false
     }
   },
   computed: {},

@@ -15,7 +15,7 @@
         </div>
         <div v-if="item.label !== '机构官网'">{{ item.value }}</div>
         <div v-else
-          ><a :class="[theme + '-color1']" :href="item.value" target="_blank">{{
+          ><a :class="[provideData.theme + '-color1']" :href="item.value" target="_blank">{{
             item.value
           }}</a></div
         >
@@ -27,7 +27,7 @@
 <script>
 export default {
   name: 'OrgProperty',
-  inject: ['theme', 'hit'],
+  inject: ['provideData'],
   props: {
     // datalist: {
     //   type: Object,
@@ -54,8 +54,6 @@ export default {
       }
     ]
     return {
-      theme: this.theme,
-      hit: this.hit,
       supplierPropertyMap,
       datalist: {
         id: '8f609cbd-7aea-c34a-c604-311efdeb178f',
@@ -241,7 +239,7 @@ export default {
       })
     },
     containerStyle() {
-      return 'propertyItem-' + this.theme
+      return 'propertyItem-' + this.provideData.theme
     }
   },
   methods: {

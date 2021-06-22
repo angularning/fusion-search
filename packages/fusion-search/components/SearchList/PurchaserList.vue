@@ -12,7 +12,7 @@ import SearchPagination from './SearchPagination'
 import PurchaserItem from './PurchaserItem'
 export default {
   name: 'PurchaserList',
-  inject: ['theme', 'hit'],
+  inject: ['provideData'],
   props: {
     list: {
       type: Array,
@@ -22,8 +22,6 @@ export default {
   data() {
     return {
       loading: false,
-      theme: this.theme,
-      hit: this.hit,
       total: 1000
     }
   },

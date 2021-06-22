@@ -1,9 +1,19 @@
 <template>
-  <div class="SupplierList" v-loading="loading">
+  <div
+    v-loading="loading"
+    class="SupplierList"
+  >
     <div>
-      <SupplierItem v-for="(item, i) in list" :key="i" :item="item" />
+      <SupplierItem
+        v-for="(item, i) in list"
+        :key="i"
+        :item="item"
+      />
     </div>
-    <SearchPagination :total="total" @change-page="changePage" />
+    <SearchPagination
+      :total="total"
+      @change-page="changePage"
+    />
   </div>
 </template>
 
@@ -12,7 +22,11 @@ import SearchPagination from './SearchPagination'
 import SupplierItem from './SupplierItem'
 export default {
   name: 'SupplierList',
-  inject: ['theme', 'hit'],
+  inject: ['provideData'],
+  components: {
+    SupplierItem,
+    SearchPagination
+  },
   props: {
     list: {
       type: Array,
@@ -22,14 +36,8 @@ export default {
   data() {
     return {
       loading: false,
-      theme: this.theme,
-      hit: this.hit,
       total: 1000
     }
-  },
-  components: {
-    SupplierItem,
-    SearchPagination
   },
   methods: {
     changePage(value) {}

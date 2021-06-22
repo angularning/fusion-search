@@ -5,12 +5,13 @@
   >
     <div class="SearchListNav">
       <div
-        v-for="(item, i) in tabNav[hit]"
+        v-for="(item, i) in tabNav[provideData.hit]"
+        :key="i"
         class="searchNav"
       >
         <a
           class="nav"
-          :class="[active === i ? theme + '-activeNav' : '']"
+          :class="[active === i ? provideData.theme + '-activeNav' : '']"
           @click="showNav(item, i)"
         >{{ item.value }}</a>
       </div>
@@ -35,7 +36,7 @@ import SortFilter from './SortFilter'
 
 export default {
   name: 'SearchListWrap',
-  inject: ['theme', 'hit'],
+  inject: ['provideData'],
   components: {
     SupplierList,
     CaseList,
@@ -62,8 +63,6 @@ export default {
   data() {
     return {
       loading: false,
-      theme: this.theme,
-      hit: this.hit,
       type: 'supplier',
       active: 0,
       tabNav: {
@@ -135,7 +134,7 @@ export default {
   },
   computed: {
     activeComponent() {
-      return this.tabNav[this.hit][this.active].name
+      return this.tabNav[this.provideData.hit][this.active].name
     }
   },
   methods: {

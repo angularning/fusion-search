@@ -22,7 +22,7 @@ import SearchPagination from './SearchPagination'
 import SupplierItem from './SupplierItem'
 export default {
   name: 'SameSupplierList',
-  inject: ['theme', 'hit'],
+  inject: ['provideData'],
   components: {
     SupplierItem,
     SearchPagination
@@ -36,8 +36,6 @@ export default {
   data() {
     return {
       loading: false,
-      theme: this.theme,
-      hit: this.hit,
       total: 1000
     }
   },

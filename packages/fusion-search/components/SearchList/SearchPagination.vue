@@ -3,10 +3,10 @@
     <span
       v-show="total > 0"
       class="total"
-    >总共<span :class="[theme + '-color1']">{{ total }}</span>条</span>
+    >总共<span :class="[provideData.theme + '-color1']">{{ total }}</span>条</span>
     <el-pagination
       class="mt30"
-      :class="[theme+'-planPagination']"
+      :class="[provideData.theme+'-planPagination']"
       layout="prev, pager, next"
       :total="total"
       :page="page"
@@ -26,13 +26,11 @@ export default {
       default: () => 0
     }
   },
-  inject: ['theme', 'hit'],
+  inject: ['provideData'],
   data() {
     return {
       page_size: 10,
       page: 1,
-      theme: this.theme,
-      hit: this.hit
     }
   },
   computed: {},

@@ -1,7 +1,7 @@
 <template>
   <div class="SupplierCaseItem">
     <div class="sCaseTop">
-      <span :class="[theme + '-color1']">成交案例</span>
+      <span :class="[provideData.theme + '-color1']">成交案例</span>
       <span v-html="shortWordStringAndHeight('安源区卫生和计划生手机育委员会安源区卫生和计划生')" />
     </div>
     <div class="sCaseTime">
@@ -22,7 +22,7 @@
 
         <span
           class="sCaseCurrentPage"
-          :class="[theme + '-color1']"
+          :class="[provideData.theme + '-color1']"
         >1</span>
         <span class="sCaseRightClick"><img
           src="../../static/pagesIcon.png"
@@ -40,7 +40,7 @@
 
 export default {
   name: 'SupplierCaseItem',
-  inject: ['theme', 'hit'],
+  inject: ['provideData'],
   components: {},
   props: {
     item: {
@@ -55,8 +55,6 @@ export default {
   data() {
     return {
       loading: false,
-      theme: this.theme,
-      hit: this.hit,
       totalList: JSON.parse(JSON.stringify(this.item))
     }
   },

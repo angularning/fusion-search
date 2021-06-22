@@ -34,7 +34,7 @@ import HitTag from './HitTag'
 import HitPropertyList from './HitPropertyList'
 export default {
   name: 'HitSupAndPurMix',
-  inject: ['theme', 'hit'],
+  inject: ['provideData'],
   components: {
     HitTag,
     HitPropertyList
@@ -42,8 +42,6 @@ export default {
   props: {},
   data() {
     return {
-      hit: this.hit,
-      theme: this.theme
     }
   },
   methods: {}

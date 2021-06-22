@@ -32,7 +32,7 @@ import OrgProperty from './OrgProperty'
 import SupplierCaseItem from './SupplierCaseItem'
 export default {
   name: 'SupplierItem',
-  inject: ['theme', 'hit'],
+  inject: ['provideData'],
   props: {
     item: {
       type: Object,
@@ -42,8 +42,6 @@ export default {
   data() {
     return {
       loading: false,
-      theme: this.theme,
-      hit: this.hit
     }
   },
   components: {

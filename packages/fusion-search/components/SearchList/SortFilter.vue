@@ -63,7 +63,7 @@ import { provinceCity } from './provinceCity'
 
 export default {
   name: 'SortFilter',
-  inject: ['theme', 'hit'],
+  inject: ['provideData'],
   props: {
     type: {
       type: String,
@@ -72,8 +72,6 @@ export default {
   },
   data() {
     return {
-      theme: this.theme,
-      hit: this.hit,
       provinceCity,
       searchParams: {
         tagFilter: null,

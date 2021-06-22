@@ -25,7 +25,7 @@
     <div class="listItemRight">
       <button
         class="plainBtn"
-        :class="[theme + '-buttonPlain']"
+        :class="[provideData.theme + '-buttonPlain']"
         @click="toSeeDetail"
       >
         查看详情
@@ -39,16 +39,14 @@ import HitTag from '../HitMix/HitTag'
 import OrgTag from './OrgTag'
 import Location from './Location'
 import OrgProperty from './OrgProperty'
-import SupplierCaseItem from './SupplierCaseItem'
 export default {
   name: 'CaseItem',
-  inject: ['theme', 'hit'],
+  inject: ['provideData'],
   components: {
     OrgProperty,
     Location,
     HitTag,
     OrgTag,
-    SupplierCaseItem
   },
   props: {
     item: {
@@ -58,9 +56,7 @@ export default {
   },
   data() {
     return {
-      loading: false,
-      theme: this.theme,
-      hit: this.hit
+      loading: false
     }
   },
   methods: {
@@ -68,7 +64,7 @@ export default {
       this.$modal('CaseDetail', {
         data () {
           return {
-            allowSelectTemplate: true,
+            allowSelectTemplate: true
           }
         },
         $store: this.$store,

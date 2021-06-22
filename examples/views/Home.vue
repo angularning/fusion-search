@@ -48,18 +48,18 @@ export default {
       console.log(value)
     },
     toSearch() {
-      this.$modal('Example', {
-        data () {
-          return {
-            allowSelectTemplate: true,
-            mainForm: {
-              template: '产品寻源报告'
-            }
-          }
-        },
-        $store: this.$store,
-        $router: this.$router
-      })
+      // this.$modal('Example', {
+      //   data () {
+      //     return {
+      //       allowSelectTemplate: true,
+      //       mainForm: {
+      //         template: '产品寻源报告'
+      //       }
+      //     }
+      //   },
+      //   $store: this.$store,
+      //   $router: this.$router
+      // })
       this.searchStatus = true
     },
     changeSearch(value) {

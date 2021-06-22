@@ -21,12 +21,10 @@
 <script>
 export default {
   name: 'HitProductMix',
-  inject: ['theme', 'hit'],
+  inject: ['provideData'],
   props: {},
   data() {
     return {
-      hit: this.hit,
-      theme: this.theme
     }
   },
   computed: {},

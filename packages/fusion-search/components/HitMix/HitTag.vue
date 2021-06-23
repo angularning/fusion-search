@@ -1,10 +1,13 @@
 <template>
   <div class="HitTag">
-    <div class="tags-container" v-if="tagList && tagList.length > 0">
+    <div
+      v-if="tagList && tagList.length > 0"
+      class="tags-container"
+    >
       <div
         v-for="(tag, j) in tagList"
-        :class="[theme + '-color1', theme + '-background16']"
         :key="j"
+        :class="[provideData.theme + '-color1', provideData.theme + '-background16']"
         class="tag"
       >
         {{ tag }}
@@ -16,12 +19,7 @@
 <script>
 export default {
   name: 'HitTag',
-  inject: {
-    theme: {
-      from: 'theme',
-      default: ''
-    }
-  },
+  inject: ['provideData'],
   props: {
     forceType: {
       type: String,
@@ -40,8 +38,7 @@ export default {
     return {
       first_list: [],
       second_list: [],
-      tagList: ['供应商', '案例'],
-      theme: this.theme
+      tagList: ['供应商', '案例']
     }
   },
   computed: {

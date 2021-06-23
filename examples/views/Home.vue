@@ -2,7 +2,7 @@
   <div class="home">
     <div class="">
       <input
-        v-model="search"
+        v-model="keyword"
         type="text"
       >
       <button
@@ -14,9 +14,9 @@
     </div>
     <FusionSearch
       :config="config"
-      :search-value="search"
+      :search-value="keyword"
       :emit-search="searchStatus"
-      @change-search="changeSearch"
+      @receive-search="receiveSearch"
     />
   </div>
 </template>
@@ -30,7 +30,7 @@ export default {
   },
   data() {
     return {
-      search: null,
+      keyword: null,
       searchStatus: false,
       config: {
         THEME: 'JFH', // 配置化主题
@@ -62,8 +62,10 @@ export default {
       // })
       this.searchStatus = true
     },
-    changeSearch(value) {
-      this.searchStatus = value
+    receiveSearch(value) {
+      console.log(value)
+      this.searchStatus = value.status
+      this.keyword = value.keyword
     }
   }
 }

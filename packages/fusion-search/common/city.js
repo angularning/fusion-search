@@ -1,3 +1,4 @@
+// eslint-disable-next-line camelcase
 export const city_group = Object.freeze({
   110000: '北京市',
   110101: '东城区',

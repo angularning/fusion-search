@@ -144,14 +144,13 @@ export default {
     fusionSearch(val) {
       this.keyword = val || this.searchValue
       // 获取到搜索的值，做请求
-      console.log(this.keyword)
       this.hit = this.keyword
       this.mixSearch()
       // 搜索之后把值设置为false
-      this.$emit('change-search', false)
+      this.$emit('receive-search', { status: false, keyword: this.hit })
     },
     mixSearch(value) {
-      this.$axios.get('')
+      // this.$axios.get('')
       // this.search(value)
     },
     searchResult() {

@@ -15,7 +15,10 @@
         <span v-html="filterData('打印机 计算机')" />
       </div>
       <div class="sCasePage">
-        <span class="sCaseLeftClick"><img
+        <span
+          class="sCaseLeftClick"
+          @click.stop="pagePre"
+        ><img
           src="../../static/pagesIcon.png"
           alt=""
         ></span>
@@ -24,7 +27,10 @@
           class="sCaseCurrentPage"
           :class="[provideData.theme + '-color1']"
         >1</span>
-        <span class="sCaseRightClick"><img
+        <span
+          class="sCaseRightClick"
+          @click.stop="pageNext"
+        ><img
           src="../../static/pagesIcon.png"
           alt=""
         ></span>
@@ -59,6 +65,8 @@ export default {
     }
   },
   methods: {
+    pagePre() {},
+    pageNext() {},
     filterData(value) {
       return `<span>${value}</span>`
     },

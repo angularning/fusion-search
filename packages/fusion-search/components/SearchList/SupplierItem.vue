@@ -1,16 +1,22 @@
 <template>
-  <div class="SupplierItem" v-loading="loading">
+  <div
+    v-loading="loading"
+    class="SupplierItem"
+    @click="showDetail"
+  >
     <div class="listItemLeft">
       <div class="orgTop">
         <img
           class="orgImg"
           src="http://cdn-caigou.shuniucloud.com/img/kg-cloud-pc-fe.aside_logoafff22c.png"
           alt=""
-        />
+        >
         <div class="orgDes">
           <div class="orgDesTitle">
-            <div class="titleName">北京众标智能科技有限公司</div>
-            <Location :item="item"></Location>
+            <div class="titleName">
+              北京众标智能科技有限公司
+            </div>
+            <Location :item="item" />
           </div>
           <div>
             <HitTag />
@@ -33,6 +39,12 @@ import SupplierCaseItem from './SupplierCaseItem'
 export default {
   name: 'SupplierItem',
   inject: ['provideData'],
+  components: {
+    OrgProperty,
+    Location,
+    HitTag,
+    SupplierCaseItem
+  },
   props: {
     item: {
       type: Object,
@@ -41,22 +53,28 @@ export default {
   },
   data() {
     return {
-      loading: false,
+      loading: false
     }
   },
-  components: {
-    OrgProperty,
-    Location,
-    HitTag,
-    SupplierCaseItem
-  },
-  methods: {}
+  methods: {
+    showDetail() {
+      const provideData = this.provideData
+      this.$modal('SupplierDetail', {
+        propsData: {
+          provideData
+        },
+        $store: this.$store,
+        $router: this.$router
+      })
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
 @import '../../common/common';
 .SupplierItem {
+  cursor: pointer;
   width: calc(100% - 40px);
   padding: 0 20px;
   display: flex;

@@ -3,18 +3,6 @@
     <div class="hitProductWrap">
       <div class="publicDesTitle">产品概览</div>
       <div class="desNormalTitle">
-        服务地区
-      </div>
-      <div class="locationTag">
-        <DescriptionTag :list="list" :type="type" />
-      </div>
-      <div class="desNormalTitle">
-        服务领域
-      </div>
-      <div class="locationTag">
-        <DescriptionTag :list="list" :type="type" />
-      </div>
-      <div class="desNormalTitle">
         供应商注册资本占比
       </div>
       <div class="chartWrap">

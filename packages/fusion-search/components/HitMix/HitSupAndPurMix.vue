@@ -14,10 +14,12 @@
           <span
             v-if="true"
             class="hitTagSpan"
+            :class="[provideData.theme||config.theme+'-background1']"
           >业主</span>
           <span
             v-else
             class="hitTagSpan"
+            :class="[provideData.theme||config.theme+'-background1']"
           >供应商</span>
         </div>
         <div class="hitTag">
@@ -39,10 +41,20 @@ export default {
     HitTag,
     HitPropertyList
   },
-  props: {},
+  props: {
+    config: {
+      type: Object,
+      default: () => {}
+    }
+  },
   data() {
     return {
     }
+  },
+  beforeCreate() {
+    // if(this.provideData){
+    //
+    // }
   },
   methods: {}
 }
@@ -80,7 +92,6 @@ export default {
         padding: 2px 10px;
         display: inline-block;
         font-size: 12px;
-        background: $blue1;
         border-radius: 16px;
       }
     }

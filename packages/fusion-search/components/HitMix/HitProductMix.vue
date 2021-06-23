@@ -4,12 +4,15 @@
       <img
         src="http://img14.360buyimg.com/n0/jfs/t12124/15/2052292482/257261/402cce28/5a30c54fN5e5f155e.jpg"
         alt=""
-      />
+      >
     </div>
     <div class="hitDesBody">
       <div class="hitTitle">
         <span class="title">手机</span>
-        <span class="hitTagSpan">产品</span>
+        <span
+          class="hitTagSpan"
+          :class="[provideData.theme+'-background1']"
+        >产品</span>
       </div>
       <div class="hitDes">
         法律服务，简称“法服”，是指律师、非律师法律工作者、法律专业人士（包括法人内部在职人员、退、离休政法人员等）或相关机构以其法律知识和技能为法人或自然人实现其正当权益、提高经济效益、排除不法侵害、防范法律风险、维护自身合法权益而提供的专业活动
@@ -69,7 +72,6 @@ export default {
         padding: 2px 10px;
         display: inline-block;
         font-size: 12px;
-        background: #3a72ff;
         border-radius: 16px;
       }
     }

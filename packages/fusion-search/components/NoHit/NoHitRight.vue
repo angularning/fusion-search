@@ -23,6 +23,7 @@
         <div>
           <el-input
             v-model="demand"
+            :class="[provideData.theme+'-input']"
             type="textarea"
             placeholder="请简要描述您的需求（选填）"
           />
@@ -33,6 +34,7 @@
         <div>
           <el-input
             v-model="mobile"
+            :class="[provideData.theme+'-input']"
             placeholder="请输入手机号（选填）"
           />
         </div>

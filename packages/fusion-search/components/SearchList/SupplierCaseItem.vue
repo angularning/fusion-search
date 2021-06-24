@@ -1,5 +1,8 @@
 <template>
-  <div class="SupplierCaseItem">
+  <div
+    v-loading="loading"
+    class="SupplierCaseItem"
+  >
     <div class="sCaseTop">
       <span :class="[provideData.theme + '-color1']">成交案例</span>
       <span v-html="shortWordStringAndHeight('安源区卫生和计划生手机育委员会安源区卫生和计划生')" />
@@ -26,7 +29,7 @@
         <span
           class="sCaseCurrentPage"
           :class="[provideData.theme + '-color1']"
-        >1</span>
+        >{{ currentPage }}</span>
         <span
           class="sCaseRightClick"
           @click.stop="pageNext"
@@ -51,7 +54,7 @@ export default {
   props: {
     item: {
       type: Array,
-      default: () => [{}]
+      default: () => []
     },
     type: {
       type: String,
@@ -61,12 +64,48 @@ export default {
   data() {
     return {
       loading: false,
-      totalList: JSON.parse(JSON.stringify(this.item))
+      currentPage: 1,
+      totalList: JSON.parse(JSON.stringify(this.item)),
+      list: [1, 2, 3, 4],
+      total: 0
     }
   },
+  computed: {
+    setStyles() {
+      return {
+        opacity: 0.5
+      }
+    }
+  },
+  created() {
+    this.setPageList()
+  },
   methods: {
-    pagePre() {},
-    pageNext() {},
+    setPageList() {
+      this.total = this.list.length
+    },
+    pagePre() {
+      this.loading = true
+      if (this.currentPage > 1) {
+        this.currentPage--
+        setTimeout(() => {
+          this.loading = false
+        }, 200)
+      } else {
+        this.loading = false
+      }
+    },
+    pageNext() {
+      this.loading = true
+      if (this.currentPage < this.total) {
+        this.currentPage++
+        setTimeout(() => {
+          this.loading = false
+        }, 200)
+      } else {
+        this.loading = false
+      }
+    },
     filterData(value) {
       return `<span>${value}</span>`
     },
@@ -102,6 +141,11 @@ export default {
     img {
       transform: rotate(180deg);
     }
+  }
+  .sCaseCurrentPage{
+    display: inline-block;
+    width: 12px;
+    text-align: center;
   }
 }
 .SupplierCaseItem {

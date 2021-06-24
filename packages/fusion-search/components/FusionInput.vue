@@ -5,9 +5,11 @@
       v-model="keyword"
       placeholder="请输入内容"
       class="input-with-select"
+      :class="[provideData.theme+'-input']"
       @keyup.enter.native="toSearchList"
     >
       <el-select
+        v-if="false"
         slot="prepend"
         v-model="select"
         placeholder="请选择"
@@ -24,6 +26,7 @@
     </el-input>
     <el-button
       type="primary"
+      :class="[provideData.theme+'-buttonNormal']"
       class="searchButton"
       @click.stop="toSearchList"
     >
@@ -36,6 +39,7 @@
 export default {
   name: 'FusionInput',
   components: {},
+  inject: ['provideData'],
   props: {
     data: {
       type: Object,
@@ -100,7 +104,7 @@ export default {
   }
 }
 .search-input-container .el-input__inner {
-  border-left: none;
+  //border-left: none;
   background: #fbfcff;
   height: 34px;
 }

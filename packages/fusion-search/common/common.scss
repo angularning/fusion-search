@@ -114,6 +114,50 @@ $green16: rgba(26, 188, 155, 0.16);
     background: $green1  !important;;
   }
 }
+.XUNYUAN-select, .XUNYUAN-input{
+  border-radius: 4px;
+  .el-input__inner, .el-textarea__inner{
+    &:hover, &:active, &:focus{
+      border: 1px solid $blue1 !important;
+    }
+  }
+  color: $blue1 !important;
+}
+.JFH-select, .JFH-input{
+  border-radius: 4px;
+  .el-input__inner, .el-textarea__inner{
+    &:hover, &:active, &:focus{
+      border: 1px solid $green1 !important;
+    }
+  }
+  color: $green1 !important;
+}
+.JFH-popperSelect, .JFH-popperInput {
+  .selected{
+    color: $green1 !important;
+  }
+  .in-active-path{
+    color: $green1 !important;
+  }
+  .is-active{
+    color: $green1 !important;
+  }
+  .in-active{
+    color: $green1 !important;
+  }
+}
+.XUNYUAN-popperSelect, .XUNYUAN-popperInput {
+  .in-active-path{
+    color: $blue1 !important;
+  }
+  .in-active{
+    color: $blue1 !important;
+  }
+  .is-active{
+    color: $blue1 !important;
+  }
+}
+//.XUNYUAN-select
 
 @mixin addFusedSearchColors($class, $theme) {
   @if $theme {

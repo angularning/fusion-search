@@ -1,59 +1,95 @@
 <template>
   <div class="SortFilter">
     <span class="label1">筛选</span>
-    <el-select
-      class="sortSelect"
-      v-model="searchParams.province"
+    <el-cascader
+      v-model="value"
       size="mini"
-      placeholder="请选择"
-      @change="setCityData"
-    >
-      <el-option
-        v-for="item in provinceCity"
-        :key="item.code"
-        :label="item.label"
-        :value="item.code"
-      />
-    </el-select>
-    <el-select
-      class="sortSelect"
-      v-model="searchParams.city"
-      style="margin-left: 30px;"
-      size="mini"
-      placeholder="请选择"
-    >
-      <el-option
-        v-for="item in searchParams.cityData"
-        :key="item.code"
-        :label="item.label"
-        :value="item.code"
-      />
-    </el-select>
-
-    <el-select
-      class="sortSelect"
-      v-model="searchParams.tagFilter"
       style="margin-left: 20px;margin-right: 20px;"
+      :popper-class="provideData.theme+'-popperSelect'"
+      :class="[provideData.theme+'-select']"
+      clearable
+      :options="provinceCity"
+      @change="handleChange"
+    />
+    <!--    <el-select-->
+    <!--      v-model="searchParams.province"-->
+    <!--      class="sortSelect"-->
+    <!--      size="mini"-->
+    <!--      placeholder="请选择"-->
+    <!--      @change="setCityData"-->
+    <!--    >-->
+    <!--      <el-option-->
+    <!--        v-for="item in provinceCity"-->
+    <!--        :key="item.code"-->
+    <!--        :label="item.label"-->
+    <!--        :value="item.code"-->
+    <!--      />-->
+    <!--    </el-select>-->
+    <!--    <el-select-->
+    <!--      v-model="searchParams.city"-->
+    <!--      class="sortSelect"-->
+    <!--      style="margin-left: 30px;"-->
+    <!--      size="mini"-->
+    <!--      placeholder="请选择"-->
+    <!--    >-->
+    <!--      <el-option-->
+    <!--        v-for="item in searchParams.cityData"-->
+    <!--        :key="item.code"-->
+    <!--        :label="item.label"-->
+    <!--        :value="item.code"-->
+    <!--      />-->
+    <!--    </el-select>-->
+
+    <!--    <el-cascader-->
+    <!--      v-model="searchParams.tagFilter"-->
+    <!--      class="sortSelect"-->
+    <!--      multiple-->
+    <!--      :options="tagFilterList[type]"-->
+    <!--      :class="[provideData.theme+'-select']"-->
+    <!--      :popper-class="provideData.theme+'-popperSelect'"-->
+    <!--      style="margin-left: 20px;margin-right: 20px;"-->
+    <!--      size="mini"-->
+    <!--      placeholder="请选择"-->
+    <!--    >-->
+    <!--    </el-cascader>-->
+    <span
+      v-if="type === 'supplier' || type === 'sameSupplier'"
+      class="label2"
+    >注册资本</span>
+    <span
+      v-else
+      class="label2"
+    >中标金额</span>
+    <el-input
+      v-model="searchParams.money1"
+      :class="[provideData.theme+'-input']"
+      class="sortInput"
       size="mini"
-      placeholder="请选择"
     >
-      <el-option
-        v-for="item in tagFilterList[type]"
-        :key="item.code"
-        :label="item.label"
-        :value="item.code"
-      />
-    </el-select>
-    <span v-if="type === 'supplier' || type === 'sameSupplier'" class="label2">注册资本</span>
-    <span v-else class="label2">中标金额</span>
-    <el-input class="sortInput" size="mini" v-model="searchParams.money1">
-      <span slot="prefix" class="normalSlotInput">￥</span>
-      <span slot="suffix" class="normalSlotInput">万</span>
+      <span
+        slot="prefix"
+        class="normalSlotInput"
+      >￥</span>
+      <span
+        slot="suffix"
+        class="normalSlotInput"
+      >万</span>
     </el-input>
     <span style="margin-left: 15px;margin-right: 15px;">——</span>
-    <el-input class="sortInput" size="mini" v-model="searchParams.money2">
-      <span slot="prefix" class="normalSlotInput">￥</span>
-      <span slot="suffix" class="normalSlotInput">万</span>
+    <el-input
+      v-model="searchParams.money2"
+      :class="[provideData.theme+'-input']"
+      class="sortInput"
+      size="mini"
+    >
+      <span
+        slot="prefix"
+        class="normalSlotInput"
+      >￥</span>
+      <span
+        slot="suffix"
+        class="normalSlotInput"
+      >万</span>
     </el-input>
   </div>
 </template>
@@ -72,7 +108,8 @@ export default {
   },
   data() {
     return {
-      provinceCity,
+      provinceCity: null,
+      value: null,
       searchParams: {
         tagFilter: null,
         money1: null,
@@ -229,15 +266,68 @@ export default {
       tagFilterList: {
         supplier: [
           {
-            code: '123',
-            label: '123'
+            code: '生产属性',
+            label: '生产属性',
+            value: '生产属性',
+            children: [
+              {
+                code: '经销商',
+                label: '经销商',
+                value: '经销商'
+              },
+              {
+                code: '厂商',
+                label: '厂商',
+                value: '厂商'
+              },
+              {
+                code: '电商',
+                label: '电商',
+                value: '电商'
+              }
+            ]
+          },
+          {
+            code: '公司类型',
+            label: '公司类型',
+            value: '公司类型',
+            children: [
+              {
+                code: '经销商',
+                label: '经销商',
+                value: '经销商'
+              },
+              {
+                code: '厂商',
+                label: '厂商',
+                value: '厂商'
+              },
+              {
+                code: '电商',
+                label: '电商',
+                value: '电商'
+              }
+            ]
           }
         ]
       }
     }
   },
-  computed: {},
+  created() {
+    this.provinceCity = this.addValues(provinceCity)
+  },
   methods: {
+    addValues(value) {
+      return value.map(item => {
+        const children = item.children.map(res => {
+          return { ...res, value: res.label }
+        })
+        return { ...item, value: item.label, children }
+      })
+    },
+    handleChange(value) {
+      console.log(value)
+    },
     setCityData() {
       this.provinceCity.forEach((item) => {
         if (item.code === this.searchParams.province) {
@@ -261,8 +351,8 @@ export default {
   .label1 {
     font-size: 12px;
     font-family: MicrosoftYaqiHei;
-    color: rgba(28, 45, 90, 0.5);
-    margin-right: 20px;
+    color: rgba(28, 45, 90, 1);
+    margin-right: 10px;
   }
   .label2 {
     font-size: 12px;

@@ -1,15 +1,9 @@
 <template>
   <div class="SortList">
-    <!--    <div-->
-    <!--      class="tags"-->
-    <!--      @click="toSort(item, i)"-->
-    <!--      v-for="(item, i) in sortList[type]"-->
-    <!--      :class="[active === i ? theme + '-activeSort' : '']"-->
-    <!--    >-->
-    <!--      {{ item.name }}-->
-    <!--    </div>-->
     <el-select
       v-model="current"
+      :class="[provideData.theme+'-select']"
+      :popper-class="provideData.theme+'-popperInput'"
       class="sortSelectList"
       size="mini"
       placeholder="请选择"

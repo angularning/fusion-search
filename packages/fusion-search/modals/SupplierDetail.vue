@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <el-dialog
     :visible.sync="visible"
     width="1200px"
@@ -14,66 +14,74 @@
       <a
         class="toDetails"
         :class="[provideData.theme+'-buttonPlain']"
+        @click="toDetail"
       >跳转到详情>></a>
     </div>
     <div
       v-loading="loading"
       class="dialog-body"
     >
-      <HitSupAndPurMix />
-      <div>
-        <div
-          class="hit-time"
-          :class="[provideData.theme+'-color1']"
-        >
-          <span class="label">最近服务时间</span> <span class="value">2021-02-01</span>
+      <div v-if="hasData">
+        <SupplierDetailOrg :data="detailData" />
+        <div v-if="detailData&&detailData.recent_date">
+          <div
+            class="hit-time"
+            :class="[provideData.theme+'-color1']"
+          >
+            <span class="label">最近服务时间</span> <span class="value">{{ detailData&&detailData.recent_date }}</span>
+          </div>
+        </div>
+        <div class="supplierDetailLocation">
+          <div class="supplierDetailTitle">
+            服务过的地区
+          </div>
+          <LocationTag />
+        </div>
+        <div>
+          <div class="supplierDetailTitle">
+            服务领域
+          </div>
+          <DescriptionTag />
+        </div>
+        <div>
+          <PlanCommonTag
+            v-if="org_website_info.product.length>0"
+            :list="org_website_info.product"
+            :title="'公司产品'"
+            :colors="'green'"
+          />
+          <PlanCommonTag
+            v-if="org_website_info.programme.length>0"
+            style="margin-top: 20px;"
+            :list="org_website_info.programme"
+            :title="'解决方案'"
+            :colors="'purple'"
+          />
         </div>
       </div>
-      <div class="supplierDetailLocation">
-        <div class="supplierDetailTitle">
-          服务过的地区
-        </div>
-        <LocationTag />
-      </div>
-      <div>
-        <div class="supplierDetailTitle">
-          服务领域
-        </div>
-        <DescriptionTag />
-      </div>
-      <div>
-        <PlanCommonTag
-          v-if="org_website_info.product.length>0"
-          :list="org_website_info.product"
-          :title="'公司产品'"
-          :colors="'green'"
-        />
-        <PlanCommonTag
-          v-if="org_website_info.programme.length>0"
-          style="margin-top: 20px;"
-          :list="org_website_info.programme"
-          :title="'解决方案'"
-          :colors="'purple'"
-        />
+      <div v-else>
+        <NoResult :from="'list'" />
       </div>
     </div>
   </el-dialog>
 </template>
 <script>
-import HitSupAndPurMix from '../components/HitMix/HitSupAndPurMix'
+import SupplierDetailOrg from '../components/HitMix/SupplierDetailOrg'
 import LocationTag from '../components/Description/LocationTag'
 import DescriptionTag from '../components/Description/DescriptionTag'
 import PlanCommonTag from '../components/Description/PlanCommonTag'
 // import { getColors, getNames } from '~/constant/ListTagConfig'
 // eslint-disable-next-line camelcase
 import { city_group } from '../common/city'
+import NoResult from '../components/NoHit/NoResult'
 export default {
   name: 'SupplierDetail',
   components: {
-    HitSupAndPurMix,
+    SupplierDetailOrg,
     LocationTag,
     DescriptionTag,
-    PlanCommonTag
+    PlanCommonTag,
+    NoResult
   },
   props: {
     provideData: {
@@ -84,13 +92,17 @@ export default {
   provide() {
     let provideData = {
       hit: '',
-      theme: ''
+      theme: '',
+      keyword: null
     }
     Object.defineProperty(provideData, 'hit', {
       get: () => this.provideData.hit
     })
     Object.defineProperty(provideData, 'theme', {
       get: () => this.provideData.theme
+    })
+    Object.defineProperty(provideData, 'keyword', {
+      get: () => this.provideData.keyword
     })
     return {
       provideData
@@ -100,11 +112,9 @@ export default {
     return {
       city_group,
       visible: true,
-      case_content: '',
-      case_url: '',
-      result_dict: [],
-      item: {},
       loading: false,
+      hasData: false,
+      detailData: {},
       org_website_info: {
         'programme': [
           {
@@ -247,31 +257,33 @@ export default {
         return this.case_url
       }
     }
-    // getColors() {
-    //   return getColors
-    // },
-    // getNames() {
-    //   return getNames
-    // }
   },
   created () {
-    // this.getDetails()
+    this.getDetails()
+    this.detailData.type_own = 'supplier'
   },
   methods: {
+    toDetail() {
+      // 触发搜索
+      this.closed()
+      setTimeout(() => {
+        this.$EventBus.$emit('fusion-list-search', (this.detailData && this.detailData.comp_name) || this.provideData.comp_name)
+      }, 100)
+    },
     getDetails() {
       this.loading = true
-      this.$store.dispatch('api/clarification_case_detail', { case_id: String(this.item.uuid), graph_id: 1 }).then(res => {
+      this.$get('search/detail/?graph_id=1&keyword=' + this.provideData.comp_name + '&instance_type=' + this.provideData.instance_type + '&uuid=' + this.provideData.uuid).then(res => {
         if (res) {
-          this.$nextTick(() => {
-            this.result_dict = res.result_dict
-            this.case_content = res.case_content
-            this.case_url = res.case_url
-          })
+          const { data } = res
+          this.hasData = JSON.stringify(data) !== '{}'
+          this.detailData = data
           this.loading = false
         } else {
+          this.hasData = false
           this.loading = false
         }
       }).catch(() => {
+        this.hasData = false
         this.loading = false
       })
     },
@@ -299,13 +311,6 @@ export default {
     },
     doPurchaser(val) {
       return val && val.join(',')
-      // if (val) {
-      //   if (JSON.parse(JSON.stringify(val.split(',')[0])).length > 2) {
-      //     return (JSON.parse(val.split(',')[0]))[0]
-      //   } else {
-      //     return false
-      //   }
-      // }
     },
     toSort(con) {
       if (con) {
@@ -542,6 +547,9 @@ export default {
     margin-left: -10px;
     margin-top: 10px;
     display: flex;flex-flow: row wrap;margin-bottom: 5px;
+  }
+  .supplierDetailLocation{
+    margin-top: 10px;
   }
 }
 </style>

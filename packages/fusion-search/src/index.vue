@@ -167,6 +167,9 @@ export default {
     }
   },
   mounted() {
+    this.$EventBus.$on('fusion-list-search', (val) => {
+      this.fusionSearch(val)
+    })
   },
   methods: {
     fusionSearch(val) {
@@ -186,19 +189,7 @@ export default {
         // 根据获取到的hit值去做不同的请求
         this.getSearchCard()
       })
-      // this.search(value)
     },
-    // getBottomSearchCard() {
-    //   this.loadingCard = true
-    //   this.$get('search/main/?graph_id=1&keyword=' + this.keyword + '&instance_type=' + this.instance_type).then(item => {
-    //     const { data } = item
-    //     this.loadingCard = false
-    //     this.cardData = data
-    //     // eslint-disable-next-line handle-callback-err
-    //   }).catch(err => {
-    //     this.loadingCard = false
-    //   })
-    // },
     getSearchCard() {
       this.loadingCard = true
       this.$get('search/card/?graph_id=1&keyword=' + this.keyword + '&instance_type=' + this.instance_type).then(item => {

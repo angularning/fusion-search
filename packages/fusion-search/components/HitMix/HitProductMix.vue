@@ -2,20 +2,20 @@
   <div class="hitProduct">
     <div class="hitImg">
       <img
-        src="http://img14.360buyimg.com/n0/jfs/t12124/15/2052292482/257261/402cce28/5a30c54fN5e5f155e.jpg"
+        src="../../static/defaultProduct@2x.png"
         alt=""
       >
     </div>
     <div class="hitDesBody">
       <div class="hitTitle">
-        <span class="title">{{ data.tag_name }}</span>
+        <span class="title">{{ data.tag_name||data.solution_name }}</span>
         <span
           class="hitTagSpan"
           :class="[provideData.theme+'-background1']"
         >产品</span>
       </div>
       <div class="hitDes">
-        {{ data.tag_describe }}
+        {{ data.tag_describe|| data.solution_desc }}
       </div>
     </div>
   </div>

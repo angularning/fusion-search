@@ -1,13 +1,13 @@
 <template>
   <div class="HitTag">
     <div
-      v-if="data && data.case_tag"
+      v-if="data && data.winbid"
       class="tags-container"
     >
       <div
-        v-for="(tag, j) in data.case_tag"
-        :class="[provideData.theme + '-color1', provideData.theme + '-background16']"
+        v-for="(tag, j) in data.winbid"
         :key="j"
+        :class="[provideData.theme + '-color1', provideData.theme + '-background16']"
         class="tag"
       >
         {{ tag }}
@@ -25,7 +25,7 @@ export default {
     data: {
       type: Object,
       default: () => {}
-    },
+    }
   },
   data() {
     return {

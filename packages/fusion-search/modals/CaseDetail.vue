@@ -34,6 +34,7 @@
       </div>
     </div>
     <div
+      v-if="hasData"
       v-loading="loading"
       class="dialog-body"
     >
@@ -110,18 +111,32 @@
       <div v-html="case_content" />
       <!-- eslint-disable -->
     </div>
+    <div v-else>
+      <NoResult :from="'list'" />
+    </div>
   </el-dialog>
 </template>
 <script>
+import NoResult from '../components/NoHit/NoResult'
 // import { getColors, getNames } from '~/constant/ListTagConfig'
 // eslint-disable-next-line camelcase
 import { city_group } from '../common/city'
 export default {
   name: 'CaseDetail',
+  components: {
+    NoResult
+  },
+  props: {
+    provideData: {
+      type: Object,
+      default: () => {}
+    }
+  },
   data () {
     return {
       city_group,
       visible: true,
+      hasData: true,
       case_content: '',
       case_url: '',
       result_dict: [],
@@ -135,31 +150,44 @@ export default {
         return this.case_url
       }
     }
-    // getColors() {
-    //   return getColors
-    // },
-    // getNames() {
-    //   return getNames
-    // }
+  },
+  provide() {
+    let provideData = {
+      hit: '',
+      theme: '',
+      keyword: null
+    }
+    Object.defineProperty(provideData, 'hit', {
+      get: () => this.provideData.hit
+    })
+    Object.defineProperty(provideData, 'theme', {
+      get: () => this.provideData.theme
+    })
+    Object.defineProperty(provideData, 'keyword', {
+      get: () => this.provideData.keyword
+    })
+    return {
+      provideData
+    }
   },
   created () {
-    // this.getDetails()
+    this.getDetails()
   },
   methods: {
     getDetails() {
       this.loading = true
-      this.$store.dispatch('api/clarification_case_detail', { case_id: String(this.item.uuid), graph_id: 1 }).then(res => {
+      this.$get('search/detail/?graph_id=1&keyword=' + this.provideData.word + '&instance_type=' + this.provideData.instance_type + '&uuid=' + this.provideData.uuid).then(res => {
         if (res) {
-          this.$nextTick(() => {
-            this.result_dict = res.result_dict
-            this.case_content = res.case_content
-            this.case_url = res.case_url
-          })
+          const { data } = res
+          this.hasData = JSON.stringify(data) !== '{}'
+          this.detailData = data
           this.loading = false
         } else {
+          this.hasData = false
           this.loading = false
         }
       }).catch(() => {
+        this.hasData = false
         this.loading = false
       })
     },

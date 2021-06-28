@@ -1,19 +1,19 @@
 <template>
-  <div class="hitSupplierAndPurchaser">
+  <div class="SupplierDetailOrg">
     <div class="hitSupAndPurBody">
       <div
-          class="orgTopImg"
-          :class="[provideData.theme+'-logo']"
+        class="orgTopImg"
+        :class="[provideData.theme+'-logo']"
       >
-        {{ (data.comp_name&&data.comp_name.substring(0,1))||(data.purchase_name&&data.purchase_name.substring(0,1)) }}
+        {{ data.comp_name&&data.comp_name.substring(0,1) }}
       </div>
       <div class="hitSupAndPurDes">
         <div class="hitTitle">
           <span class="title">
-            {{ data.comp_name || data.purchase_name }}
+            {{ data.comp_name }}
           </span>
           <span
-            v-if="provideData.hit==='purchaser'"
+            v-if="data.type_own==='purchaser'"
             class="hitTagSpan"
             :class="[provideData.theme+'-background1']"
           >业主</span>
@@ -28,7 +28,11 @@
         </div>
       </div>
     </div>
-    <HitPropertyList :data="data" :type="'supplier'" />
+    <HitPropertyList
+      :data="data"
+      :from="'modal'"
+      :type="'supplier'"
+    />
   </div>
 </template>
 
@@ -36,7 +40,7 @@
 import HitTag from './HitTag'
 import HitPropertyList from './HitPropertyList'
 export default {
-  name: 'HitSupAndPurMix',
+  name: 'SupplierDetailOrg',
   inject: ['provideData'],
   components: {
     HitTag,
@@ -63,26 +67,26 @@ export default {
 
 <style scoped lang="scss">
 @import '../../common/common';
-.hitSupplierAndPurchaser {
+.orgTopImg {
+  width: 54px;
+  height: 54px;
+  line-height: 54px;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 26px;
+  margin-right: 10px;
+  //width: 54px;
+  //height: 54px;
+  //vertical-align: middle;
+}
+.SupplierDetailOrg {
   .hitSupAndPurBody {
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 25px;
-    .orgTopImg {
-      width: 54px;
-      height: 54px;
-      line-height: 54px;
-      border-radius: 4px;
-      text-align: center;
-      font-weight: bold;
-      font-size: 26px;
-      margin-right: 10px;
-      //width: 54px;
-      //height: 54px;
-      //vertical-align: middle;
-    }
     .supAndPruImg {
       width: 54px;
       height: 54px;

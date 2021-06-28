@@ -50,17 +50,17 @@ export default {
     const supplierPropertyMap = [
       {
         label: '注册资本',
-        prop: 'reg_cap'
+        prop: 'register_capital'
         // calc: this.getDatalistRegCap
       },
       {
         label: '成立时间',
-        prop: 'est_date'
+        prop: 'establish_time'
         // calc: datalist => this.est_date(datalist.est_date)
       },
       {
         label: '机构官网',
-        prop: 'org_url'
+        prop: 'comp_web_url'
         // fullWidth: value => value.length > 30
       }
     ]
@@ -74,7 +74,7 @@ export default {
         if (!item) return
         const { label, prop, fullWidth = () => false, calc } = item
         let value
-        if (prop === 'reg_cap') {
+        if (prop === 'register_capital') {
           value = calc ? calc(this.datalist) : this.setRegCap(this.datalist && this.datalist[prop])
         } else {
           value = calc ? calc(this.datalist) : this.datalist && this.datalist[prop]
@@ -92,7 +92,7 @@ export default {
   },
   methods: {
     setRegCap(value) {
-      return (value / 10000).toFixed(1) + '万'
+      return value && (value / 10000).toFixed(1) + '万'
     }
   }
 }
@@ -104,7 +104,7 @@ export default {
   width: calc(100% - 40px);
   background: rgba(0, 0, 0, 0.02);
   padding: 12px;
-  display: flex;
+  display: inline-flex;
   flex-flow: row wrap;
   align-items: center;
   justify-content: flex-start;

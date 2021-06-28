@@ -1,16 +1,16 @@
 <template>
   <div
-    v-if="item[currentPage]&&item[currentPage].case_name"
+    v-if="item[currentPage]&&item[currentPage].project_name"
     v-loading="loading"
     class="SupplierCaseItem"
   >
     <div class="sCaseTop">
       <span :class="[provideData.theme + '-color1']">成交案例</span>
-      <span v-html="shortWordStringAndHeight(item[currentPage]&&item[currentPage].case_name)" />
+      <span v-html="shortWordStringAndHeight(item[currentPage]&&item[currentPage].project_name)" />
     </div>
     <div class="sCaseTime">
       <span>案例时间</span>
-      <span>{{ item[currentPage]&&item[currentPage].case_release_date }}</span>
+      <span>{{ item[currentPage]&&item[currentPage].publish_time }}</span>
     </div>
     <div class="sCaseCon">
       <div class="sCaseLastDes">
@@ -18,11 +18,11 @@
         <span v-else-if="type !=='supplier'&&item[currentPage]&&item[currentPage].supplier">供应商</span>
         <span
           v-if="type === 'supplier'"
-          v-html="filterData(item[currentPage]&&item[currentPage].purchaser)"
+          v-html="filterData(item[currentPage]&&item[currentPage].object)"
         />
         <span
           v-else
-          v-html="filterData(item[currentPage]&&item[currentPage].supplier)"
+          v-html="filterData(item[currentPage]&&item[currentPage].winbid)"
         />
       </div>
       <div class="sCasePage">
@@ -116,7 +116,9 @@ export default {
       }
     },
     filterData(value) {
-      return `<span>${value}</span>`
+      if (value) {
+        return `<span>${value}</span>`
+      }
     },
     shortWordStringAndHeight(value) {
       const keyword = this.provideData.keyword

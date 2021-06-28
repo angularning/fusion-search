@@ -15,11 +15,15 @@
         <div class="item-label">
           {{ item.label }}
         </div>
-        <div v-if="item.label !== '成交内容'">
+        <div
+          v-if="item.label !== '成交内容'"
+          :title="item.realValue"
+        >
           {{ item.value }}
         </div>
         <div
           v-else
+          :title="item.realValue"
           :class="[provideData.theme + '-color1','textOverflow']"
         >
           {{
@@ -50,17 +54,14 @@ export default {
       {
         label: '采购金额',
         prop: 'case_winamount_sum'
-        // calc: this.getDatalistRegCap
       },
       {
         label: '成交时间',
-        prop: 'case_release_date'
-        // calc: datalist => this.est_date(datalist.est_date)
+        prop: 'publish_time'
       },
       {
-        label: '供应商',
-        prop: 'winbid'
-        // fullWidth: value => value.length > 30
+        label: '成交内容',
+        prop: 'object'
       }
     ]
     return {
@@ -71,18 +72,20 @@ export default {
     supplierProperties() {
       return this.supplierPropertyMap.map((item) => {
         if (!item) return
-        const { label, prop, fullWidth = () => false } = item
+        const { label, prop } = item
         let value
         if (prop === 'case_winamount_sum') {
           value = this.setRegCap(this.datalist && this.datalist[prop])
-        } else if (prop === 'winbid') {
+        } else if (prop === 'object') {
           value = this.datalist && this.datalist[prop] && this.datalist[prop].length > 0 && this.datalist[prop].join()
+          value = value && value.length > 30 ? value.substring(0, 30) + '...' : value
         } else {
           value = this.datalist && this.datalist[prop]
         }
+        let realValue = this.datalist && this.datalist[prop]
         return {
           label,
-          fullWidth: fullWidth(value),
+          realValue,
           value
         }
       })
@@ -93,7 +96,7 @@ export default {
   },
   methods: {
     setRegCap(value) {
-      return (value / 10000).toFixed(1) + '万'
+      return value && (value / 10000).toFixed(1) + '万'
     }
   }
 }
@@ -105,7 +108,7 @@ export default {
   width: calc(100% - 40px);
   background: rgba(0, 0, 0, 0.02);
   padding: 12px;
-  display: flex;
+  display: inline-flex;
   flex-flow: row wrap;
   align-items: center;
   justify-content: flex-start;

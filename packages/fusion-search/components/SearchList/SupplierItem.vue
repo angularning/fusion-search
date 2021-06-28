@@ -7,15 +7,15 @@
     <div class="listItemLeft">
       <div class="orgTop">
         <div
-          class="imgs"
+          class="orgTopImg"
           :class="[provideData.theme+'-logo']"
         >
-          {{ item.org_name&&item.org_name.substring(0,1) }}
+          {{ item.comp_name&&item.comp_name.substring(0,1) }}
         </div>
         <div class="orgDes">
           <div class="orgDesTitle">
             <div class="titleName">
-              {{ item.org_name }}
+              {{ item.comp_name }}
             </div>
             <Location :item="item" />
           </div>
@@ -24,7 +24,10 @@
           </div>
         </div>
       </div>
-      <OrgProperty :type="'supplier'" :datalist="item" />
+      <OrgProperty
+        :type="'supplier'"
+        :datalist="item"
+      />
     </div>
     <div class="listItemRight">
       <SupplierCaseItem
@@ -63,6 +66,9 @@ export default {
   methods: {
     showDetail() {
       const provideData = this.provideData
+      provideData.instance_type = 'supplier'
+      provideData.uuid = this.item.uuid
+      provideData.comp_name = this.item.comp_name
       this.$modal('SupplierDetail', {
         propsData: {
           provideData
@@ -98,7 +104,7 @@ export default {
       align-items: center;
       margin-bottom: 15px;
       padding-top: 20px;
-      .imgs {
+      .orgTopImg {
         width: 54px;
         height: 54px;
         line-height: 54px;

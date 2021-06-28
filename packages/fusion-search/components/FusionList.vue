@@ -17,9 +17,9 @@
         </div>
       </div>
       <div
-        v-loading="loading"
         class="listWrap"
       >
+<!--        v-loading="loading"-->
         <div class="sortList">
           <SortList
             :search="search"
@@ -95,21 +95,21 @@ export default {
         product: {
           supplier: {
             fields: {
-              supplier_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
-              case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
-              order: '-reg_cap'
+              // supplier_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
+              // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
+              order: '-register_capital'
             }
           },
           case: {
             fields: {
-              supplier_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
-              case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
+              // supplier_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
+              // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
               order: '-case_winamount_sum'
             }
           },
           purchaser: {
             fields: {
-              purchaser_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
+              // purchaser_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
               order: '-reg_cap'
             }
           }
@@ -124,31 +124,31 @@ export default {
           // },
           case: {
             fields: {
-              fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,case_winamount_sum,object,winbid',
-              case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
+              // fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,case_winamount_sum,object,winbid',
+              // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
               order: '-case_release_date' // default/-case_release_date/-case_winamount_sum
             }
           },
           purchaser: {
             fields: {
-              purchaser_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
-              order: '-case_release_date', // 排序规则-case_release_date/-case_winamount_sum
-              case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,winbid,object,case_winamount_sum'
+              // purchaser_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
+              // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,winbid,object,case_winamount_sum'
+              order: '-case_release_date' // 排序规则-case_release_date/-case_winamount_sum
             }
           }
         },
         purchaser: {
           supplier: {
             fields: {
-              supplier_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
-              case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,winbid,object',
-              order: '-est_date' // default/-case_release_date/-est_date
+              // supplier_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
+              // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,winbid,object',
+              order: '-register_capital' // default/-case_release_date/-est_date
             }
           },
           case: {
             fields: {
-              fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,case_winamount_sum,case_tag,object,winbid',
-              case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
+              // fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,case_winamount_sum,case_tag,object,winbid',
+              // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
               order: '-case_winamount_sum' // default/-case_release_date/-case_winamount_sum
             }
           }
@@ -156,20 +156,20 @@ export default {
         noHit: {
           supplier: {
             fields: {
-              fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
+              // fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
               order: '-est_date' // -reg_cap/-est_date
             }
           },
           case: {
             fields: {
-              fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,case_winamount_sum,object',
-              case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
+              // fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,case_winamount_sum,object',
+              // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
               order: '-release_date' // 排序规则-case_release_date/-case_winamount_sum
             }
           },
           purchaser: {
             fields: {
-              fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
+              // fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
               order: '-case_release_date' // 排序规则-case_release_date/-reg_cap
             }
           }
@@ -237,7 +237,7 @@ export default {
           },
           {
             name: 'SupplierList',
-            key: 'Supplier',
+            key: 'supplier',
             value: '相关供应商'
           }
         ]
@@ -305,6 +305,8 @@ export default {
       })
     },
     getDefaultList() {
+      console.log(this.searchFields[this.hit])
+      console.log([this.defaultType])
       this.data = {}
       // TODO: 优化查询 把命中的词与当前tab建立关系，如果有关系则下次不查询 0627
       this.loading = true

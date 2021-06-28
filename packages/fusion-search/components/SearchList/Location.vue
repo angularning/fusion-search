@@ -48,6 +48,7 @@ export default {
   font-family: MicrosoftYaqiHei;
   color: #1c2d5a;
   display: flex;
+  min-width: 170px;
   div {
     display: flex;
     align-items: center;

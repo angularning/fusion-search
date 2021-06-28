@@ -7,7 +7,6 @@
       class="HitPropertyList"
       :label="item.label"
       :value="item.value"
-      :full-width="item.fullWidth"
     >
       <div
         v-if="item.value && item.value.length > 0"
@@ -40,92 +39,149 @@ export default {
     type: {
       type: String,
       default: () => 'supplier'
+    },
+    from: {
+      type: String,
+      default: () => ''
     }
   },
   data() {
-    const supplierPropertyMap = [
+    // const supplierPropertyMap = [
+    //   {
+    //     label: '注册资本',
+    //     prop: 'reg_cap'
+    //   },
+    //   {
+    //     label: '成立时间',
+    //     prop: 'est_date'
+    //   },
+    //   {
+    //     label: '法人',
+    //     prop: 'law_per'
+    //   },
+    //   {
+    //     label: '统一社会信用代码',
+    //     prop: 'uniform_code'
+    //   },
+    //   {
+    //     label: '曾用名',
+    //     prop: 'org_alias'
+    //   },
+    //   {
+    //     label: '地区',
+    //     prop: 'location'
+    //   },
+    //   {
+    //     label: '联系方式',
+    //     prop: 'org_phone'
+    //   },
+    //   {
+    //     label: '公司类型',
+    //     prop: 'org_type'
+    //   },
+    //   {
+    //     label: '注册号',
+    //     prop: 'reg_code'
+    //   },
+    //   {
+    //     label: '组织机构代码',
+    //     prop: 'org_code'
+    //   },
+    //   {
+    //     label: '营业期限',
+    //     prop: 'op_limit'
+    //   },
+    //   {
+    //     label: '企业地址',
+    //     prop: 'address'
+    //   },
+    //   {
+    //     label: '机构官网',
+    //     prop: 'org_url'
+    //   },
+    //   {
+    //     label: '经营范围',
+    //     prop: 'op_scope'
+    //   }
+    // ]
+    const supplierDetailMap = [
       {
         label: '注册资本',
-        prop: 'reg_cap'
-        // calc: this.getDatalistRegCap
+        prop: 'register_capital'
       },
       {
         label: '成立时间',
-        prop: 'est_date'
-        // calc: datalist => this.est_date(datalist.est_date)
+        prop: 'establish_time'
       },
       {
         label: '法人',
-        prop: 'law_per'
+        prop: 'legal_person'
       },
       {
         label: '统一社会信用代码',
-        prop: 'uniform_code'
+        prop: 'business_license'
       },
       {
         label: '曾用名',
         prop: 'org_alias'
-        // calc: datalist => this.orgAlias(datalist.org_alias)
       },
       {
         label: '地区',
         prop: 'location'
-        // calc: this.getDatalistCityNameAll
       },
       {
         label: '联系方式',
-        prop: 'org_phone'
+        prop: 'link_phone'
       },
       {
         label: '公司类型',
-        prop: 'org_type',
-        calc: (datalist) => this.getNames(datalist.org_type)
+        prop: 'comp_type'
       },
       {
         label: '注册号',
-        prop: 'reg_code'
+        prop: 'register_no'
       },
       {
         label: '组织机构代码',
-        prop: 'org_code'
+        prop: 'organization_code'
       },
       {
         label: '营业期限',
-        prop: 'op_limit'
+        prop: 'operating_end'
       },
       {
         label: '企业地址',
-        prop: 'address'
-        // fullWidth: value => value.length > 30
+        prop: 'office_address'
       },
       {
         label: '机构官网',
-        prop: 'org_url'
-        // fullWidth: value => value.length > 30
+        prop: 'comp_web_url'
       },
       {
         label: '经营范围',
-        prop: 'op_scope',
-        fullWidth: () => true
+        prop: 'business_scope'
       }
     ]
     return {
-      supplierPropertyMap
+      // supplierPropertyMap,
+      supplierDetailMap
     }
   },
   computed: {
     supplierProperties() {
-      return this.supplierPropertyMap.map((item) => {
-        const { label, prop, fullWidth = () => false, calc } = item
+      console.log(this.from)
+      const temp = this.from === 'modal' ? this.supplierDetailMap : this.supplierDetailMap
+      console.log(temp)
+      return temp.map((item) => {
+        const { label, prop } = item
         let value
         if (prop === 'org_type') {
-          value = calc ? calc(this.data) : this.getNames(this.data && this.data[prop])
+          value = this.getNames(this.data && this.data[prop])
         } else {
-          value = calc ? calc(this.data) : this.data && this.data[prop]
+          value = this.data && this.data[prop]
         }
         return {
           label,
-          fullWidth: fullWidth(value),
           value
         }
       })

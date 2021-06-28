@@ -53,8 +53,8 @@ export default {
     }
   },
   mounted() {
-    this.$EventBus.$on('fusion-search', (value) => {
-      console.log('fusion-search', value)
+    this.$EventBus.$on('fusion-list-search', (value) => {
+      this.keyword = value
     })
   },
   beforeDestroy() {

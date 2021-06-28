@@ -8,7 +8,7 @@
               class="titleName"
               v-html="
                 shortWordStringAndHeight(
-                  item && item.case_name
+                  item && (item.case_name || item.project_name)
                 )
               "
             />
@@ -64,11 +64,13 @@ export default {
   },
   methods: {
     toSeeDetail() {
+      const provideData = this.provideData
+      provideData.instance_type = 'case'
+      provideData.uuid = this.item.uuid
+      provideData.word = this.item.case_name || this.item.project_name
       this.$modal('CaseDetail', {
-        data () {
-          return {
-            allowSelectTemplate: true
-          }
+        propsData: {
+          provideData
         },
         $store: this.$store,
         $router: this.$router
@@ -102,7 +104,7 @@ export default {
   border-top: 1px #eee solid;
   margin-top: 20px;
   .listItemLeft {
-    flex: 3;
+    flex: 4;
     width: 100%;
     .orgTop {
       width: 100%;
@@ -117,6 +119,7 @@ export default {
         vertical-align: middle;
       }
       .orgDes {
+        width: 100%;
         .orgDesTitle {
           display: flex;
           justify-content: flex-start;

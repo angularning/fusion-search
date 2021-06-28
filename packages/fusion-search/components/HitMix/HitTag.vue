@@ -1,61 +1,44 @@
 <template>
   <div class="HitTag">
     <div
-      v-if="tagList && tagList.length > 0"
+      v-if="data && data.org_tag"
       class="tags-container"
     >
       <div
-        v-for="(tag, j) in tagList"
+        v-for="(tag, j) in data&&data.org_tag"
         :key="j"
         :class="[provideData.theme + '-color1', provideData.theme + '-background16']"
         class="tag"
       >
-        {{ tag }}
+        {{ getValue(tag) }}
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { getNames } from '../../utils/tagConfig'
 export default {
   name: 'HitTag',
   inject: ['provideData'],
   props: {
-    forceType: {
-      type: String,
-      default: ''
-    },
-    types: {
-      type: String,
-      default: ''
-    },
-    forceTagListConf: {
+    data: {
       type: Object,
-      default: null
+      default: () => {}
     }
   },
   data() {
     return {
       first_list: [],
       second_list: [],
-      tagList: ['供应商', '案例']
+      tagList: []
     }
   },
   computed: {
-    isShow() {
-      return this.tagList.length > 0
-    }
   },
-  watch: {},
   methods: {
-    handleClick(item, tag, e) {
-      if (item.label === '同义词') {
-        if (item.navi) {
-          // this.$emit('nav-tag', e.target.innerText)
-        }
-      } else if (item.navi) {
-        this.$emit('nav-tag', tag)
-      }
+    getValue(value) {
+      return getNames(value)
     }
   }
 }

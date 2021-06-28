@@ -9,7 +9,7 @@
       :class="[provideData.theme+'-planPagination']"
       layout="prev, pager, next"
       :total="total"
-      :page="page"
+      :current-page="page"
       :page-size="page_size"
       background
       @current-change="handleCurrentChange"
@@ -24,20 +24,39 @@ export default {
     total: {
       type: Number,
       default: () => 0
+    },
+    type: {
+      type: String,
+      default: () => null
+    },
+    cpage: {
+      type: Boolean,
+      default: () => false
     }
   },
   inject: ['provideData'],
   data() {
     return {
-      page_size: 10,
-      page: 1,
+      page_size: 15,
+      page: 1
     }
   },
-  computed: {},
+  computed: {
+  },
+  watch: {
+    cpage: {
+      deep: true,
+      handler(value) {
+        if (value) {
+          this.page = 1
+        }
+      }
+    }
+  },
   methods: {
     handleCurrentChange(value) {
-      this.$emit('change-page', value)
       this.page = value
+      this.$emit('change-page', { page: value, type: this.type })
     }
   }
 }

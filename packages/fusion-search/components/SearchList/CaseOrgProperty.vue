@@ -15,20 +15,16 @@
         <div class="item-label">
           {{ item.label }}
         </div>
-        <div :title="item.value" v-if="item.label !== '机构官网'">
+        <div v-if="item.label !== '成交内容'">
           {{ item.value }}
         </div>
         <div
-          :title="item.value"
           v-else
+          :class="[provideData.theme + '-color1','textOverflow']"
         >
-          <a
-            :class="[provideData.theme + '-color1']"
-            :href="item.value"
-            target="_blank"
-          >{{
+          {{
             item.value
-          }}</a>
+          }}
         </div>
       </div>
     </div>
@@ -37,30 +33,33 @@
 
 <script>
 export default {
-  name: 'OrgProperty',
+  name: 'CaseOrgProperty',
   inject: ['provideData'],
   props: {
     datalist: {
       type: Object,
-      default: () => {
-      }
+      default: () => {}
+    },
+    type: {
+      type: String,
+      default: () => 'supplier'
     }
   },
   data() {
     const supplierPropertyMap = [
       {
-        label: '注册资本',
-        prop: 'reg_cap'
+        label: '采购金额',
+        prop: 'case_winamount_sum'
         // calc: this.getDatalistRegCap
       },
       {
-        label: '成立时间',
-        prop: 'est_date'
+        label: '成交时间',
+        prop: 'case_release_date'
         // calc: datalist => this.est_date(datalist.est_date)
       },
       {
-        label: '机构官网',
-        prop: 'org_url'
+        label: '供应商',
+        prop: 'winbid'
         // fullWidth: value => value.length > 30
       }
     ]
@@ -72,12 +71,14 @@ export default {
     supplierProperties() {
       return this.supplierPropertyMap.map((item) => {
         if (!item) return
-        const { label, prop, fullWidth = () => false, calc } = item
+        const { label, prop, fullWidth = () => false } = item
         let value
-        if (prop === 'reg_cap') {
-          value = calc ? calc(this.datalist) : this.setRegCap(this.datalist && this.datalist[prop])
+        if (prop === 'case_winamount_sum') {
+          value = this.setRegCap(this.datalist && this.datalist[prop])
+        } else if (prop === 'winbid') {
+          value = this.datalist && this.datalist[prop] && this.datalist[prop].length > 0 && this.datalist[prop].join()
         } else {
-          value = calc ? calc(this.datalist) : this.datalist && this.datalist[prop]
+          value = this.datalist && this.datalist[prop]
         }
         return {
           label,
@@ -158,6 +159,10 @@ export default {
     //    font-weight: bold;
     //  }
     //}
+  }
+  .textOverflow{
+    //max-width: 200px;
+    @include limit1line
   }
 }
 </style>

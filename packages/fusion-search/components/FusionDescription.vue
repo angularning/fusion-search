@@ -25,7 +25,8 @@ export default {
     return {
       configList: {
         product: 'HitProductDescription',
-        supplier: 'HitSupplierDescription'
+        supplier: 'HitSupplierDescription',
+        purchaser: 'HitSupplierDescription'
       }
     }
   },

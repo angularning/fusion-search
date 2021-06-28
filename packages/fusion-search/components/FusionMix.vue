@@ -2,7 +2,10 @@
   <div class="FusionMix">
     <!--    <HitProductMix v-if="hit === 'product'" />-->
     <!--    <HitSupAndPurMix v-else />-->
-    <component :is="hitData[provideData.hit]" />
+    <component
+      :is="hitData[provideData.hit]"
+      :data="data"
+    />
   </div>
 </template>
 

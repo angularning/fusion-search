@@ -1,33 +1,45 @@
 <template>
-  <div class="SupplierList" v-loading="loading">
-    <div>
-      <PurchaserItem v-for="(item, i) in list" :key="i" :item="item" />
+  <div
+    v-loading="loading"
+    class="PurchaserList"
+  >
+    <div v-if="data&&data.result&&data.result.length>0">
+      <PurchaserItem
+        v-for="(item, i) in data && data.result"
+        :key="i"
+        :item="item"
+      />
     </div>
-    <SearchPagination :total="total" @change-page="changePage" />
+    <div v-else>
+      <NoResult :from="'list'" />
+    </div>
   </div>
 </template>
 
 <script>
-import SearchPagination from './SearchPagination'
 import PurchaserItem from './PurchaserItem'
+import NoResult from '../NoHit/NoResult'
 export default {
   name: 'PurchaserList',
   inject: ['provideData'],
+  components: {
+    PurchaserItem,
+    NoResult
+  },
   props: {
-    list: {
-      type: Array,
-      default: () => [{ location: 654223 }, { location: 654223 }, { location: 654223 }]
+    data: {
+      type: Object,
+      default: () => {}
+    },
+    loading: {
+      type: Boolean,
+      default: () => false
     }
   },
   data() {
     return {
-      loading: false,
-      total: 1000
+      total: 0
     }
-  },
-  components: {
-    SearchPagination,
-    PurchaserItem
   },
   methods: {
     changePage(value) {}
@@ -37,4 +49,7 @@ export default {
 
 <style scoped lang="scss">
 @import '../../common/common';
+.PurchaserList{
+  height: auto;
+}
 </style>

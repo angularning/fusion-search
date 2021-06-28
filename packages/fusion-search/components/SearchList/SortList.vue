@@ -7,6 +7,7 @@
       class="sortSelectList"
       size="mini"
       placeholder="请选择"
+      @change="toSort"
     >
       <el-option
         v-for="(item, i) in sortList[type]"
@@ -27,6 +28,10 @@ export default {
       type: String,
       default: () => 'supplier'
     }
+    // search: {
+    //   type: String,
+    //   default: () => null
+    // }
   },
   data() {
     return {
@@ -37,43 +42,18 @@ export default {
           {
             type: 'supplier',
             name: '综合排序',
-            prop: '-default'
-          },
-          /*  {
-            type: 'supplier',
-            name: '综合升序',
             prop: 'default'
-          }, */
-          {
-            type: 'supplier',
-            name: '成交数量降序',
-            prop: '-deal_count'
           },
-          /*  {
-            type: 'supplier',
-            name: '成交数量升序',
-            prop: 'deal_count'
-          }, */
-          {
-            type: 'supplier',
-            name: '最近成交日期降序',
-            prop: '-deal_date'
-          },
-          /*  {
-            type: 'supplier',
-            name: '最近成交日期升序',
-            prop: 'deal_date'
-          }, */
           {
             type: 'supplier',
             name: '注册资本降序',
             prop: '-reg_cap'
-          }
-          /*    {
+          },
+          {
             type: 'supplier',
-            name: '注册资本升序',
-            prop: 'reg_cap'
-          } */
+            name: '最近成立时间降序',
+            prop: '-est_date'
+          }
         ],
         sameSupplier: [
           {
@@ -86,58 +66,8 @@ export default {
             name: '注册资本降序',
             prop: '-reg_cap'
           }
-          /* {
-            type: 'supplier',
-            name: '成交数量降序',
-            prop: '-deal_count'
-          },
-          /!*  {
-            type: 'supplier',
-            name: '成交数量升序',
-            prop: 'deal_count'
-          }, *!/
-          {
-            type: 'supplier',
-            name: '最近成交日期降序',
-            prop: '-deal_date'
-          },
-          /!*  {
-            type: 'supplier',
-            name: '最近成交日期升序',
-            prop: 'deal_date'
-          }, *!/
-          {
-            type: 'supplier',
-            name: '注册资本降序',
-            prop: '-reg_cap'
-          },
-          /!*    {
-            type: 'supplier',
-            name: '注册资本升序',
-            prop: 'reg_cap'
-          } *!/ */
         ],
         purchaser: [
-          /* {
-            type: 'purchaser',
-            name: '最近采购日期降序',
-            prop: '-purchase_date'
-          }, */
-          /*   {
-            type: 'purchaser',
-            name: '最近采购日期升序',
-            prop: 'purchase_date'
-          }, */
-          /* {
-            type: 'purchaser',
-            name: '采购次数降序',
-            prop: '-purchase_count'
-          }, */
-          /*  {
-            type: 'purchaser',
-            name: '采购次数升序',
-            prop: 'purchase_count'
-          }, */
           {
             type: 'purchaser',
             name: '注册资本降序',
@@ -195,6 +125,7 @@ export default {
   methods: {
     toSort(item, i) {
       this.active = i
+      this.$emit('sort-list', { order: this.current, type: this.type })
     }
   }
 }

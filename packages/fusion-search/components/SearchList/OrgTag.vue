@@ -1,9 +1,12 @@
 <template>
   <div class="HitTag">
-    <div class="tags-container" v-if="tagList && tagList.length > 0">
+    <div
+      v-if="data && data.case_tag"
+      class="tags-container"
+    >
       <div
-        v-for="(tag, j) in tagList"
-        :class="[theme + '-color1', theme + '-background16']"
+        v-for="(tag, j) in data.case_tag"
+        :class="[provideData.theme + '-color1', provideData.theme + '-background16']"
         :key="j"
         class="tag"
       >
@@ -14,51 +17,29 @@
 </template>
 
 <script>
+import { getNames } from '../../utils/tagConfig'
 export default {
   name: 'OrgTag',
-  inject: {
-    theme: {
-      from: 'theme',
-      default: ''
-    }
-  },
+  inject: ['provideData'],
   props: {
-    forceType: {
-      type: String,
-      default: ''
-    },
-    types: {
-      type: String,
-      default: ''
-    },
-    forceTagListConf: {
+    data: {
       type: Object,
-      default: null
-    }
+      default: () => {}
+    },
   },
   data() {
     return {
       first_list: [],
       second_list: [],
-      tagList: ['北京众标之后能科技有限公司', '北京众标之后能科技有限公司'],
       theme: this.theme
     }
   },
   computed: {
-    isShow() {
-      return this.tagList.length > 0
-    }
   },
   watch: {},
   methods: {
-    handleClick(item, tag, e) {
-      if (item.label === '同义词') {
-        if (item.navi) {
-          // this.$emit('nav-tag', e.target.innerText)
-        }
-      } else if (item.navi) {
-        this.$emit('nav-tag', tag)
-      }
+    getValue(value) {
+      return getNames(value)
     }
   }
 }

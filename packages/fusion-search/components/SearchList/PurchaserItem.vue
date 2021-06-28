@@ -1,26 +1,36 @@
 <template>
-  <div class="PurchaserItem" v-loading="loading">
+  <div
+    v-loading="loading"
+    class="PurchaserItem"
+    @click="showDetail"
+  >
     <div class="listItemLeft">
       <div class="orgTop">
-        <img
-          class="orgImg"
-          src="http://cdn-caigou.shuniucloud.com/img/kg-cloud-pc-fe.aside_logoafff22c.png"
-          alt=""
-        />
+        <div
+          class="imgs"
+          :class="[provideData.theme+'-logo']"
+        >
+          {{ item.org_name&&item.org_name.substring(0,1) }}
+        </div>
         <div class="orgDes">
           <div class="orgDesTitle">
-            <div class="titleName">北京众标智能科技有限公司</div>
-            <Location :item="item"></Location>
+            <div class="titleName">
+              {{ item.org_name }}
+            </div>
+            <Location :item="item" />
           </div>
           <div>
-            <HitTag />
+            <HitTag :data="item" />
           </div>
         </div>
       </div>
-      <OrgProperty />
+      <OrgProperty :type="'purchaser'" :datalist="item" />
     </div>
     <div class="listItemRight">
-      <SupplierCaseItem :type="'purchaser'" />
+      <SupplierCaseItem
+        :item="item.cases"
+        :type="'purchaser'"
+      />
     </div>
   </div>
 </template>
@@ -33,6 +43,12 @@ import SupplierCaseItem from './SupplierCaseItem'
 export default {
   name: 'PurchaserItem',
   inject: ['provideData'],
+  components: {
+    OrgProperty,
+    Location,
+    HitTag,
+    SupplierCaseItem
+  },
   props: {
     item: {
       type: Object,
@@ -41,22 +57,28 @@ export default {
   },
   data() {
     return {
-      loading: false,
+      loading: false
     }
   },
-  components: {
-    OrgProperty,
-    Location,
-    HitTag,
-    SupplierCaseItem
-  },
-  methods: {}
+  methods: {
+    showDetail() {
+      const provideData = this.provideData
+      this.$modal('SupplierDetail', {
+        propsData: {
+          provideData
+        },
+        $store: this.$store,
+        $router: this.$router
+      })
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
 @import '../../common/common';
 .PurchaserItem {
+  cursor: pointer;
   width: calc(100% - 40px);
   padding: 0 20px;
   display: flex;
@@ -76,10 +98,18 @@ export default {
       align-items: center;
       margin-bottom: 15px;
       padding-top: 20px;
-      .orgImg {
+      .imgs {
         width: 54px;
         height: 54px;
-        vertical-align: middle;
+        line-height: 54px;
+        border-radius: 4px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 26px;
+        margin-right: 10px;
+        //width: 54px;
+        //height: 54px;
+        //vertical-align: middle;
       }
       .orgDes {
         .orgDesTitle {

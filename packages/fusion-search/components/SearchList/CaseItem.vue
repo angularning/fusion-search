@@ -8,19 +8,22 @@
               class="titleName"
               v-html="
                 shortWordStringAndHeight(
-                  '安源区卫生和计划生育委员会本级手机于2021年03月30日一笔交易'
+                  item && item.case_name
                 )
               "
             />
             <Location :item="item" />
           </div>
           <div>
-            <HitTag />
+            <HitTag :data="item" />
           </div>
         </div>
       </div>
-      <OrgProperty style="margin: 10px 0;" />
-      <OrgTag />
+      <CaseOrgProperty
+        :datalist="item"
+        style="margin: 10px 0;"
+      />
+      <OrgTag :data="item" />
     </div>
     <div class="listItemRight">
       <button
@@ -38,15 +41,15 @@
 import HitTag from '../HitMix/HitTag'
 import OrgTag from './OrgTag'
 import Location from './Location'
-import OrgProperty from './OrgProperty'
+import CaseOrgProperty from './CaseOrgProperty'
 export default {
   name: 'CaseItem',
   inject: ['provideData'],
   components: {
-    OrgProperty,
+    CaseOrgProperty,
     Location,
     HitTag,
-    OrgTag,
+    OrgTag
   },
   props: {
     item: {
@@ -72,10 +75,10 @@ export default {
       })
     },
     shortWordStringAndHeight(value) {
-      const keyword = '手机'
+      const keyword = this.provideData.keyword
       const filter = new RegExp(keyword)
-      if (value && value.length > 42) {
-        return (value.substring(0, 42) + '...').replace(
+      if (value && value.length > 30) {
+        return (value.substring(0, 30) + '...').replace(
           filter,
           `<span style="color: #F13D3D;">${keyword}</span>`
         )
@@ -119,6 +122,7 @@ export default {
           justify-content: flex-start;
           align-items: center;
           margin-bottom: 10px;
+          width: 100%;
           .titleName {
             margin-right: 20px;
             height: 20px;
@@ -127,6 +131,7 @@ export default {
             font-family: MicrosoftYaqiHei-Bold, MicrosoftYaqiHei;
             font-weight: bold;
             color: #333;
+            width: 80%;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;

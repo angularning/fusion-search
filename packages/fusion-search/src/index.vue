@@ -15,11 +15,18 @@
       <div class="fusionLeft">
         <!--    命中详情卡片-->
         <template v-if="config && config.showMix">
-          <FusionMix :data="{}" />
+          <FusionMix
+            v-loading="loadingCard"
+            :data="cardData"
+          />
         </template>
         <!--    命中列表组件-->
         <template v-if="config && config.showList">
-          <FusionList />
+          <FusionList
+            :loading="loadingList"
+            :search="keyword"
+            :hit="hit"
+          />
         </template>
       </div>
       <div class="fusionRight">
@@ -38,7 +45,11 @@
         <div class="tipTitle">
           为您找到如下相关内容：
         </div>
-        <FusionList />
+        <FusionList
+          :loading="loadingList"
+          :search="keyword"
+          :hit="hit"
+        />
       </div>
       <div class="fusionRight">
         <NoHitRight />
@@ -46,10 +57,7 @@
     </div>
     <!--    完全不命中-->
     <div v-if="hit==='completeNoHit'">
-      <div class="no-results">
-        <img src="http://cdn-caigou.shuniucloud.com/img/kg-cloud-pc-fe.no-searche7dfd1a.png">
-        <div>暂未搜索到相关信息</div>
-      </div>
+      <NoResult />
     </div>
   </div>
 </template>
@@ -62,6 +70,7 @@ import FusionMix from '../components/FusionMix'
 import FusionList from '../components/FusionList'
 import FusionDescription from '../components/FusionDescription'
 import NoHitRight from '../components/NoHit/NoHitRight'
+import NoResult from '../components/NoHit/NoResult'
 import defaultMixins from '../minxins/default'
 
 export default {
@@ -71,7 +80,8 @@ export default {
     FusionInput,
     FusionList,
     FusionDescription,
-    NoHitRight
+    NoHitRight,
+    NoResult
   },
   mixins: [defaultMixins],
   props: {
@@ -87,7 +97,7 @@ export default {
       type: Object,
       default: () => {
         return {
-          THEME: 'JFH',
+          THEME: 'XUNYUAN',
           APIHOST: '',
           LOGIN: true,
           showInput: true,
@@ -100,11 +110,25 @@ export default {
   },
   data() {
     return {
+      lastKeyword: null,
       keyword: null,
       configData: {},
-      hit: 'product',
-      count: '1'
+      cardData: {}, // 命中卡片数据
+      hit: 'completeNoHit',
+      loadingCard: false,
+      loadingList: false,
+      instance_type: null,
+      count: '1',
+      hitConfig: {
+        product: 'product',
+        supplier: 'supplier',
+        purchaser: 'purchaser',
+        blank: 'completeNoHit',
+        bottom_hit: 'noHit'
+      }
     }
+  },
+  computed: {
   },
   watch: {
     emitSearch: {
@@ -126,13 +150,17 @@ export default {
   provide() {
     let provideData = {
       hit: '',
-      theme: ''
+      theme: '',
+      keyword: this.keyword
     }
     Object.defineProperty(provideData, 'hit', {
       get: () => this.hit
     })
     Object.defineProperty(provideData, 'theme', {
       get: () => this.config.THEME
+    })
+    Object.defineProperty(provideData, 'keyword', {
+      get: () => this.keyword
     })
     return {
       provideData
@@ -144,14 +172,43 @@ export default {
     fusionSearch(val) {
       this.keyword = val || this.searchValue
       // 获取到搜索的值，做请求
-      this.hit = this.keyword
-      this.mixSearch()
+      this.mixSearch(this.keyword)
       // 搜索之后把值设置为false
-      this.$emit('receive-search', { status: false, keyword: this.hit })
+      this.$emit('receive-search', { status: false, keyword: this.keyword })
     },
     mixSearch(value) {
-      // this.$axios.get('')
+      if (this.lastKeyword === this.keyword) return false
+      this.$get('search/input_box/?graph_id=1&keyword=' + value).then(item => {
+        this.lastKeyword = this.keyword
+        const { data } = item
+        this.hit = this.hitConfig[data.instance_type]
+        this.instance_type = data.instance_type
+        // 根据获取到的hit值去做不同的请求
+        this.getSearchCard()
+      })
       // this.search(value)
+    },
+    // getBottomSearchCard() {
+    //   this.loadingCard = true
+    //   this.$get('search/main/?graph_id=1&keyword=' + this.keyword + '&instance_type=' + this.instance_type).then(item => {
+    //     const { data } = item
+    //     this.loadingCard = false
+    //     this.cardData = data
+    //     // eslint-disable-next-line handle-callback-err
+    //   }).catch(err => {
+    //     this.loadingCard = false
+    //   })
+    // },
+    getSearchCard() {
+      this.loadingCard = true
+      this.$get('search/card/?graph_id=1&keyword=' + this.keyword + '&instance_type=' + this.instance_type).then(item => {
+        const { data } = item
+        this.loadingCard = false
+        this.cardData = data
+        // eslint-disable-next-line handle-callback-err
+      }).catch(err => {
+        this.loadingCard = false
+      })
     },
     searchResult() {
 
@@ -195,22 +252,6 @@ export default {
 
     .noHitLeft {
       background: #ffffff;
-    }
-  }
-  .no-results {
-    position: absolute;
-    top: 200px;
-    left: calc(50% - 158px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    color: #B3B9C6;
-    img {
-      width: 316px;
-      height: 290px;
-      margin-bottom: 50px;
     }
   }
 }

@@ -1,33 +1,45 @@
 <template>
-  <div class="CaseList" v-loading="loading">
-    <div>
-      <CaseItem v-for="(item, i) in list" :key="i" :item="item" />
+  <div
+    v-loading="loading"
+    class="CaseList"
+  >
+    <div v-if="data&&data.result&&data.result.length>0">
+      <CaseItem
+        v-for="(item, i) in data.result"
+        :key="i"
+        :item="item"
+      />
     </div>
-    <SearchPagination :total="total" @change-page="changePage" />
+    <div v-else>
+      <NoResult :from="'list'" />
+    </div>
   </div>
 </template>
 
 <script>
-import SearchPagination from './SearchPagination'
 import CaseItem from './CaseItem'
+import NoResult from '../NoHit/NoResult'
 export default {
   name: 'CaseList',
   inject: ['provideData'],
+  components: {
+    CaseItem,
+    NoResult
+  },
   props: {
-    list: {
-      type: Array,
-      default: () => [{ location: 654223 }, { location: 654223 }, { location: 654223 }]
+    data: {
+      type: Object,
+      default: () => {}
+    },
+    loading: {
+      type: Boolean,
+      default: () => false
     }
   },
   data() {
     return {
-      loading: false,
-      total: 1000
+      total: 0
     }
-  },
-  components: {
-    CaseItem,
-    SearchPagination
   },
   methods: {
     changePage() {}

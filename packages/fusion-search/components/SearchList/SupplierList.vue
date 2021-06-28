@@ -3,48 +3,54 @@
     v-loading="loading"
     class="SupplierList"
   >
-    <div>
+    <div v-if="data&&data.result&&data.result.length>0">
       <SupplierItem
-        v-for="(item, i) in list"
+        v-for="(item, i) in data && data.result"
         :key="i"
         :item="item"
       />
     </div>
-    <SearchPagination
-      :total="total"
-      @change-page="changePage"
-    />
+    <div v-else>
+      <NoResult :from="'list'" />
+    </div>
   </div>
 </template>
 
 <script>
-import SearchPagination from './SearchPagination'
 import SupplierItem from './SupplierItem'
+import NoResult from '../NoHit/NoResult'
 export default {
   name: 'SupplierList',
   inject: ['provideData'],
   components: {
     SupplierItem,
-    SearchPagination
+    NoResult
   },
   props: {
-    list: {
-      type: Array,
-      default: () => [{ location: 654223 }, { location: 654223 }, { location: 654223 }]
+    data: {
+      type: Object,
+      default: () => {}
+    },
+    loading: {
+      type: Boolean,
+      default: () => false
     }
   },
   data() {
     return {
-      loading: false,
-      total: 1000
+      total: 0
     }
   },
+  watch: {
+  },
   methods: {
-    changePage(value) {}
   }
 }
 </script>
 
 <style scoped lang="scss">
 @import '../../common/common';
+.SupplierList{
+  height: auto;
+}
 </style>

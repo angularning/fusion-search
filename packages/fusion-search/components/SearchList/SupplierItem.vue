@@ -6,27 +6,31 @@
   >
     <div class="listItemLeft">
       <div class="orgTop">
-        <img
-          class="orgImg"
-          src="http://cdn-caigou.shuniucloud.com/img/kg-cloud-pc-fe.aside_logoafff22c.png"
-          alt=""
+        <div
+          class="imgs"
+          :class="[provideData.theme+'-logo']"
         >
+          {{ item.org_name&&item.org_name.substring(0,1) }}
+        </div>
         <div class="orgDes">
           <div class="orgDesTitle">
             <div class="titleName">
-              北京众标智能科技有限公司
+              {{ item.org_name }}
             </div>
             <Location :item="item" />
           </div>
           <div>
-            <HitTag />
+            <HitTag :data="item" />
           </div>
         </div>
       </div>
-      <OrgProperty />
+      <OrgProperty :type="'supplier'" :datalist="item" />
     </div>
     <div class="listItemRight">
-      <SupplierCaseItem :type="'supplier'" />
+      <SupplierCaseItem
+        :item="item.cases"
+        :type="'supplier'"
+      />
     </div>
   </div>
 </template>
@@ -94,10 +98,18 @@ export default {
       align-items: center;
       margin-bottom: 15px;
       padding-top: 20px;
-      .orgImg {
+      .imgs {
         width: 54px;
         height: 54px;
-        vertical-align: middle;
+        line-height: 54px;
+        border-radius: 4px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 26px;
+        margin-right: 10px;
+        //width: 54px;
+        //height: 54px;
+        //vertical-align: middle;
       }
       .orgDes {
         .orgDesTitle {

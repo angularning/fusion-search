@@ -1,10 +1,14 @@
 $blue1: rgba(58, 114, 255, 1);
-$blue8: rgba(58, 114, 255, 0.8);
+$blue5: rgba(58, 114, 255, 5);
 $blue6: rgba(58, 114, 255, 0.6);
+$blue8: rgba(58, 114, 255, 0.8);
+$blue12: rgba(58, 114, 255, 0.12);
 $blue16: rgba(58, 114, 255, 0.16);
 $green1: rgba(26, 188, 155, 1);
-$green8: rgba(26, 188, 155, 0.8);
+$green5: rgba(26, 188, 155, 5);
 $green6: rgba(26, 188, 155, 0.6);
+$green8: rgba(26, 188, 155, 0.8);
+$green12: rgba(26, 188, 155, 0.12);
 $green16: rgba(26, 188, 155, 0.16);
 
 //@each $color in  1, 2, 3, 4, 5, 6, 7, 8, 9 {
@@ -157,7 +161,16 @@ $green16: rgba(26, 188, 155, 0.16);
     color: $blue1 !important;
   }
 }
-//.XUNYUAN-select
+.XUNYUAN-logo{
+  background: $blue12;
+  border: 1px $blue5 solid;
+  color: $blue1;
+}
+.JFH-logo{
+  background: $green12;
+  border: 1px $green5 solid;
+  color: $green1;
+}
 
 @mixin addFusedSearchColors($class, $theme) {
   @if $theme {

@@ -9,25 +9,25 @@
       <div class="hitSupAndPurDes">
         <div class="hitTitle">
           <span class="title">
-            供应商标题
+            {{ data.org_name }}
           </span>
           <span
-            v-if="true"
+            v-if="provideData.hit==='purchaser'"
             class="hitTagSpan"
-            :class="[provideData.theme||config.theme+'-background1']"
+            :class="[provideData.theme+'-background1']"
           >业主</span>
           <span
             v-else
             class="hitTagSpan"
-            :class="[provideData.theme||config.theme+'-background1']"
+            :class="[provideData.theme+'-background1']"
           >供应商</span>
         </div>
         <div class="hitTag">
-          <HitTag />
+          <HitTag :data="data" />
         </div>
       </div>
     </div>
-    <HitPropertyList :type="'supplier'" />
+    <HitPropertyList :data="data" :type="'supplier'" />
   </div>
 </template>
 
@@ -42,7 +42,7 @@ export default {
     HitPropertyList
   },
   props: {
-    config: {
+    data: {
       type: Object,
       default: () => {}
     }
@@ -96,7 +96,7 @@ export default {
       }
     }
     .hitSupAndPurDes {
-      height: 60px;
+      min-height: 60px;
       display: flex;
       flex-direction: column;
       justify-content: center;

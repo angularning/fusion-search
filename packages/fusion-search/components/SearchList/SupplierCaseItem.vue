@@ -1,21 +1,29 @@
 <template>
   <div
+    v-if="item[currentPage]&&item[currentPage].case_name"
     v-loading="loading"
     class="SupplierCaseItem"
   >
     <div class="sCaseTop">
       <span :class="[provideData.theme + '-color1']">成交案例</span>
-      <span v-html="shortWordStringAndHeight('安源区卫生和计划生手机育委员会安源区卫生和计划生')" />
+      <span v-html="shortWordStringAndHeight(item[currentPage]&&item[currentPage].case_name)" />
     </div>
     <div class="sCaseTime">
       <span>案例时间</span>
-      <span>2020-10-10</span>
+      <span>{{ item[currentPage]&&item[currentPage].case_release_date }}</span>
     </div>
     <div class="sCaseCon">
       <div class="sCaseLastDes">
-        <span v-if="type === 'supplier'">成交业主</span>
-        <span v-else>供应商</span>
-        <span v-html="filterData('打印机 计算机')" />
+        <span v-if="type === 'supplier'&& item[currentPage]&&item[currentPage].purchaser">成交业主</span>
+        <span v-else-if="type !=='supplier'&&item[currentPage]&&item[currentPage].supplier">供应商</span>
+        <span
+          v-if="type === 'supplier'"
+          v-html="filterData(item[currentPage]&&item[currentPage].purchaser)"
+        />
+        <span
+          v-else
+          v-html="filterData(item[currentPage]&&item[currentPage].supplier)"
+        />
       </div>
       <div class="sCasePage">
         <span
@@ -29,7 +37,7 @@
         <span
           class="sCaseCurrentPage"
           :class="[provideData.theme + '-color1']"
-        >{{ currentPage }}</span>
+        >{{ currentPage+1 }}</span>
         <span
           class="sCaseRightClick"
           @click.stop="pageNext"
@@ -64,9 +72,9 @@ export default {
   data() {
     return {
       loading: false,
-      currentPage: 1,
+      currentPage: 0,
       totalList: JSON.parse(JSON.stringify(this.item)),
-      list: [1, 2, 3, 4],
+      list: [],
       total: 0
     }
   },
@@ -82,11 +90,12 @@ export default {
   },
   methods: {
     setPageList() {
-      this.total = this.list.length
+      this.total = this.item.length
+      this.list = this.item
     },
     pagePre() {
       this.loading = true
-      if (this.currentPage > 1) {
+      if (this.currentPage > 0) {
         this.currentPage--
         setTimeout(() => {
           this.loading = false
@@ -97,7 +106,7 @@ export default {
     },
     pageNext() {
       this.loading = true
-      if (this.currentPage < this.total) {
+      if (this.currentPage < this.total - 1) {
         this.currentPage++
         setTimeout(() => {
           this.loading = false
@@ -110,7 +119,7 @@ export default {
       return `<span>${value}</span>`
     },
     shortWordStringAndHeight(value) {
-      const keyword = '手机'
+      const keyword = this.provideData.keyword
       const filter = new RegExp(keyword)
       if (value && value.length > 42) {
         return (value.substring(0, 42) + '...').replace(

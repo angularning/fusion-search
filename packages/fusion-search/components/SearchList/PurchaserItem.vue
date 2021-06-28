@@ -7,7 +7,7 @@
     <div class="listItemLeft">
       <div class="orgTop">
         <div
-          class="imgs"
+          class="orgTopImg"
           :class="[provideData.theme+'-logo']"
         >
           {{ item.comp_name&&item.comp_name.substring(0,1) }}
@@ -101,7 +101,7 @@ export default {
       align-items: center;
       margin-bottom: 15px;
       padding-top: 20px;
-      .imgs {
+      .orgTopImg {
         width: 54px;
         height: 54px;
         line-height: 54px;
@@ -110,6 +110,7 @@ export default {
         font-weight: bold;
         font-size: 26px;
         margin-right: 10px;
+        min-width: 54px;
         //width: 54px;
         //height: 54px;
         //vertical-align: middle;

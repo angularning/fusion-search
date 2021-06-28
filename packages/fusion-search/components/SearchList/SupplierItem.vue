@@ -113,6 +113,7 @@ export default {
         font-weight: bold;
         font-size: 26px;
         margin-right: 10px;
+        min-width: 54px;
         //width: 54px;
         //height: 54px;
         //vertical-align: middle;

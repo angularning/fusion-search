@@ -3,7 +3,7 @@
 import axios from 'axios' // 引用axios
 // import Qs from 'qs'
 
-axios.defaults.timeout = 50000 // 设置接口响应时间
+axios.defaults.timeout = 500000 // 设置接口响应时间
 
 // if (location.hostname === 'localhost') {
 //   axios.defaults.baseURL = process.env.API_HOST_DEV

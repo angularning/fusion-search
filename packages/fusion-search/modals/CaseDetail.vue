@@ -13,16 +13,15 @@
         {{ item.case_name }}
       </div>
       <div
-        v-if="result_dict.case_tag"
+        v-if="result_dict&&result_dict.owned_item"
         class="caseTagClass"
       >
-        <div
-          v-for="(con,index) in toSort(result_dict.case_tag)"
-          :key="index"
-          class="item-class-tag ml10  defalutColor"
-        >
-          liable
-        </div>
+        <!--        <div-->
+        <!--          v-for="(con,index) in (result_dict.owned_item)"-->
+        <!--          :key="index"-->
+        <!--          class="item-class-tag ml10  defalutColor"-->
+        <!--        >-->
+        <!--        </div>-->
       </div>
       <div
         class="case-detail-url"
@@ -47,16 +46,16 @@
             <div style="font-weight: bold;">
               案例时间
             </div>
-            <div>{{ result_dict.case_release_date }}</div>
+            <div>{{ result_dict.publish_time }}</div>
           </div>
           <div
-            v-if="hasPurchaser(result_dict.purchaser)"
+            v-if="hasPurchaser(result_dict.pur_unit_name)"
             class="product-property-item"
           >
             <div style="font-weight: bold;">
               落地业主
             </div>
-            <div>{{ doPurchaser(result_dict.purchaser) }}</div>
+            <div>{{ doPurchaser(result_dict.pur_unit_name) }}</div>
           </div>
           <div
             v-if="result_dict.hasOwnProperty('case_province_code')"
@@ -65,7 +64,7 @@
             <div style="font-weight: bold;">
               地区
             </div>
-            <div>{{ city_name(result_dict.case_province_code) }}</div>
+            <div>{{ city_name(result_dict.location) }}</div>
           </div>
         </div>
         <template v-if="result_dict.hasOwnProperty('package_info')">
@@ -78,11 +77,11 @@
               <span>内容详情{{ index+1 }}</span>
             </div>
             <div
-              v-if="item.win_amount"
+              v-if="item.subcontract_win_amount"
               class="packageAmountBlack"
             >
               <span>中标金额</span>
-              <span>{{ (item.win_amount/10000).toFixed(2) }}万元</span>
+              <span>{{ (item.subcontract_win_amount/10000).toFixed(2) }}万元</span>
             </div>
             <!-- <div v-if="item.win_amount" class="packageAmount">
                <span>中标金额</span>
@@ -90,7 +89,7 @@
              </div>-->
             <div class="packageProduct">
               <span
-                v-for="productItem in item.object"
+                v-for="productItem in item.subcontract_content"
                 :key="productItem"
               >
                 {{ productItem }}
@@ -98,7 +97,7 @@
             </div>
             <div class="packageWinbid">
               <span
-                v-for="winbidItem in item.winbid"
+                v-for="winbidItem in item.other_suppliers"
                 :key="winbidItem"
               >
                 {{ winbidItem }}
@@ -138,7 +137,7 @@ export default {
       visible: true,
       hasData: true,
       case_content: '',
-      case_url: '',
+      anno_content_url: '',
       result_dict: [],
       item: {},
       loading: false
@@ -147,7 +146,7 @@ export default {
   computed: {
     isActive: {
       get() {
-        return this.case_url
+        return this.anno_content_url
       }
     }
   },
@@ -181,6 +180,9 @@ export default {
           const { data } = res
           this.hasData = JSON.stringify(data) !== '{}'
           this.detailData = data
+          this.result_dict = data.result_dict
+          this.anno_content_url = data.anno_content_url
+          this.case_content = data.notice_content
           this.loading = false
         } else {
           this.hasData = false
@@ -214,7 +216,7 @@ export default {
       }
     },
     doPurchaser(val) {
-      return val && val.join(',')
+      return val
       // if (val) {
       //   if (JSON.parse(JSON.stringify(val.split(',')[0])).length > 2) {
       //     return (JSON.parse(val.split(',')[0]))[0]
@@ -231,8 +233,8 @@ export default {
       }
     },
     viewDetail () {
-      if (this.case_url) {
-        window.open(this.case_url, '_blank')
+      if (this.anno_content_url) {
+        window.open(this.anno_content_url, '_blank')
       }
     },
     // 关闭浮窗时, 销毁实例

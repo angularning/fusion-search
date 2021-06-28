@@ -1,11 +1,11 @@
 <template>
   <div class="HitTag">
     <div
-      v-if="data && data.winbid"
+      v-if="data && (data.winbid||data.pur_unit_name)"
       class="tags-container"
     >
       <div
-        v-for="(tag, j) in data.winbid"
+        v-for="(tag, j) in (data.winbid||data.pur_unit_name)"
         :key="j"
         :class="[provideData.theme + '-color1', provideData.theme + '-background16']"
         class="tag"

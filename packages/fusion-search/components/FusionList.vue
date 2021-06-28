@@ -19,7 +19,7 @@
       <div
         class="listWrap"
       >
-<!--        v-loading="loading"-->
+        <!--        v-loading="loading"-->
         <div class="sortList">
           <SortList
             :search="search"
@@ -35,6 +35,7 @@
         <div>
           <component
             :is="activeComponent"
+            v-loading="loading"
             :data="data"
             :loading="loading"
             @reload-list="reloadList"
@@ -110,7 +111,7 @@ export default {
           purchaser: {
             fields: {
               // purchaser_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
-              order: '-reg_cap'
+              order: '-register_capital'
             }
           }
         },

@@ -32,7 +32,11 @@
       <div class="fusionRight">
         <!--    右侧概览，分产品，供应商，业主-->
         <template v-if="config && config.showDescription">
-          <FusionDescription />
+          <FusionDescription
+            v-loading="loadingChart"
+            :data="chartData"
+            :list="relateList"
+          />
         </template>
       </div>
     </div>
@@ -114,9 +118,12 @@ export default {
       keyword: null,
       configData: {},
       cardData: {}, // 命中卡片数据
+      chartData: {}, // 命中右侧图表等
+      relateList: [], // 相关产品
       hit: 'completeNoHit',
       loadingCard: false,
       loadingList: false,
+      loadingChart: false,
       instance_type: null,
       count: '1',
       hitConfig: {
@@ -196,16 +203,31 @@ export default {
         const { data } = item
         this.loadingCard = false
         this.cardData = data
+        this.getChartData()
+        this.getRelatedList()
         // eslint-disable-next-line handle-callback-err
       }).catch(err => {
         this.loadingCard = false
       })
     },
-    searchResult() {
-
+    getRelatedList() {
+      this.$get('search/related_product/?graph_id=1&keyword=' + this.keyword + '&instance_type=' + this.instance_type + '&uuid=' + this.cardData.uuid).then(item => {
+        const { data } = item
+        this.relateList = data
+        // eslint-disable-next-line handle-callback-err
+      }).catch(err => {
+      })
     },
-    getList(type) {
-
+    getChartData() {
+      this.loadingChart = true
+      this.$get('search/statistics/?graph_id=1&keyword=' + this.keyword + '&instance_type=' + this.instance_type + '&uuid=' + this.cardData.uuid).then(item => {
+        const { data } = item
+        this.chartData = data
+        this.loadingChart = false
+        // eslint-disable-next-line handle-callback-err
+      }).catch(err => {
+        this.loadingChart = false
+      })
     }
   }
 }

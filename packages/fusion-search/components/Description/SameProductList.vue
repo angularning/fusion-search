@@ -1,25 +1,32 @@
 <template>
   <div class="SameProductList">
-    <div>
-      <div class="publicDesTitle">相似的产品</div>
+    <div style="margin-bottom: 15px;">
+      <div class="publicDesTitle">
+        相似的产品
+      </div>
     </div>
     <div class="listRepeat">
-      <div v-for="(item, i) in list" :key="i" class="sameProductRe">
+      <div
+        v-for="(item, i) in list.slice(0, 10)"
+        :key="i"
+        class="sameProductRe"
+      >
         <div class="hitImg">
           <img
-            src="http://img14.360buyimg.com/n0/jfs/t12124/15/2052292482/257261/402cce28/5a30c54fN5e5f155e.jpg"
+            src="../../static/defaultProduct@2x.png"
             alt=""
-          />
+          >
         </div>
         <div class="hitDesBody">
           <div class="hitTitle">
-            <span class="title">手机</span>
-            <span class="hitTagSpan" :class="[provideData.theme + '-color1', provideData.theme + '-background16']"
-              >产品</span
-            >
+            <span class="title">{{ item.solution_name }}</span>
+            <span
+              class="hitTagSpan"
+              :class="[provideData.theme + '-color1', provideData.theme + '-background16']"
+            >产品</span>
           </div>
           <div class="hitDes">
-            法律服务，简称“法服”，是指律师、非律师法律工作者、法律专业人士（包括法人内部在职人员、退、离休政法人员等）或相关机构以其法律知识和技能为法人或自然人实现其正当权益、提高经济效益、排除不法侵害、防范法律风险、维护自身合法权益而提供的专业活动
+            {{ item.solution_desc }}
           </div>
         </div>
       </div>
@@ -50,6 +57,12 @@ export default {
 <style scoped lang="scss">
 @import '../../common/common';
 .SameProductList {
+  .publicDesTitle {
+    font-size: 14px;
+    font-weight: bold;
+    padding-bottom: 12px;
+    border-bottom: 1px #eee solid;
+  }
   background: #ffffff;
   margin-top: 20px;
   padding: 20px;

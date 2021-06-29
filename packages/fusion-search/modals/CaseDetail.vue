@@ -10,7 +10,7 @@
       class="dialog-header"
     >
       <div>
-        {{ item.case_name }}
+        {{ (result_dict&&result_dict.case_name) }}
       </div>
       <div
         v-if="result_dict&&result_dict.owned_item"
@@ -146,7 +146,7 @@ export default {
   computed: {
     isActive: {
       get() {
-        return this.anno_content_url
+        return this.result_dict.anno_content_url
       }
     }
   },

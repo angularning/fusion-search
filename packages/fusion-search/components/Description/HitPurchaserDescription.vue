@@ -6,24 +6,8 @@
     <div
       class="hitProductWrap"
     >
-      <div class="publicDesTitle">
-        服务概览
-      </div>
-      <div class="desNormalTitle">
-        服务地区
-      </div>
-      <div class="locationTag">
-        <DescriptionTag
-          :list="locations()"
-        />
-      </div>
-      <!--      <div class="desNormalTitle">-->
-      <!--        服务领域-->
-      <!--      </div>-->
-      <!--      <div class="locationTag">-->
-      <!--        <DescriptionTag-->
-      <!--          :list="list"-->
-      <!--        />-->
+      <!--      <div class="publicDesTitle">-->
+      <!--        服务概览-->
       <!--      </div>-->
       <div
         class="publicDesTitle"
@@ -32,13 +16,13 @@
         采购分析
       </div>
       <div class="desNormalTitle">
-        合作业主区域分布
+        合作供应商区域分布
       </div>
       <div class="chartWrap">
         <ZbChart :options="options" />
       </div>
       <div class="desNormalTitle">
-        服务产品主要分类（次）
+        采购产品占比
       </div>
       <div class="chartWrap">
         <ZbChart
@@ -46,41 +30,35 @@
           :height="'200px'"
         />
       </div>
+      <SameProductList :list="[1, 2, 3, 4]" />
     </div>
-    <SameProductList :list="list" />
   </div>
 </template>
 
 <script>
 import ZbChart from '../Echarts/ZbChart'
-import DescriptionTag from './DescriptionTag'
 import SameProductList from './SameProductList'
-
 // eslint-disable-next-line camelcase
 import { city_group } from '../../common/city'
 
 export default {
-  name: 'HitSupplierDescription',
+  name: 'HitPurchaserDescription',
   inject: ['provideData'],
   components: {
     SameProductList,
-    DescriptionTag,
     ZbChart
   },
   props: {
     data: {
       type: Object,
       default: () => {}
-    },
-    list: {
-      type: Array,
-      default: () => []
     }
   },
   data() {
     return {
       city_group,
-      loading: false
+      loading: false,
+      list: [1, 2, 3]
     }
   },
   computed: {
@@ -113,7 +91,7 @@ export default {
               fontSize: '12'
             }
           },
-          data: this.getDataSupplier() && this.getDataSupplier().map(item => item.name)
+          data: this.getDataSupplier().map(item => item.name) || []
         }, {
           axisTick: 'none',
           axisLine: 'none',
@@ -124,7 +102,7 @@ export default {
               fontSize: '12'
             }
           },
-          data: this.getDataSupplier() && this.getDataSupplier().map(item => item.value)
+          data: this.getDataSupplier().map(item => (item.value * 100).toFixed(2) + '%') || []
         }],
         series: [
           {
@@ -218,33 +196,29 @@ export default {
     }
   },
   methods: {
-    locations() {
-      if (JSON.stringify(this.data) === '{}') return
-      return this.data && this.data.service_area.map(item => city_group[item])
-    },
     getMaxCountSupplier () {
       if (JSON.stringify(this.data) === '{}') return
-      const lists = this.data.product_count.map(item => item.value)
+      const lists = this.data.product_percent.map(item => item.value)
       const max = Math.max.apply(null, lists)
       return new Array(lists.length).fill(max)
     },
     getDataSupplier () {
       if (JSON.stringify(this.data) === '{}') return
-      return this.data.product_count.map(item => {
+      return this.data.product_percent.map(item => {
         return { name: item.name, value: item.value }
       }).reverse()
     },
     getCaseNumValue() {
       if (JSON.stringify(this.data) === '{}') return
-      return this.data.product_count.map(item => item.value)
+      return this.data.product_percent.map(item => item.value)
     },
     getCaseNumName() {
       if (JSON.stringify(this.data) === '{}') return
-      return this.data.product_count.map(item => item.name)
+      return this.data.product_percent.map(item => item.name)
     },
     getData() {
       if (JSON.stringify(this.data) === '{}') return
-      return this.data.purchaser_location.map(item => {
+      return this.data.supplier_location.map(item => {
         return {
           name: city_group[item.name],
           value: item.value

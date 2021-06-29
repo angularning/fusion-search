@@ -1,24 +1,33 @@
 <template>
   <div class="FusionDescription">
-    <!--    <HitProductDescription v-if="hit === 'product'" />-->
-    <component :is="configList[provideData.hit]" />
+    <component
+      :is="configList[provideData.hit]"
+      :data="data"
+      :list="list"
+    />
   </div>
 </template>
 
 <script>
 import HitProductDescription from './Description/HitProductDescription'
 import HitSupplierDescription from './Description/HitSupplierDescription'
+import HitPurchaserDescription from './Description/HitPurchaserDescription'
 export default {
   name: 'FusionDescription',
   inject: ['provideData'],
   components: {
     HitProductDescription,
-    HitSupplierDescription
+    HitSupplierDescription,
+    HitPurchaserDescription
   },
   props: {
     data: {
       type: Object,
       default: () => {}
+    },
+    list: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
@@ -26,7 +35,7 @@ export default {
       configList: {
         product: 'HitProductDescription',
         supplier: 'HitSupplierDescription',
-        purchaser: 'HitSupplierDescription'
+        purchaser: 'HitPurchaserDescription'
       }
     }
   },

@@ -1,19 +1,42 @@
 <template>
-  <div class="HitProductDescription" v-loading="loading">
+  <div
+    v-loading="loading"
+    class="HitProductDescription"
+  >
     <div class="hitProductWrap">
-      <div class="publicDesTitle">产品概览</div>
-      <div class="desNormalTitle">
+      <div class="publicDesTitle">
+        产品概览
+      </div>
+      <div
+        v-if="getData().length>0"
+        class="desNormalTitle"
+      >
         供应商注册资本占比
       </div>
-      <div class="chartWrap">
+      <div
+        v-if="getData().length>0"
+        class="chartWrap"
+      >
         <ZbChart :options="options" />
       </div>
       <div class="desNormalTitle">
         产品落地次数分布
       </div>
       <div class="chartWrap">
-        <ZbChart :options="optionsLine" :height="'200px'" />
+        <ZbChart
+          :options="optionsLine"
+          :height="'200px'"
+        />
       </div>
+      <!--      <div class="desNormalTitle">-->
+      <!--        产品供应商区域分布-->
+      <!--      </div>-->
+      <!--      <div class="chartWrap">-->
+      <!--        <ZbChart-->
+      <!--          :options="optionsMap"-->
+      <!--          :height="'200px'"-->
+      <!--        />-->
+      <!--      </div>-->
     </div>
     <SameProductList :list="[1, 2, 3, 4]" />
   </div>
@@ -21,45 +44,150 @@
 
 <script>
 import ZbChart from '../Echarts/ZbChart'
-import DescriptionTag from './DescriptionTag'
+// import DescriptionTag from './DescriptionTag'
 import SameProductList from './SameProductList'
 // eslint-disable-next-line camelcase
 import { city_group } from '../../common/city'
-
+const geoCoordMap = {
+  黑龙江省: [127.9688, 45.368],
+  内蒙古自治区: [110.3467, 41.4899],
+  吉林省: [125.8154, 44.2584],
+  北京市: [116.4551, 40.2539],
+  辽宁省: [123.1238, 42.1216],
+  河北省: [114.4995, 38.1006],
+  天津市: [117.4219, 39.4189],
+  山西省: [112.3352, 37.9413],
+  陕西省: [109.1162, 34.2004],
+  甘肃省: [103.5901, 36.3043],
+  宁夏回族自治区: [106.3586, 38.1775],
+  青海省: [101.4038, 36.8207],
+  新疆维吾尔自治区: [87.9236, 43.5883],
+  西藏自治区: [91.11, 29.97],
+  四川省: [103.9526, 30.7617],
+  重庆市: [108.384366, 30.439702],
+  山东省: [117.1582, 36.8701],
+  河南省: [113.4668, 34.6234],
+  江苏省: [118.8062, 31.9208],
+  安徽省: [117.29, 32.0581],
+  湖北省: [114.3896, 30.6628],
+  浙江省: [119.5313, 29.8773],
+  福建省: [119.4543, 25.9222],
+  厦门市: [118.0952, 24.4867],
+  江西省: [116.0046, 28.6633],
+  湖南省: [113.0823, 28.2568],
+  贵州省: [106.6992, 26.7682],
+  云南省: [102.9199, 25.4663],
+  广东省: [113.12244, 23.009505],
+  广西壮族自治区: [108.479, 23.1152],
+  海南省: [110.3893, 19.8516],
+  上海市: [121.4648, 31.2891]
+}
 export default {
   name: 'HitProductDescription',
   inject: ['provideData'],
-  props: {},
+  components: {
+    // DescriptionTag,
+    SameProductList,
+    ZbChart
+  },
+  props: {
+    data: {
+      type: Object,
+      default: () => {}
+    }
+  },
   data() {
     return {
       city_group,
       loading: false,
-      list: [
-        { release_date: '2018Q2', count: 146 },
-        { release_date: '2018Q3', count: 1477 },
-        { release_date: '2018Q4', count: 1638 },
-        { release_date: '2019Q1', count: 890 },
-        { release_date: '2019Q2', count: 912 },
-        { release_date: '2019Q3', count: 1410 },
-        { release_date: '2019Q4', count: 1487 },
-        { release_date: '2020Q1', count: 542 },
-        { release_date: '2020Q2', count: 917 },
-        { release_date: '2020Q3', count: 1393 },
-        { release_date: '2020Q4', count: 1759 },
-        { release_date: '2021Q1', count: 793 },
-        { release_date: '2021Q2', count: 0 }
-      ],
+      list: [],
       type: '123'
     }
-  },
-  components: {
-    DescriptionTag,
-    SameProductList,
-    ZbChart
   },
   computed: {
     regOrder() {
       return ['5000万以上', '1000-5000万', '500-1000万', '200-500万', '100-200万', '100万以下']
+    },
+    optionsMap () {
+      const option = {
+        tooltip: {
+          trigger: 'item',
+          showDelay: 0,
+          transitionDuration: 0.2,
+          formatter (params) {
+            let val = params.value || 0
+            if (Number.isNaN(val)) {
+              val = 0
+            }
+            return params.name + ' : ' + val
+          }
+        },
+        // geo: {
+        //   map: 'china',
+        //   top: '2%',
+        //   bottom: '8%',
+        //   label: {
+        //     emphasis: {
+        //       show: false
+        //     }
+        //   },
+        //   itemStyle: {
+        //     normal: {
+        //       areaColor: '#113F89',
+        //       borderColor: '#6273E5',
+        //       borderWidth: 1
+        //     },
+        //     emphasis: {
+        //       areaColor: 'rgb(10, 105, 187)'
+        //     }
+        //   }
+        // },
+        visualMap: {
+          show: false,
+          min: 0,
+          max: this.getMaxCount(),
+          inRange: {
+            color: ['rgba(58, 114, 255, 0.2)', 'rgba(58, 114, 255, 1)']
+          },
+          textStyle: {
+            color: '#fff'
+          }
+        },
+        series: [
+          {
+            name: '新动能城市成长指数',
+            type: 'map',
+            map: 'china',
+            top: '2%',
+            bottom: '8%',
+            coordinateSystem: 'geo',
+            aspectScale: 0.75, // 长宽比
+            data: this.convertData(),
+            // tooltip: {
+            //   show: false
+            // },
+            label: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: false
+              }
+            },
+            itemStyle: {
+              normal: {
+                areaColor: 'rgba(58, 114, 255, 0.01)',
+                borderColor: 'rgba(58, 114, 255, 0.6)',
+                borderWidth: 1
+              },
+              emphasis: {
+                areaColor: 'rgb(10, 105, 187, 0.5)'
+              }
+            }
+          }
+        ]
+      }
+      return option
     },
     optionsLine() {
       const option = {
@@ -89,7 +217,7 @@ export default {
           splitLine: {
             show: false
           },
-          data: this.list.map((x) => x.release_date)
+          data: this.getCaseNumName()
         },
         yAxis: [
           {
@@ -148,7 +276,7 @@ export default {
               borderColor: 'rgba(58,114,255,1)',
               borderWidth: 1
             },
-            data: this.list.map((item) => item.count)
+            data: this.getCaseNumValue()
           }
         ]
       }
@@ -156,6 +284,7 @@ export default {
     },
     options() {
       const legendData = this.getData()
+      console.log(legendData)
       // if (this.reg) {
       //   legendData.sort((a, b) => this.regOrder.indexOf(a) - this.regOrder.indexOf(b))
       // }
@@ -216,14 +345,46 @@ export default {
       return option
     }
   },
+  created() {
+  },
   methods: {
+    getCaseNumValue() {
+      if (JSON.stringify(this.data) === '{}') return
+      return this.data.case_num.map(item => item.value)
+    },
+    getCaseNumName() {
+      if (JSON.stringify(this.data) === '{}') return
+      return this.data.case_num.map(item => item.name)
+    },
     getData() {
-      return [
-        { name: '北京市', value: 25 },
-        { name: '浙江', value: 17 },
-        { name: '江苏', value: 5 },
-        { name: '上海市', value: 4 }
-      ]
+      if (JSON.stringify(this.data) === '{}') return
+      return this.data.supplier_reg_cap.map(item => {
+        return { ...item }
+      })
+    },
+    convertData () {
+      if (JSON.stringify(this.data) === '{}') return
+      const data = this.data && this.data.supplier_location
+      const res = []
+      for (let i = 0; i < data.length; i++) {
+        const code = data[i].name
+        const name = city_group[code]
+        const geoCoord = geoCoordMap[name]
+        if (geoCoord) {
+          res.push({
+            name,
+            value: data[i].value
+          })
+        }
+      }
+      console.log(res)
+      return res
+    },
+    getMaxCount () {
+      if (JSON.stringify(this.data) === '{}') return
+      const lists = (this.data && this.data.supplier_location).map(o => o.value)
+      const max = Math.max.apply(null, lists)
+      return max
     }
   }
 }

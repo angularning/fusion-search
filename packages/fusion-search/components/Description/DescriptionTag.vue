@@ -1,10 +1,13 @@
 <template>
   <div class="DescriptionTag">
-    <div class="tags-container" v-if="tagList && tagList.length > 0">
+    <div
+      v-if="list && list.length > 0"
+      class="tags-container"
+    >
       <div
-        v-for="(tag, j) in tagList"
-        :class="[provideData.theme + '-color1', provideData.theme + '-background16']"
+        v-for="(tag, j) in list"
         :key="j"
+        :class="[provideData.theme + '-color1', provideData.theme + '-background16']"
         class="tag"
       >
         {{ tag }}
@@ -29,6 +32,10 @@ export default {
     forceTagListConf: {
       type: Object,
       default: null
+    },
+    list: {
+      type: Array,
+      default: () => []
     }
   },
   data() {

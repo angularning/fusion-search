@@ -1,5 +1,9 @@
 <template>
-  <div :id="id" ref="ChartRoot" :style="chartStyle" />
+  <div
+    :id="id"
+    ref="ChartRoot"
+    :style="chartStyle"
+  />
 </template>
 <script>
 function isEmpty(value) {
@@ -7,8 +11,8 @@ function isEmpty(value) {
 }
 
 function debounce(fn, wait) {
-  let timer = null,
-    _this = this
+  let timer = null
+  let _this = this
   return function(...arg) {
     if (timer) {
       clearTimeout(timer)

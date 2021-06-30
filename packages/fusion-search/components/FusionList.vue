@@ -29,7 +29,7 @@
           <SortFilter
             :search="search"
             :type="defaultType"
-            @reload-list="toSortList"
+            @reload-list="toFilterList"
           />
         </div>
         <div>
@@ -60,7 +60,6 @@ import SameSupplierList from './SearchList/SameSupplierList'
 import SortList from './SearchList/SortList'
 import SortFilter from './SearchList/SortFilter'
 import SearchPagination from './SearchList/SearchPagination'
-
 export default {
   name: 'FusionList',
   inject: ['provideData'],
@@ -127,14 +126,14 @@ export default {
             fields: {
               // fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,case_winamount_sum,object,winbid',
               // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
-              order: '-case_release_date' // default/-case_release_date/-case_winamount_sum
+              order: '-case_winamount_sum' // default/-case_release_date/-case_winamount_sum
             }
           },
           purchaser: {
             fields: {
               // purchaser_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
               // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,winbid,object,case_winamount_sum'
-              order: '-case_release_date' // 排序规则-case_release_date/-case_winamount_sum
+              order: '-publish_time' // 排序规则-case_release_date/-case_winamount_sum
             }
           }
         },
@@ -158,20 +157,20 @@ export default {
           supplier: {
             fields: {
               // fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
-              order: '-est_date' // -reg_cap/-est_date
+              order: '-establish_time' // -reg_cap/-est_date
             }
           },
           case: {
             fields: {
               // fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,case_winamount_sum,object',
               // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
-              order: '-release_date' // 排序规则-case_release_date/-case_winamount_sum
+              order: '-publish_time' // 排序规则-case_release_date/-case_winamount_sum
             }
           },
           purchaser: {
             fields: {
               // fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
-              order: '-case_release_date' // 排序规则-case_release_date/-reg_cap
+              order: '-establish_time' // 排序规则-case_release_date/-reg_cap
             }
           }
         }
@@ -281,7 +280,6 @@ export default {
       this.active = 0
     },
     changePage(value) {
-      console.log(value)
       this.cpage = false
       this.getReloadList({ type: value.type, page: value.page })
     },
@@ -290,6 +288,12 @@ export default {
     },
     toSortList(value) {
       this.searchFields[this.hit][value.type].fields.order = value.order
+      this.cpage = true
+      this.getReloadList({ type: value.type })
+    },
+    toFilterList(value) {
+      this.searchFields[this.hit][value.type].fields.location = value.location
+      this.searchFields[this.hit][value.type].fields.reg_cap = value.reg_cap
       this.cpage = true
       this.getReloadList({ type: value.type })
     },
@@ -307,7 +311,6 @@ export default {
     },
     getDefaultList() {
       console.log(this.searchFields[this.hit])
-      console.log([this.defaultType])
       this.data = {}
       // TODO: 优化查询 把命中的词与当前tab建立关系，如果有关系则下次不查询 0627
       this.loading = true

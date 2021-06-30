@@ -180,7 +180,7 @@ export default {
           const { data } = res
           this.hasData = JSON.stringify(data) !== '{}'
           this.detailData = data
-          this.result_dict = data.result_dict
+          this.result_dict = data
           this.anno_content_url = data.anno_content_url
           this.case_content = data.notice_content
           this.loading = false

@@ -9,7 +9,7 @@
       :class="[provideData.theme+'-select']"
       clearable
       :options="provinceCity"
-      @change="handleChange"
+      @change="handleChange(value)"
     />
     <!--    <el-select-->
     <!--      v-model="searchParams.province"-->
@@ -120,21 +120,21 @@ export default {
       },
       sortList: {
         supplier: [
-          {
-            type: 'supplier',
-            name: '综合排序',
-            prop: '-default'
-          },
+          // {
+          //   type: 'supplier',
+          //   name: '综合排序',
+          //   prop: '-default'
+          // },
           /*  {
             type: 'supplier',
             name: '综合升序',
             prop: 'default'
           }, */
-          {
-            type: 'supplier',
-            name: '成交数量降序',
-            prop: '-deal_count'
-          },
+          // {
+          //   type: 'supplier',
+          //   name: '成交数量降序',
+          //   prop: '-establish_time'
+          // },
           /*  {
             type: 'supplier',
             name: '成交数量升序',
@@ -143,7 +143,7 @@ export default {
           {
             type: 'supplier',
             name: '最近成交日期降序',
-            prop: '-deal_date'
+            prop: '-register_capital'
           },
           /*  {
             type: 'supplier',
@@ -153,7 +153,7 @@ export default {
           {
             type: 'supplier',
             name: '注册资本降序',
-            prop: '-reg_cap'
+            prop: '-register_capital'
           }
           /*    {
             type: 'supplier',
@@ -172,89 +172,39 @@ export default {
             name: '注册资本降序',
             prop: '-reg_cap'
           }
-          /* {
-            type: 'supplier',
-            name: '成交数量降序',
-            prop: '-deal_count'
-          },
-          /!*  {
-            type: 'supplier',
-            name: '成交数量升序',
-            prop: 'deal_count'
-          }, *!/
-          {
-            type: 'supplier',
-            name: '最近成交日期降序',
-            prop: '-deal_date'
-          },
-          /!*  {
-            type: 'supplier',
-            name: '最近成交日期升序',
-            prop: 'deal_date'
-          }, *!/
-          {
-            type: 'supplier',
-            name: '注册资本降序',
-            prop: '-reg_cap'
-          },
-          /!*    {
-            type: 'supplier',
-            name: '注册资本升序',
-            prop: 'reg_cap'
-          } *!/ */
         ],
         purchaser: [
-          /* {
+          {
             type: 'purchaser',
             name: '最近采购日期降序',
-            prop: '-purchase_date'
-          }, */
-          /*   {
-            type: 'purchaser',
-            name: '最近采购日期升序',
-            prop: 'purchase_date'
-          }, */
-          /* {
-            type: 'purchaser',
-            name: '采购次数降序',
-            prop: '-purchase_count'
-          }, */
-          /*  {
-            type: 'purchaser',
-            name: '采购次数升序',
-            prop: 'purchase_count'
-          }, */
+            prop: '-establish_time'
+          },
           {
             type: 'purchaser',
             name: '注册资本降序',
-            prop: '-reg_cap'
-          },
-          {
-            type: 'purchaser',
-            name: '注册资本升序',
-            prop: 'reg_cap'
-          },
-          {
-            type: 'purchaser',
-            name: '最近采购日期降序',
-            prop: '-purchaser_recent_date'
-          },
-          {
-            type: 'purchaser',
-            name: '采购数量降序',
-            prop: '-purchaser_case_cnt'
+            prop: '-register_capital'
           }
+          // {
+          //   type: 'purchaser',
+          //   name: '注册资本升序',
+          //   prop: 'reg_cap'
+          // },
+          // {
+          //   type: 'purchaser',
+          //   name: '采购数量降序',
+          //   prop: '-purchaser_case_cnt'
+          // }
         ],
         case: [
           {
             type: 'case',
             name: '发布时间降序',
-            prop: '-case_release_date'
+            prop: '-publish_time'
           },
           {
             type: 'case',
-            name: '发布时间升序',
-            prop: 'case_release_date'
+            name: '成交金额降序',
+            prop: '-case_winamount_sum'
           }
           /* {
             type: 'case',

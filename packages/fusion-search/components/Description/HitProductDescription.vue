@@ -7,18 +7,18 @@
       <div class="publicDesTitle">
         产品概览
       </div>
-      <div
-        v-if="getData().length>0"
-        class="desNormalTitle"
-      >
-        供应商注册资本占比
-      </div>
-      <div
-        v-if="getData().length>0"
-        class="chartWrap"
-      >
-        <ZbChart :options="options" />
-      </div>
+      <template v-if="data.supplier_reg_cap && data.supplier_reg_cap.length>0">
+        <div
+          class="desNormalTitle"
+        >
+          供应商注册资本占比
+        </div>
+        <div
+          class="chartWrap"
+        >
+          <ZbChart :options="options" />
+        </div>
+      </template>
       <div class="desNormalTitle">
         产品落地次数分布
       </div>
@@ -38,14 +38,14 @@
       <!--        />-->
       <!--      </div>-->
     </div>
-    <SameProductList :list="[1, 2, 3, 4]" />
+    <!--    <SameProductList :list="[1, 2, 3, 4]" />-->
   </div>
 </template>
 
 <script>
 import ZbChart from '../Echarts/ZbChart'
 // import DescriptionTag from './DescriptionTag'
-import SameProductList from './SameProductList'
+// import SameProductList from './SameProductList'
 // eslint-disable-next-line camelcase
 import { city_group } from '../../common/city'
 const geoCoordMap = {
@@ -87,7 +87,7 @@ export default {
   inject: ['provideData'],
   components: {
     // DescriptionTag,
-    SameProductList,
+    // SameProductList,
     ZbChart
   },
   props: {
@@ -284,7 +284,6 @@ export default {
     },
     options() {
       const legendData = this.getData()
-      console.log(legendData)
       // if (this.reg) {
       //   legendData.sort((a, b) => this.regOrder.indexOf(a) - this.regOrder.indexOf(b))
       // }

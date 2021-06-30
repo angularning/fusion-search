@@ -204,7 +204,9 @@ export default {
         this.loadingCard = false
         this.cardData = data
         this.getChartData()
-        this.getRelatedList()
+        if (this.instance_type === 'supplier' || this.instance_type === 'purchaser') {
+          this.getRelatedList()
+        }
         // eslint-disable-next-line handle-callback-err
       }).catch(err => {
         this.loadingCard = false

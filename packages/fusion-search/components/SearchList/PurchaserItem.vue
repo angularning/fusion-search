@@ -10,12 +10,12 @@
           class="orgTopImg"
           :class="[provideData.theme+'-logo']"
         >
-          {{ item.comp_name&&item.comp_name.substring(0,1) }}
+          {{ item.purchase_name&&item.purchase_name.substring(0,1) }}
         </div>
         <div class="orgDes">
           <div class="orgDesTitle">
             <div class="titleName">
-              {{ item.comp_name }}
+              {{ item.purchase_name }}
             </div>
             <Location :item="item" />
           </div>
@@ -65,7 +65,7 @@ export default {
       const provideData = this.provideData
       provideData.instance_type = 'purchaser'
       provideData.uuid = this.item.uuid
-      provideData.comp_name = this.item.comp_name
+      provideData.purchase_name = this.item.purchase_name
       this.$modal('SupplierDetail', {
         propsData: {
           provideData

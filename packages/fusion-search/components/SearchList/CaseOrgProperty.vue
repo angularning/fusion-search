@@ -75,7 +75,7 @@ export default {
         const { label, prop } = item
         let value
         if (prop === 'case_winamount_sum') {
-          value = this.setRegCap(this.datalist && this.datalist[prop])
+          value = this.setRegCap(this.datalist && (this.datalist[prop] || this.datalist['bid_winning_amount']))
         } else if (prop === 'object') {
           value = this.datalist && this.datalist[prop] && this.datalist[prop].length > 0 && this.datalist[prop].join()
           value = value && value.length > 30 ? value.substring(0, 30) + '...' : value

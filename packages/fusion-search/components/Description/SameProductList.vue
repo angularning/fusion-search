@@ -10,6 +10,7 @@
         v-for="(item, i) in list.slice(0, 10)"
         :key="i"
         class="sameProductRe"
+        @click="toSearch(item.solution_name)"
       >
         <div class="hitImg">
           <img
@@ -50,7 +51,11 @@ export default {
     }
   },
   computed: {},
-  methods: {}
+  methods: {
+    toSearch(value) {
+      this.$EventBus.$emit('fusion-list-search', value)
+    }
+  }
 }
 </script>
 
@@ -72,6 +77,7 @@ export default {
     flex-flow: row wrap;
     justify-content: flex-start;
     width: 100%;
+    cursor: pointer;
     .sameProductRe {
       display: flex;
       flex-flow: row nowrap;

@@ -2,7 +2,7 @@
   <div class="searchInputContainer">
     <!-- <span class="search-input-title"><img style="width: 100%;" src="" alt=""/></span> -->
     <el-input
-      v-model="keyword"
+      v-model="keywordCopy"
       placeholder="请输入内容"
       class="input-with-select"
       :class="[provideData.theme+'-input']"
@@ -44,17 +44,26 @@ export default {
     data: {
       type: Object,
       default: () => {}
+    },
+    keyword: {
+      type: String,
+      default: () => null
     }
   },
   data() {
     return {
-      keyword: null,
-      select: '1'
+      select: '1',
+      keywordCopy: null
+    }
+  },
+  watch: {
+    keyword(value) {
+      this.keywordCopy = JSON.parse(JSON.stringify(value))
     }
   },
   mounted() {
     this.$EventBus.$on('fusion-list-search', (value) => {
-      this.keyword = value
+      this.keywordCopy = value
     })
   },
   beforeDestroy() {
@@ -62,7 +71,7 @@ export default {
   },
   methods: {
     toSearchList() {
-      this.$emit('search', this.keyword)
+      this.$emit('search', this.keywordCopy)
     }
   }
 }

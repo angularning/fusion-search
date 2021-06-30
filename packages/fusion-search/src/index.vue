@@ -5,7 +5,10 @@
   >
     <!--    搜索框组件-->
     <template v-if="config && config.showInput">
-      <FusionInput @search="fusionSearch" />
+      <FusionInput
+        :keyword="keyword"
+        @search="fusionSearch"
+      />
     </template>
     <!--    命中显示-->
     <div
@@ -209,7 +212,7 @@ export default {
         this.loadingCard = false
         this.cardData = data
         this.getChartData()
-        if (this.instance_type === 'supplier' || this.instance_type === 'purchaser'|| this.instance_type === 'product') {
+        if (this.instance_type === 'supplier' || this.instance_type === 'purchaser' || this.instance_type === 'product') {
           this.getRelatedList()
         }
         // eslint-disable-next-line handle-callback-err

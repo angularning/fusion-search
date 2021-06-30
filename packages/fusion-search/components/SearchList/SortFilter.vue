@@ -1,7 +1,8 @@
 <template>
   <div class="SortFilter">
-    <span class="label1">筛选</span>
+    <span class="label1">服务地区筛选</span>
     <el-cascader
+      ref="myCascader"
       v-model="value"
       size="mini"
       style="margin-left: 20px;margin-right: 20px;"
@@ -81,6 +82,7 @@
       :class="[provideData.theme+'-input']"
       class="sortInput"
       size="mini"
+      @keyup.enter.native="toSearchList"
     >
       <span
         slot="prefix"
@@ -276,7 +278,19 @@ export default {
       })
     },
     handleChange(value) {
-      console.log(value)
+      if (value) {
+        const n = this.$refs.myCascader.getCheckedNodes()[0]
+        const location = n && n.data.code
+        this.location = location
+        this.$emit('filter-list', { location, type: this.type, reg_cap: this.reg_cap })
+      }
+    },
+    toSearchList() {
+      // eslint-disable-next-line camelcase
+      const reg_cap = this.searchParams.money1 + ',' + this.searchParams.money2
+      // eslint-disable-next-line camelcase
+      this.reg_cap = reg_cap
+      this.$emit('filter-list', { reg_cap, type: this.type, location: this.location })
     },
     setCityData() {
       this.provinceCity.forEach((item) => {

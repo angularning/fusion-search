@@ -29,7 +29,7 @@
           <SortFilter
             :search="search"
             :type="defaultType"
-            @reload-list="toFilterList"
+            @filter-list="toFilterList"
           />
         </div>
         <div>
@@ -355,7 +355,7 @@ export default {
         page_size: 15
       }
       const data = Object.assign(selection, this.searchFields[this.hit][additional.type].fields)
-      // console.log('data', data)
+      console.log('data', data)
       this.$post(this.provideData.baseUrl + 'search/main/', data).then(item => {
         const { data } = item
         this.data = data

@@ -1,58 +1,50 @@
 <template>
   <div class="LocationTag">
-    <div class="tags-container" v-if="tagList && tagList.length > 0">
+    <div
+      v-if="list"
+      class="tags-container"
+    >
       <div
-        v-for="(tag, j) in tagList"
+        v-for="(tag, j) in [list]"
         :key="j"
         class="tag"
       >
-        {{ tag }}
+        {{ getValue(tag) }}
       </div>
     </div>
   </div>
 </template>
 
 <script>
+// eslint-disable-next-line camelcase
+import { city_group } from '../../common/city'
+
 export default {
   name: 'LocationTag',
   inject: ['provideData'],
   props: {
-    forceType: {
-      type: String,
+    list: {
+      type: [Array, String],
       default: ''
-    },
-    types: {
-      type: String,
-      default: ''
-    },
-    forceTagListConf: {
-      type: Object,
-      default: null
     }
   },
   data() {
     return {
       first_list: [],
       second_list: [],
-      tagList: ['北京', '上海'],
+      // tagList: ['北京', '上海'],
       theme: this.theme
     }
   },
   computed: {
     isShow() {
-      return this.tagList.length > 0
+      return this.list.length > 0
     }
   },
   watch: {},
   methods: {
-    handleClick(item, tag, e) {
-      if (item.label === '同义词') {
-        if (item.navi) {
-          // this.$emit('nav-tag', e.target.innerText)
-        }
-      } else if (item.navi) {
-        this.$emit('nav-tag', tag)
-      }
+    getValue(value) {
+      return city_group[value]
     }
   }
 }

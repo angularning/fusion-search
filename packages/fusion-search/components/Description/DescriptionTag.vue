@@ -10,13 +10,15 @@
         :class="[provideData.theme + '-color1', provideData.theme + '-background16']"
         class="tag"
       >
-        {{ tag }}
+        {{ getValue(tag) }}
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { getNames } from '../../utils/tagConfig'
+
 export default {
   name: 'DescriptionTag',
   inject: ['provideData'],
@@ -53,14 +55,8 @@ export default {
   },
   watch: {},
   methods: {
-    handleClick(item, tag, e) {
-      if (item.label === '同义词') {
-        if (item.navi) {
-          // this.$emit('nav-tag', e.target.innerText)
-        }
-      } else if (item.navi) {
-        this.$emit('nav-tag', tag)
-      }
+    getValue(value) {
+      return getNames(value)
     }
   }
 }

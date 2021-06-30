@@ -310,7 +310,7 @@ export default {
       })
     },
     getDefaultList() {
-      console.log(this.searchFields[this.hit])
+      // console.log(this.searchFields[this.hit])
       this.data = {}
       // TODO: 优化查询 把命中的词与当前tab建立关系，如果有关系则下次不查询 0627
       this.loading = true
@@ -326,8 +326,8 @@ export default {
         page_size: 15
       }
       const data = Object.assign(selection, this.searchFields[this.hit][this.defaultType].fields)
-      console.log('data', data)
-      this.$post('search/main/', data).then(item => {
+      // console.log('data', data)
+      this.$post(this.provideData.baseUrl + 'search/main/', data).then(item => {
         const { data } = item
         this.data = data
         if (this.data) {
@@ -355,8 +355,8 @@ export default {
         page_size: 15
       }
       const data = Object.assign(selection, this.searchFields[this.hit][additional.type].fields)
-      console.log('data', data)
-      this.$post('search/main/', data).then(item => {
+      // console.log('data', data)
+      this.$post(this.provideData.baseUrl + 'search/main/', data).then(item => {
         const { data } = item
         this.data = data
         if (this.data) {

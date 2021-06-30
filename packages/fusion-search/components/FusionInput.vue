@@ -1,5 +1,5 @@
 <template>
-  <div class="search-input-container">
+  <div class="searchInputContainer">
     <!-- <span class="search-input-title"><img style="width: 100%;" src="" alt=""/></span> -->
     <el-input
       v-model="keyword"
@@ -69,7 +69,7 @@ export default {
 </script>
 
 <style lang="scss">
-.search-input-container .el-input-group__prepend {
+.searchInputContainer .el-input-group__prepend {
   padding: 0;
   width: 70px;
   background-color: #fbfcff;
@@ -103,14 +103,14 @@ export default {
     content: '\E78F';
   }
 }
-.search-input-container .el-input__inner {
+.searchInputContainer .el-input__inner {
   //border-left: none;
   background: #fbfcff;
   height: 34px;
 }
 </style>
 <style scoped lang="scss">
-.search-input-container {
+.searchInputContainer {
   width: 100%;
   height: 74px;
   background: #ffffff;

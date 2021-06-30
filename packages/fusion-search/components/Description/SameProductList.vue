@@ -26,8 +26,11 @@
               :class="[provideData.theme + '-color1', provideData.theme + '-background16']"
             >产品</span>
           </div>
-          <div class="hitDes">
-            {{ item.solution_desc }}
+          <div
+            v-if="item.hasOwnProperty('solution_desc')"
+            class="hitDes"
+          >
+            {{ item.solution_desc || '' }}
           </div>
         </div>
       </div>

@@ -165,6 +165,9 @@ export default {
     Object.defineProperty(provideData, 'keyword', {
       get: () => this.provideData.keyword
     })
+    Object.defineProperty(provideData, 'baseUrl', {
+      get: () => this.provideData.baseUrl
+    })
     return {
       provideData
     }
@@ -175,7 +178,7 @@ export default {
   methods: {
     getDetails() {
       this.loading = true
-      this.$get('search/detail/?graph_id=1&keyword=' + this.provideData.word + '&instance_type=' + this.provideData.instance_type + '&uuid=' + this.provideData.uuid).then(res => {
+      this.$get(this.provideData.baseUrl + 'search/detail/?graph_id=1&keyword=' + this.provideData.word + '&instance_type=' + this.provideData.instance_type + '&uuid=' + this.provideData.uuid).then(res => {
         if (res) {
           const { data } = res
           this.hasData = JSON.stringify(data) !== '{}'

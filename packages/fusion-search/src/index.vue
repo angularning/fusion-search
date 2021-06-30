@@ -159,7 +159,8 @@ export default {
     let provideData = {
       hit: '',
       theme: '',
-      keyword: this.keyword
+      keyword: this.keyword,
+      baseUrl: ''
     }
     Object.defineProperty(provideData, 'hit', {
       get: () => this.hit
@@ -169,6 +170,9 @@ export default {
     })
     Object.defineProperty(provideData, 'keyword', {
       get: () => this.keyword
+    })
+    Object.defineProperty(provideData, 'baseUrl', {
+      get: () => this.config.baseUrl
     })
     return {
       provideData
@@ -189,7 +193,7 @@ export default {
     },
     mixSearch(value) {
       if (this.lastKeyword === this.keyword) return false
-      this.$get('search/input_box/?graph_id=1&keyword=' + value).then(item => {
+      this.$get(this.config.baseUrl + 'search/input_box/?graph_id=1&keyword=' + value).then(item => {
         this.lastKeyword = this.keyword
         const { data } = item
         this.hit = this.hitConfig[data.instance_type]
@@ -200,12 +204,12 @@ export default {
     },
     getSearchCard() {
       this.loadingCard = true
-      this.$get('search/card/?graph_id=1&keyword=' + this.keyword + '&instance_type=' + this.instance_type).then(item => {
+      this.$get(this.config.baseUrl + 'search/card/?graph_id=1&keyword=' + this.keyword + '&instance_type=' + this.instance_type).then(item => {
         const { data } = item
         this.loadingCard = false
         this.cardData = data
         this.getChartData()
-        if (this.instance_type === 'supplier' || this.instance_type === 'purchaser') {
+        if (this.instance_type === 'supplier' || this.instance_type === 'purchaser'|| this.instance_type === 'product') {
           this.getRelatedList()
         }
         // eslint-disable-next-line handle-callback-err
@@ -214,7 +218,7 @@ export default {
       })
     },
     getRelatedList() {
-      this.$get('search/related_product/?graph_id=1&keyword=' + this.keyword + '&instance_type=' + this.instance_type + '&uuid=' + this.cardData.uuid).then(item => {
+      this.$get(this.config.baseUrl + 'search/related_product/?graph_id=1&keyword=' + this.keyword + '&instance_type=' + this.instance_type + '&uuid=' + this.cardData.uuid).then(item => {
         const { data } = item
         this.relateList = data
         // eslint-disable-next-line handle-callback-err
@@ -223,7 +227,7 @@ export default {
     },
     getChartData() {
       this.loadingChart = true
-      this.$get('search/statistics/?graph_id=1&keyword=' + this.keyword + '&instance_type=' + this.instance_type + '&uuid=' + this.cardData.uuid).then(item => {
+      this.$get(this.config.baseUrl + 'search/statistics/?graph_id=1&keyword=' + this.keyword + '&instance_type=' + this.instance_type + '&uuid=' + this.cardData.uuid).then(item => {
         const { data } = item
         this.chartData = data
         this.loadingChart = false

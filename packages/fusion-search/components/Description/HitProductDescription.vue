@@ -38,14 +38,14 @@
       <!--        />-->
       <!--      </div>-->
     </div>
-    <!--    <SameProductList :list="[1, 2, 3, 4]" />-->
+    <SameProductList :list="list" />
   </div>
 </template>
 
 <script>
 import ZbChart from '../Echarts/ZbChart'
 // import DescriptionTag from './DescriptionTag'
-// import SameProductList from './SameProductList'
+import SameProductList from './SameProductList'
 // eslint-disable-next-line camelcase
 import { city_group } from '../../common/city'
 const geoCoordMap = {
@@ -87,20 +87,23 @@ export default {
   inject: ['provideData'],
   components: {
     // DescriptionTag,
-    // SameProductList,
+    SameProductList,
     ZbChart
   },
   props: {
     data: {
       type: Object,
       default: () => {}
+    },
+    list: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
     return {
       city_group,
       loading: false,
-      list: [],
       type: '123'
     }
   },

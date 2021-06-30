@@ -30,7 +30,7 @@
           :height="'200px'"
         />
       </div>
-      <SameProductList :list="[1, 2, 3, 4]" />
+      <SameProductList :list="list" />
     </div>
   </div>
 </template>
@@ -52,13 +52,16 @@ export default {
     data: {
       type: Object,
       default: () => {}
+    },
+    list: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
     return {
       city_group,
-      loading: false,
-      list: [1, 2, 3]
+      loading: false
     }
   },
   computed: {

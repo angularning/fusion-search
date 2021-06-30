@@ -35,25 +35,25 @@
           <div class="supplierDetailTitle">
             服务过的地区
           </div>
-          <LocationTag />
+          <LocationTag :list="detailData.location" />
         </div>
         <div>
           <div class="supplierDetailTitle">
             服务领域
           </div>
-          <DescriptionTag />
+          <DescriptionTag :list="detailData.supplementary_label" />
         </div>
         <div>
           <PlanCommonTag
-            v-if="org_website_info.product.length>0"
-            :list="org_website_info.product"
+            v-if="detailData.product.length>0"
+            :list="detailData.product"
             :title="'公司产品'"
             :colors="'green'"
           />
           <PlanCommonTag
-            v-if="org_website_info.programme.length>0"
+            v-if="detailData.programme.length>0"
             style="margin-top: 20px;"
-            :list="org_website_info.programme"
+            :list="detailData.programme"
             :title="'解决方案'"
             :colors="'purple'"
           />
@@ -93,7 +93,8 @@ export default {
     let provideData = {
       hit: '',
       theme: '',
-      keyword: null
+      keyword: null,
+      baseUrl: ''
     }
     Object.defineProperty(provideData, 'hit', {
       get: () => this.provideData.hit
@@ -103,6 +104,9 @@ export default {
     })
     Object.defineProperty(provideData, 'keyword', {
       get: () => this.provideData.keyword
+    })
+    Object.defineProperty(provideData, 'baseUrl', {
+      get: () => this.provideData.baseUrl
     })
     return {
       provideData
@@ -116,138 +120,138 @@ export default {
       hasData: false,
       detailData: {},
       org_website_info: {
-        'programme': [
-          {
-            'url': 'http://www.seeyon.com/Project/index.html?id=6http://www.seeyon.com/',
-            'name': '更多业务解决方案',
-            'depth': 2,
-            'label': 'FA0099',
-            'order': 1,
-            'columns': [{
-              'url': 'http://www.seeyon.com/Project/index.html?id=6http://www.seeyon.com/',
-              'name': '更多业务解决方案',
-              'depth': 2,
-              'label': 'FA0099',
-              'order': 1,
-              'columns': [],
-              'category': '01'
-            }],
-            'category': '01'
-          }, {
-            'url': 'http://www.seeyon.com/Project/index.html?id=7http://www.seeyon.com/',
-            'name': '更多行业解决方案',
-            'depth': 2,
-            'label': 'FA0099',
-            'order': 2,
-            'columns': [{
-              'url': 'http://www.seeyon.com/Project/index.html?id=7http://www.seeyon.com/',
-              'name': '更多行业解决方案',
-              'depth': 2,
-              'label': 'FA0099',
-              'order': 2,
-              'columns': [],
-              'category': '01'
-            }],
-            'category': '01'
-          }, {
-            'url': 'http://www.seeyon.com/home/Zhengwu/index.html?from=index-daohanghttp://www.seeyon.com/',
-            'name': '更多行业解决方案',
-            'depth': 2,
-            'label': 'FA0099',
-            'order': 3,
-            'columns': [{
-              'url': 'http://www.seeyon.com/home/Zhengwu/index.html?from=index-daohanghttp://www.seeyon.com/',
-              'name': '更多行业解决方案',
-              'depth': 2,
-              'label': 'FA0099',
-              'order': 3,
-              'columns': [],
-              'category': '01'
-            }],
-            'category': '01'
-          }],
-        'product': [
-          {
-            'url': 'http://www.seeyon.com/home/Zhengwu/index.html?from=index-daohanghttp://www.seeyon.com/',
-            'name': '更多政务产品',
-            'depth': 2,
-            'label': 'FA0001',
-            'order': 1,
-            'columns': [{
-              'url': 'http://www.seeyon.com/home/Zhengwu/index.html?from=index-daohanghttp://www.seeyon.com/',
-              'name': '更多政务产品',
-              'depth': 2,
-              'label': 'FA0001',
-              'order': 1,
-              'columns': [],
-              'category': '02'
-            }],
-            'category': '02'
-          }, {
-            'url': 'http://www.seeyon.com/home/Tiyan/business_scene.html?from=index-daohanghttp://www.seeyon.com/',
-            'name': '更多业务产品',
-            'depth': 2,
-            'label': 'FA0099',
-            'order': 2,
-            'columns': [{
-              'url': 'http://www.seeyon.com/home/Tiyan/business_scene.html?from=index-daohanghttp://www.seeyon.com/',
-              'name': '更多业务产品',
-              'depth': 2,
-              'label': 'FA0099',
-              'order': 2,
-              'columns': [],
-              'category': '02'
-            }],
-            'category': '02'
-          }, {
-            'url': 'http://www.seeyon.com/home/Tiyan/mobile.html?from=index-daohanghttp://www.seeyon.com/',
-            'name': '更多移动产品',
-            'depth': 2,
-            'label': 'FA0099',
-            'order': 3,
-            'columns': [{
-              'url': 'http://www.seeyon.com/home/Tiyan/mobile.html?from=index-daohanghttp://www.seeyon.com/',
-              'name': '更多移动产品',
-              'depth': 2,
-              'label': 'FA0099',
-              'order': 3,
-              'columns': [],
-              'category': '02'
-            }],
-            'category': '02'
-          }, {
-            'url': 'http://www.seeyon.com/home/Tiyan/index.html?from=index-daohanghttp://www.seeyon.com/',
-            'name': '更多云平台产品',
-            'depth': 2,
-            'label': 'FA0099',
-            'order': 4,
-            'columns': [{
-              'url': 'http://www.seeyon.com/home/Tiyan/index.html?from=index-daohanghttp://www.seeyon.com/',
-              'name': '更多云平台产品',
-              'depth': 2,
-              'label': 'FA0099',
-              'order': 4,
-              'columns': [],
-              'category': '02'
-            }],
-            'category': '02'
-          }, {
-            'url': 'http://www.seeyon.com/home/Zhongtai/index.html?from=index-daohanghttp://www.seeyon.com/',
-            'name': '更多协同运营中台产品',
-            'depth': 2,
-            'label': 'FA0099',
-            'order': 5,
-            'columns': [{
-              'url': 'http://www.seeyon.com/home/Zhongtai/index.html?from=index-daohanghttp://www.seeyon.com/',
-              'name': '更多协同运营中台产品',
-              'depth': 2,
-              'label': 'FA0099',
-              'order': 5,
-              'columns': [],
-              'category': '02'
-            }],
-            'category': '02'
-          }]
+        // 'programme': [
+        //   {
+        //     'url': 'http://www.seeyon.com/Project/index.html?id=6http://www.seeyon.com/',
+        //     'name': '更多业务解决方案',
+        //     'depth': 2,
+        //     'label': 'FA0099',
+        //     'order': 1,
+        //     'columns': [{
+        //       'url': 'http://www.seeyon.com/Project/index.html?id=6http://www.seeyon.com/',
+        //       'name': '更多业务解决方案',
+        //       'depth': 2,
+        //       'label': 'FA0099',
+        //       'order': 1,
+        //       'columns': [],
+        //       'category': '01'
+        //     }],
+        //     'category': '01'
+        //   }, {
+        //     'url': 'http://www.seeyon.com/Project/index.html?id=7http://www.seeyon.com/',
+        //     'name': '更多行业解决方案',
+        //     'depth': 2,
+        //     'label': 'FA0099',
+        //     'order': 2,
+        //     'columns': [{
+        //       'url': 'http://www.seeyon.com/Project/index.html?id=7http://www.seeyon.com/',
+        //       'name': '更多行业解决方案',
+        //       'depth': 2,
+        //       'label': 'FA0099',
+        //       'order': 2,
+        //       'columns': [],
+        //       'category': '01'
+        //     }],
+        //     'category': '01'
+        //   }, {
+        //     'url': 'http://www.seeyon.com/home/Zhengwu/index.html?from=index-daohanghttp://www.seeyon.com/',
+        //     'name': '更多行业解决方案',
+        //     'depth': 2,
+        //     'label': 'FA0099',
+        //     'order': 3,
+        //     'columns': [{
+        //       'url': 'http://www.seeyon.com/home/Zhengwu/index.html?from=index-daohanghttp://www.seeyon.com/',
+        //       'name': '更多行业解决方案',
+        //       'depth': 2,
+        //       'label': 'FA0099',
+        //       'order': 3,
+        //       'columns': [],
+        //       'category': '01'
+        //     }],
+        //     'category': '01'
+        //   }],
+        // 'product': [
+        //   {
+        //     'url': 'http://www.seeyon.com/home/Zhengwu/index.html?from=index-daohanghttp://www.seeyon.com/',
+        //     'name': '更多政务产品',
+        //     'depth': 2,
+        //     'label': 'FA0001',
+        //     'order': 1,
+        //     'columns': [{
+        //       'url': 'http://www.seeyon.com/home/Zhengwu/index.html?from=index-daohanghttp://www.seeyon.com/',
+        //       'name': '更多政务产品',
+        //       'depth': 2,
+        //       'label': 'FA0001',
+        //       'order': 1,
+        //       'columns': [],
+        //       'category': '02'
+        //     }],
+        //     'category': '02'
+        //   }, {
+        //     'url': 'http://www.seeyon.com/home/Tiyan/business_scene.html?from=index-daohanghttp://www.seeyon.com/',
+        //     'name': '更多业务产品',
+        //     'depth': 2,
+        //     'label': 'FA0099',
+        //     'order': 2,
+        //     'columns': [{
+        //       'url': 'http://www.seeyon.com/home/Tiyan/business_scene.html?from=index-daohanghttp://www.seeyon.com/',
+        //       'name': '更多业务产品',
+        //       'depth': 2,
+        //       'label': 'FA0099',
+        //       'order': 2,
+        //       'columns': [],
+        //       'category': '02'
+        //     }],
+        //     'category': '02'
+        //   }, {
+        //     'url': 'http://www.seeyon.com/home/Tiyan/mobile.html?from=index-daohanghttp://www.seeyon.com/',
+        //     'name': '更多移动产品',
+        //     'depth': 2,
+        //     'label': 'FA0099',
+        //     'order': 3,
+        //     'columns': [{
+        //       'url': 'http://www.seeyon.com/home/Tiyan/mobile.html?from=index-daohanghttp://www.seeyon.com/',
+        //       'name': '更多移动产品',
+        //       'depth': 2,
+        //       'label': 'FA0099',
+        //       'order': 3,
+        //       'columns': [],
+        //       'category': '02'
+        //     }],
+        //     'category': '02'
+        //   }, {
+        //     'url': 'http://www.seeyon.com/home/Tiyan/index.html?from=index-daohanghttp://www.seeyon.com/',
+        //     'name': '更多云平台产品',
+        //     'depth': 2,
+        //     'label': 'FA0099',
+        //     'order': 4,
+        //     'columns': [{
+        //       'url': 'http://www.seeyon.com/home/Tiyan/index.html?from=index-daohanghttp://www.seeyon.com/',
+        //       'name': '更多云平台产品',
+        //       'depth': 2,
+        //       'label': 'FA0099',
+        //       'order': 4,
+        //       'columns': [],
+        //       'category': '02'
+        //     }],
+        //     'category': '02'
+        //   }, {
+        //     'url': 'http://www.seeyon.com/home/Zhongtai/index.html?from=index-daohanghttp://www.seeyon.com/',
+        //     'name': '更多协同运营中台产品',
+        //     'depth': 2,
+        //     'label': 'FA0099',
+        //     'order': 5,
+        //     'columns': [{
+        //       'url': 'http://www.seeyon.com/home/Zhongtai/index.html?from=index-daohanghttp://www.seeyon.com/',
+        //       'name': '更多协同运营中台产品',
+        //       'depth': 2,
+        //       'label': 'FA0099',
+        //       'order': 5,
+        //       'columns': [],
+        //       'category': '02'
+        //     }],
+        //     'category': '02'
+        //   }]
       }
     }
   },
@@ -272,7 +276,7 @@ export default {
     },
     getDetails() {
       this.loading = true
-      this.$get('search/detail/?graph_id=1&keyword=' + this.provideData.comp_name + '&instance_type=' + this.provideData.instance_type + '&uuid=' + this.provideData.uuid).then(res => {
+      this.$get(this.provideData.baseUrl + 'search/detail/?graph_id=1&keyword=' + this.provideData.comp_name + '&instance_type=' + this.provideData.instance_type + '&uuid=' + this.provideData.uuid).then(res => {
         if (res) {
           const { data } = res
           this.hasData = JSON.stringify(data) !== '{}'

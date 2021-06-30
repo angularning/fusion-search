@@ -35,7 +35,7 @@
           <div class="supplierDetailTitle">
             服务过的地区
           </div>
-          <LocationTag :list="detailData.location" />
+          <LocationTag :list="detailData.service_area" />
         </div>
         <div>
           <div class="supplierDetailTitle">

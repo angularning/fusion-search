@@ -5,7 +5,7 @@
       class="tags-container"
     >
       <div
-        v-for="(tag, j) in [list]"
+        v-for="(tag, j) in list"
         :key="j"
         class="tag"
       >

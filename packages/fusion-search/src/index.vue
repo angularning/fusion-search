@@ -135,8 +135,6 @@ export default {
       }
     }
   },
-  computed: {
-  },
   watch: {
     emitSearch: {
       immediate: true,
@@ -153,6 +151,9 @@ export default {
         // console.log(val)
       }
     }
+  },
+  created() {
+    sessionStorage.setItem('FUSIONCONFIG', JSON.stringify(this.config))
   },
   provide() {
     let provideData = {

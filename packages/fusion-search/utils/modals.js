@@ -5,7 +5,7 @@ keys.map(iterator).forEach((_item, i) => {
   const item = _item.default
   // ./Example.vue
   const name = keys[i].slice(2, -4)
-  if (item.name) {
+  if (item && item.name) {
     modals[item.name] = item
   } else {
     modals[name] = item

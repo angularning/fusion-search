@@ -12,7 +12,9 @@ axios.defaults.timeout = 500000 // 设置接口响应时间
 // } else if (location.hostname === 'production') {
 //   axios.defaults.baseURL = process.env.API_HOST_PROD
 // }
-axios.defaults.baseURL = 'http://192.168.41.84:8000/'
+const config = JSON.parse(sessionStorage.getItem('FUSIONCONFIG') && sessionStorage.getItem('FUSIONCONFIG'))
+const configUrl = config.APIHOST || 'http://47.93.91.115:7150/v1/api/'
+// axios.defaults.baseURL = config && (config.APIHOST || 'http://47.93.91.115:7150/v1/api/')
 
 // http request 拦截器，通过这个，我们就可以把Cookie传到后台
 axios.interceptors.request.use(
@@ -108,7 +110,7 @@ export default axios
 export function $get(url, params = {}) {
   return new Promise((resolve, reject) => {
     axios
-      .get(url, {
+      .get(configUrl + url, {
         params: params
       })
       .then(response => {
@@ -128,7 +130,7 @@ export function $get(url, params = {}) {
  */
 export function $post(url, data = {}) {
   return new Promise((resolve, reject) => {
-    axios.post(url, data).then(
+    axios.post(configUrl + url, data).then(
       response => {
         // console.log(response.data.code)
         resolve(response.data)

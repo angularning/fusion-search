@@ -1,13 +1,15 @@
 import FusionSearch from './src/index'
 // import element from 'element-ui'
-// import axios from 'axios'
 // import 'element-ui/lib/theme-chalk/index.css'
+import { $get, $post } from './utils/axios'
 import GlobalModal from './utils/modals'
 const components = [FusionSearch]
 const install = function(Vue) {
   Vue.prototype.$EventBus = new Vue()
   // Vue.use(element)
   Vue.use(GlobalModal)
+  Vue.prototype.$post = $post
+  Vue.prototype.$get = $get
   // Vue.prototype.$axios = axios
   // 判断是否安装
   if (install.installed) {

@@ -22,12 +22,12 @@
 </template>
 
 <script>
-import FusionSearch from '../../packages/fusion-search/src/index'
+// import FusionSearch from '../../packages/fusion-search/src/index'
 export default {
   name: 'Home',
-  components: {
-    FusionSearch
-  },
+  // components: {
+  //   FusionSearch
+  // },
   data() {
     return {
       keyword: null,

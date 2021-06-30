@@ -1,7 +1,7 @@
 {
   "name": "vue-fusion-search",
-  "version": "0.0.9",
-  "description": "A library packaging tool based on rollup and vue-cli3",
+  "version": "0.0.11x1",
+  "description": "fusion-search",
   "private": false,
   "author": "weining@chinasofti.com",
   "main": "lib/index.js",
@@ -39,7 +39,10 @@
     "pub:cli": "npm run uv && npm run lib:cli && npm publish",
     "uv": "cross-env node ./script/update.version.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "generate-source-map": "^0.0.5",
+    "rollup-plugin-require-context": "^1.0.1"
+  },
   "devDependencies": {
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
@@ -52,6 +55,7 @@
     "@vuepress/plugin-back-to-top": "^1.0.4",
     "@vuepress/plugin-medium-zoom": "^1.0.4",
     "autoprefixer": "^9.6.1",
+    "axios": "^0.21.1",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^23.6.0",
@@ -61,6 +65,8 @@
     "core-js": "^2.6.5",
     "cross-env": "^5.2.1",
     "cssnano": "^4.1.10",
+    "echarts": "^4.9.0",
+    "element-ui": "^2.12.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "highlight.js": "^9.15.10",
@@ -68,9 +74,6 @@
     "image-webpack-loader": "^6.0.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
-    "element-ui": "^2.12.0",
-    "echarts": "^4.9.0",
-    "axios": "^0.21.1",
     "lint-staged": "^9.2.5",
     "mini-css-extract-plugin": "^0.8.0",
     "postcss-cssnext": "^3.1.0",

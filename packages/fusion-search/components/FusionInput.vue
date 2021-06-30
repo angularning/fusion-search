@@ -67,7 +67,7 @@ export default {
     })
   },
   beforeDestroy() {
-    this.$EventBus.$off('fusion-search')
+    this.$EventBus.$off('fusion-list-search')
   },
   methods: {
     toSearchList() {

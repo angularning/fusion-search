@@ -35,6 +35,12 @@
         :type="'supplier'"
       />
     </div>
+    <template v-if="show">
+      <SupplierDetail
+        :provide-data="useData"
+        @cancel="changeShow"
+      />
+    </template>
   </div>
 </template>
 
@@ -43,6 +49,7 @@ import HitTag from '../HitMix/HitTag'
 import Location from './Location'
 import OrgProperty from './OrgProperty'
 import SupplierCaseItem from './SupplierCaseItem'
+import SupplierDetail from '../../modals/SupplierDetail'
 export default {
   name: 'SupplierItem',
   inject: ['provideData'],
@@ -50,7 +57,8 @@ export default {
     OrgProperty,
     Location,
     HitTag,
-    SupplierCaseItem
+    SupplierCaseItem,
+    SupplierDetail
   },
   props: {
     item: {
@@ -60,22 +68,29 @@ export default {
   },
   data() {
     return {
-      loading: false
+      loading: false,
+      show: false,
+      useData: {}
     }
   },
   methods: {
+    changeShow() {
+      this.show = false
+    },
     showDetail() {
       const provideData = this.provideData
       provideData.instance_type = 'supplier'
       provideData.uuid = this.item.uuid
       provideData.comp_name = this.item.comp_name
-      this.$modal('SupplierDetail', {
-        propsData: {
-          provideData
-        },
-        $store: this.$store,
-        $router: this.$router
-      })
+      this.useData = provideData
+      this.show = true
+      // this.$modal('SupplierDetail', {
+      //   propsData: {
+      //     provideData
+      //   },
+      //   $store: this.$store,
+      //   $router: this.$router
+      // })
     }
   }
 }

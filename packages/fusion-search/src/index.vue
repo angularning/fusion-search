@@ -186,6 +186,9 @@ export default {
       this.fusionSearch(val)
     })
   },
+  beforeDestroy() {
+    this.$EventBus.$off('fusion-list-search')
+  },
   methods: {
     fusionSearch(val) {
       this.keyword = val || this.searchValue

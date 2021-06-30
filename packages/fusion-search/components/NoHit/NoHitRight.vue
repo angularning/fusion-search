@@ -82,21 +82,29 @@ export default {
   },
   watch: {},
   methods: {
-    handleClick(item, tag, e) {
-      if (item.label === '同义词') {
-        if (item.navi) {
-          // this.$emit('nav-tag', e.target.innerText)
-        }
-      } else if (item.navi) {
-        this.$emit('nav-tag', tag)
-      }
-    },
     cancel() {
       this.demand = null
       this.mobile = null
     },
     enter() {
       // 提交
+      // adviser/all/
+      if (this.mobile === null) return
+      const data = {
+        cellphone: this.mobile,
+        product_name: this.demand
+      }
+      this.$post(this.provideData.baseUrl + 'adviser/', data).then(item => {
+        if (item) {
+          this.$message.success('提交成功')
+          setTimeout(() => {
+            this.demand = null
+            this.mobile = null
+          })
+        }
+        // eslint-disable-next-line handle-callback-err
+      }).catch(err => {
+      })
     }
   }
 }

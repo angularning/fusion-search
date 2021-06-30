@@ -22,19 +22,19 @@
 </template>
 
 <script>
-// import FusionSearch from '../../packages/fusion-search/src/index'
+import FusionSearch from '../../packages/fusion-search/src/index'
 export default {
   name: 'Home',
-  // components: {
-  //   FusionSearch
-  // },
+  components: {
+    FusionSearch
+  },
   data() {
     return {
       keyword: null,
       searchStatus: false,
       config: {
         THEME: 'JFH', // 配置化主题
-        APIHOST: '', // 接口请求域名
+        baseUrl: 'http://192.168.41.84:8000/v1/api/', // 接口请求域名
         LOGIN: true,
         showInput: true, // 是否显示搜索框
         showMix: true, // 是否显示命中详情
@@ -48,18 +48,6 @@ export default {
       console.log(value)
     },
     toSearch() {
-      // this.$modal('Example', {
-      //   data () {
-      //     return {
-      //       allowSelectTemplate: true,
-      //       mainForm: {
-      //         template: '产品寻源报告'
-      //       }
-      //     }
-      //   },
-      //   $store: this.$store,
-      //   $router: this.$router
-      // })
       this.searchStatus = true
     },
     receiveSearch(value) {

@@ -4,7 +4,7 @@
     width="1200px"
     class="supplier-detail-modal"
     :show-close="false"
-    @closed="closed"
+    @close="cancel"
   >
     <div
       slot="title"
@@ -89,29 +89,29 @@ export default {
       default: () => {}
     }
   },
-  provide() {
-    let provideData = {
-      hit: '',
-      theme: '',
-      keyword: null,
-      baseUrl: ''
-    }
-    Object.defineProperty(provideData, 'hit', {
-      get: () => this.provideData.hit
-    })
-    Object.defineProperty(provideData, 'theme', {
-      get: () => this.provideData.theme
-    })
-    Object.defineProperty(provideData, 'keyword', {
-      get: () => this.provideData.keyword
-    })
-    Object.defineProperty(provideData, 'baseUrl', {
-      get: () => this.provideData.baseUrl
-    })
-    return {
-      provideData
-    }
-  },
+  // provide() {
+  //   let provideData = {
+  //     hit: '',
+  //     theme: '',
+  //     keyword: null,
+  //     baseUrl: ''
+  //   }
+  //   Object.defineProperty(provideData, 'hit', {
+  //     get: () => this.provideData.hit
+  //   })
+  //   Object.defineProperty(provideData, 'theme', {
+  //     get: () => this.provideData.theme
+  //   })
+  //   Object.defineProperty(provideData, 'keyword', {
+  //     get: () => this.provideData.keyword
+  //   })
+  //   Object.defineProperty(provideData, 'baseUrl', {
+  //     get: () => this.provideData.baseUrl
+  //   })
+  //   return {
+  //     provideData
+  //   }
+  // },
   data () {
     return {
       city_group,
@@ -335,11 +335,13 @@ export default {
       this.$destroy()
     },
     cancel () {
+      this.$emit('cancel')
       this.visible = false
     },
     confirm () {
+      console.log(3)
       // 关闭浮窗
-      this.$emit('confirm')
+      this.$emit('cancel')
       this.visible = false
     }
   }

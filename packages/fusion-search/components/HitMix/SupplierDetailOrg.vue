@@ -5,12 +5,12 @@
         class="orgTopImg"
         :class="[provideData.theme+'-logo']"
       >
-        {{ data.comp_name&&data.comp_name.substring(0,1) }}
+        {{ (data.comp_name&&data.comp_name.substring(0,1))||(data.purchase_name&&data.purchase_name.substring(0,1)) }}
       </div>
       <div class="hitSupAndPurDes">
         <div class="hitTitle">
           <span class="title">
-            {{ data.comp_name }}
+            {{ data.comp_name || data.purchase_name }}
           </span>
           <span
             v-if="data.type_own==='purchaser'"

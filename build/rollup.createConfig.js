@@ -15,7 +15,6 @@ const simplevars = require('postcss-simple-vars')
 const nested = require('postcss-nested')
 const cssnext = require('postcss-cssnext')
 const fs = require('fs')
-const re = require('rollup-plugin-require-context')
 
 const { getAssetsPath, env, fsExistsSync, chalkConsole } = require('./utils')
 const { esDir } = require('../config/rollup.build.config')
@@ -28,7 +27,6 @@ function createPlugins({ min } = {}) {
   const exclude = 'node_modules/**'
   const plugins = [
     commonjs(),
-    re(),
     vue({
       css: false
     }),

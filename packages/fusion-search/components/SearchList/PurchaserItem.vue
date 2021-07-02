@@ -1,37 +1,46 @@
 <template>
-  <div
-    v-loading="loading"
-    class="PurchaserItem"
-    @click="showDetail"
-  >
-    <div class="listItemLeft">
-      <div class="orgTop">
-        <div
-          class="orgTopImg"
-          :class="[provideData.theme+'-logo']"
-        >
-          {{ item.purchase_name&&item.purchase_name.substring(0,1) }}
-        </div>
-        <div class="orgDes">
-          <div class="orgDesTitle">
-            <div class="titleName">
-              {{ item.purchase_name }}
+  <div>
+    <div
+      v-loading="loading"
+      class="PurchaserItem"
+      @click="showDetail"
+    >
+      <div class="listItemLeft">
+        <div class="orgTop">
+          <div
+            class="orgTopImg"
+            :class="[provideData.theme+'-logo']"
+          >
+            {{ item.purchase_name&&item.purchase_name.substring(0,1) }}
+          </div>
+          <div class="orgDes">
+            <div class="orgDesTitle">
+              <div class="titleName">
+                {{ item.purchase_name }}
+              </div>
+              <Location :item="item" />
             </div>
-            <Location :item="item" />
-          </div>
-          <div>
-            <HitTag :data="item" />
+            <div>
+              <HitTag :data="item" />
+            </div>
           </div>
         </div>
+        <OrgProperty :type="'purchaser'" :datalist="item" />
       </div>
-      <OrgProperty :type="'purchaser'" :datalist="item" />
+      <div class="listItemRight">
+        <SupplierCaseItem
+          :item="item.cases"
+          :type="'purchaser'"
+        />
+      </div>
     </div>
-    <div class="listItemRight">
-      <SupplierCaseItem
-        :item="item.cases"
-        :type="'purchaser'"
+    <template v-if="show">
+      <PurchaserDetail
+        :provide-data="useData"
+        :visibles="show"
+        @cancel="cancel"
       />
-    </div>
+    </template>
   </div>
 </template>
 
@@ -40,6 +49,7 @@ import HitTag from '../HitMix/HitTag'
 import Location from './Location'
 import OrgProperty from './OrgProperty'
 import SupplierCaseItem from './SupplierCaseItem'
+import PurchaserDetail from '../../modals/PurchaserDetail'
 export default {
   name: 'PurchaserItem',
   inject: ['provideData'],
@@ -47,7 +57,8 @@ export default {
     OrgProperty,
     Location,
     HitTag,
-    SupplierCaseItem
+    SupplierCaseItem,
+    PurchaserDetail
   },
   props: {
     item: {
@@ -57,22 +68,29 @@ export default {
   },
   data() {
     return {
+      show: false,
+      useData: {},
       loading: false
     }
   },
   methods: {
+    cancel() {
+      this.show = false
+    },
     showDetail() {
       const provideData = this.provideData
       provideData.instance_type = 'purchaser'
       provideData.uuid = this.item.uuid
-      provideData.purchase_name = this.item.purchase_name
-      this.$modal('SupplierDetail', {
-        propsData: {
-          provideData
-        },
-        $store: this.$store,
-        $router: this.$router
-      })
+      provideData.comp_name = this.item.purchase_name
+      this.useData = provideData
+      this.show = true
+      // this.$modal('SupplierDetail', {
+      //   propsData: {
+      //     provideData
+      //   },
+      //   $store: this.$store,
+      //   $router: this.$router
+      // })
     }
   }
 }

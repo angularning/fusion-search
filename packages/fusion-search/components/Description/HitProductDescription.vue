@@ -28,15 +28,15 @@
           :height="'200px'"
         />
       </div>
-      <!--      <div class="desNormalTitle">-->
-      <!--        产品供应商区域分布-->
-      <!--      </div>-->
-      <!--      <div class="chartWrap">-->
-      <!--        <ZbChart-->
-      <!--          :options="optionsMap"-->
-      <!--          :height="'200px'"-->
-      <!--        />-->
-      <!--      </div>-->
+      <div class="desNormalTitle">
+        产品供应商区域分布
+      </div>
+      <div class="chartWrap">
+        <ZbChart
+          :options="optionsMap"
+          :height="'200px'"
+        />
+      </div>
     </div>
     <SameProductList :list="list" />
   </div>
@@ -125,26 +125,6 @@ export default {
             return params.name + ' : ' + val
           }
         },
-        // geo: {
-        //   map: 'china',
-        //   top: '2%',
-        //   bottom: '8%',
-        //   label: {
-        //     emphasis: {
-        //       show: false
-        //     }
-        //   },
-        //   itemStyle: {
-        //     normal: {
-        //       areaColor: '#113F89',
-        //       borderColor: '#6273E5',
-        //       borderWidth: 1
-        //     },
-        //     emphasis: {
-        //       areaColor: 'rgb(10, 105, 187)'
-        //     }
-        //   }
-        // },
         visualMap: {
           show: false,
           min: 0,

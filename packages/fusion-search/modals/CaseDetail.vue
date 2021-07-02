@@ -3,7 +3,7 @@
     :visible.sync="visible"
     width="1200px"
     class="case-detail-modal"
-    @closed="closed"
+    @closed="cancel"
   >
     <div
       slot="title"
@@ -129,12 +129,16 @@ export default {
     provideData: {
       type: Object,
       default: () => {}
+    },
+    visibles: {
+      type: Boolean,
+      default: () => false
     }
   },
   data () {
     return {
       city_group,
-      visible: true,
+      visible: false,
       hasData: true,
       case_content: '',
       anno_content_url: '',
@@ -150,28 +154,37 @@ export default {
       }
     }
   },
-  provide() {
-    let provideData = {
-      hit: '',
-      theme: '',
-      keyword: null
-    }
-    Object.defineProperty(provideData, 'hit', {
-      get: () => this.provideData.hit
-    })
-    Object.defineProperty(provideData, 'theme', {
-      get: () => this.provideData.theme
-    })
-    Object.defineProperty(provideData, 'keyword', {
-      get: () => this.provideData.keyword
-    })
-    Object.defineProperty(provideData, 'baseUrl', {
-      get: () => this.provideData.baseUrl
-    })
-    return {
-      provideData
+  watch: {
+    visibles: {
+      deep: true,
+      immediate: true,
+      handler(value) {
+        this.visible = JSON.parse(JSON.stringify(value))
+      }
     }
   },
+  // provide() {
+  //   let provideData = {
+  //     hit: '',
+  //     theme: '',
+  //     keyword: null
+  //   }
+  //   Object.defineProperty(provideData, 'hit', {
+  //     get: () => this.provideData.hit
+  //   })
+  //   Object.defineProperty(provideData, 'theme', {
+  //     get: () => this.provideData.theme
+  //   })
+  //   Object.defineProperty(provideData, 'keyword', {
+  //     get: () => this.provideData.keyword
+  //   })
+  //   Object.defineProperty(provideData, 'baseUrl', {
+  //     get: () => this.provideData.baseUrl
+  //   })
+  //   return {
+  //     provideData
+  //   }
+  // },
   created () {
     this.getDetails()
   },
@@ -220,13 +233,6 @@ export default {
     },
     doPurchaser(val) {
       return val
-      // if (val) {
-      //   if (JSON.parse(JSON.stringify(val.split(',')[0])).length > 2) {
-      //     return (JSON.parse(val.split(',')[0]))[0]
-      //   } else {
-      //     return false
-      //   }
-      // }
     },
     toSort(con) {
       if (con) {
@@ -242,17 +248,16 @@ export default {
     },
     // 关闭浮窗时, 销毁实例
     closed () {
-      this.$emit('cancel')
+      this.$emit('cancel', false)
       this.$el.parentNode.removeChild(this.$el)
       this.$destroy()
     },
     cancel () {
-      this.visible = false
+      this.$emit('cancel', false)
     },
     confirm () {
       // 关闭浮窗
-      this.$emit('confirm')
-      this.visible = false
+      this.$emit('cancel', false)
     }
   }
 }

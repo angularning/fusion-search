@@ -1,39 +1,48 @@
 <template>
-  <div class="CaseItem">
-    <div class="listItemLeft">
-      <div class="orgTop">
-        <div class="orgDes">
-          <div class="orgDesTitle">
-            <span
-              class="titleName"
-              v-html="
-                shortWordStringAndHeight(
-                  item && (item.case_name || item.project_name)
-                )
-              "
-            />
-            <Location :item="item" />
-          </div>
-          <div>
-            <HitTag :data="item" />
+  <div>
+    <div class="CaseItem">
+      <div class="listItemLeft">
+        <div class="orgTop">
+          <div class="orgDes">
+            <div class="orgDesTitle">
+              <span
+                class="titleName"
+                v-html="
+                  shortWordStringAndHeight(
+                    item && (item.case_name || item.project_name)
+                  )
+                "
+              />
+              <Location :item="item" />
+            </div>
+            <div>
+              <HitTag :data="item" />
+            </div>
           </div>
         </div>
+        <CaseOrgProperty
+          :datalist="item"
+          style="margin: 10px 0;"
+        />
+        <OrgTag :data="item" />
       </div>
-      <CaseOrgProperty
-        :datalist="item"
-        style="margin: 10px 0;"
+      <div class="listItemRight">
+        <button
+          class="plainBtn"
+          :class="[provideData.theme + '-buttonPlain']"
+          @click="toSeeDetail"
+        >
+          查看详情
+        </button>
+      </div>
+    </div>
+    <template v-if="show">
+      <CaseDetail
+        :provide-data="useData"
+        :visibles="show"
+        @cancel="cancel"
       />
-      <OrgTag :data="item" />
-    </div>
-    <div class="listItemRight">
-      <button
-        class="plainBtn"
-        :class="[provideData.theme + '-buttonPlain']"
-        @click="toSeeDetail"
-      >
-        查看详情
-      </button>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -42,6 +51,7 @@ import HitTag from '../HitMix/HitTag'
 import OrgTag from './OrgTag'
 import Location from './Location'
 import CaseOrgProperty from './CaseOrgProperty'
+import CaseDetail from '../../modals/CaseDetail'
 export default {
   name: 'CaseItem',
   inject: ['provideData'],
@@ -49,7 +59,8 @@ export default {
     CaseOrgProperty,
     Location,
     HitTag,
-    OrgTag
+    OrgTag,
+    CaseDetail
   },
   props: {
     item: {
@@ -59,22 +70,29 @@ export default {
   },
   data() {
     return {
+      show: false,
+      useData: {},
       loading: false
     }
   },
   methods: {
+    cancel() {
+      this.show = false
+    },
     toSeeDetail() {
       const provideData = this.provideData
       provideData.instance_type = 'case'
       provideData.uuid = this.item.uuid
       provideData.word = this.item.case_name || this.item.project_name
-      this.$modal('CaseDetail', {
-        propsData: {
-          provideData
-        },
-        $store: this.$store,
-        $router: this.$router
-      })
+      this.useData = provideData
+      this.show = true
+      // this.$modal('CaseDetail', {
+      //   propsData: {
+      //     provideData
+      //   },
+      //   $store: this.$store,
+      //   $router: this.$router
+      // })
     },
     shortWordStringAndHeight(value) {
       const keyword = this.provideData.keyword

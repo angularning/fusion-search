@@ -37,78 +37,108 @@
    
    data() {
        return {
-         keyword: null, // 动态传入搜索关键词
-         searchStatus: false,
-         config: {
-           THEME: "XUNYUAN", // 配置化主题
-           APIHOST: "", // 接口请求域名
-           LOGIN: false, // 是否需要登录
-           showInput: true, // 是否显示搜索框 如果有搜索框则可以false隐藏
-           showMix: true, // 是否显示命中详情
-           showList: true, // 是否显示命中列表
-           showDescription: true, // 是否显示右侧
-         },
+        keyword: null, // 搜索框的关键词，第三方项目需要把搜索词传到此 keyword
+        searchStatus: false, // 搜索框搜索的状态，默认为 false
+        config: { // 基础配置项    
+        THEME: 'JFH', // 配置化主题 支持 JFH/XUNYUAN
+        baseUrl: 'http://192.168.41.84:8000/v1/api/', // 接口请求域名
+        LOGIN: true, // 暂未开放
+        showInput: true, // 是否显示搜索框
+        showMix: true, // 是否显示命中详情
+        showList: true, // 是否显示命中列表
+        showDescription: true // 是否显示右侧
+         }
        };
      },
    ```
 5. 如果选择使用自定义搜索框，不使用组件自带搜索框则需要做以下操作
    ```javascript
-   在触发搜索的时候，把searchStatus设置为true。
-   比如：
-   toSearch() {
-     // 触发搜索
-         this.searchStatus = true;
-   }
-   同时需要有一个接受的方法
-   receiveSearch(value) {
-         this.searchStatus = value.status; // 搜索完之后会重置状态
-   }
+   methods: {
+    // 需要配置搜索方法，主要是把搜索状态重置。
+    toSearch() {
+      // 把目前的搜索框的值绑定到keyword上
+      this.keyword = this.keywordProjectUse
+      // 触发搜索
+      this.searchStatus = true
+    },
+    receiveSearch(value) {
+      // 修改搜索状态
+      this.searchStatus = value.status
+      // 由搜索的词同步跟新到搜索框。
+      this.keywordProjectUse = value.keyword
+      this.keyword = value.keyword
+    }
+}
    ```
 6. 完整示例如下
    ```html
    <template>
-     <div class="home">
-       <div class="">
-         <input v-model="keyword" type="text" />
-         <button style="cursor: pointer" @click="toSearch">触发</button>
-       </div>
-       <FusionSearch
-         :config="config"
-         :search-value="keyword"
-         :emit-search="searchStatus"
-         @receive-search="receiveSearch"
-       />
-     </div>
-   </template>
-   
-   <script>
-   export default {
-     name: "Home",
-     data() {
-       return {
-         keyword: null,
-         searchStatus: false,
-         config: {
-           THEME: "XUNYUAN", // 配置化主题
-           APIHOST: "", // 接口请求域名
-           LOGIN: false, // 是否需要登录
-           showInput: true, // 是否显示搜索框
-           showMix: true, // 是否显示命中详情
-           showList: true, // 是否显示命中列表
-           showDescription: true, // 是否显示右侧
-         },
-       };
-     },
-     methods: {
-       toSearch() {
-         this.searchStatus = true;
-       },
-       receiveSearch(value) {
-         this.searchStatus = value.status;
-       },
-     },
-   };
-   </script>
+  <div class="home">
+    <!--    使用自有搜索框-->
+    <input
+      v-model="keywordProjectUse"
+      type="text"
+    >
+    <button
+      style="cursor: pointer;"
+      @click="toSearch"
+    >
+      触发
+    </button>
+    <!--    使用自有搜索框-->
+
+    <!--    使用组件-->
+    <FusionSearch
+      :config="config"
+      :search-value="keyword"
+      :emit-search="searchStatus"
+      @receive-search="receiveSearch"
+    />
+  </div>
+</template>
+
+<script>
+import FusionSearch from '../../packages/fusion-search/src/index'
+export default {
+  name: 'Home',
+  components: {
+    FusionSearch
+  },
+  data() {
+    return {
+      keywordProjectUse: null,
+      keyword: null, // 搜索框的关键词，第三方项目需要把搜索词传到此 keyword
+      searchStatus: false, // 搜索框搜索的状态，默认为 false
+      config: { // 基础配置项
+        THEME: 'JFH', // 配置化主题 支持 JFH/XUNYUAN
+        baseUrl: 'http://192.168.41.84:8000/v1/api/', // 接口请求域名
+        LOGIN: true, // 暂未开放
+        showInput: true, // 是否显示搜索框
+        showMix: true, // 是否显示命中详情
+        showList: true, // 是否显示命中列表
+        showDescription: true // 是否显示右侧
+      }
+    }
+  },
+  methods: {
+    // 需要配置搜索方法，主要是把搜索状态重置。
+    toSearch() {
+      // 把目前的搜索框的值绑定到keyword上
+      this.keyword = this.keywordProjectUse
+      // 触发搜索
+      this.searchStatus = true
+    },
+    receiveSearch(value) {
+      // 修改搜索状态
+      this.searchStatus = value.status
+      // 由搜索的词同步跟新到搜索框。
+      this.keywordProjectUse = value.keyword
+      this.keyword = value.keyword
+    }
+  }
+}
+</script>
+
    
    ```
 7. .

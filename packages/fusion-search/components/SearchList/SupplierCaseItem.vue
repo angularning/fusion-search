@@ -14,16 +14,24 @@
     </div>
     <div class="sCaseCon">
       <div class="sCaseLastDes">
-        <span v-if="type === 'supplier'&& item[currentPage]&&item[currentPage].purchaser">成交业主</span>
-        <span v-else-if="type !=='supplier'&&item[currentPage]&&item[currentPage].supplier">供应商</span>
-        <span
-          v-if="type === 'supplier'"
-          v-html="filterData(item[currentPage]&&item[currentPage].object)"
-        />
-        <span
-          v-else
-          v-html="filterData(item[currentPage]&&item[currentPage].winbid)"
-        />
+        <template v-if="type === 'supplier' && provideData.hit === 'supplier'">
+          <span>成交业主</span>
+          <span
+            v-html="filterData(item[currentPage]&&item[currentPage].pur_unit_name)"
+          />
+        </template>
+        <template v-if="type === 'purchaser' && provideData.hit === 'supplier'">
+          <span>供应商</span>
+          <span
+            v-html="filterData(item[currentPage]&&item[currentPage].winbid)"
+          />
+        </template>
+        <template v-if="type === 'supplier' && provideData.hit === 'purchaser'">
+          <span>成交内容你那个</span>
+          <span
+            v-html="filterData(item[currentPage]&&item[currentPage].object)"
+          />
+        </template>
       </div>
       <div class="sCasePage">
         <span

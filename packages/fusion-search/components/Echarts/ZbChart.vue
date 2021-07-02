@@ -6,6 +6,7 @@
   />
 </template>
 <script>
+import China from '../../utils/china.json'
 function isEmpty(value) {
   return value === null || value === undefined || value === '' || JSON.stringify(value) === '{}'
 }
@@ -38,6 +39,7 @@ function cloneDeep(value) {
 const queue = []
 let seed = 0
 const echarts = require('echarts')
+echarts.registerMap('china', China)
 
 function registerChart(componentInstance) {
   if (!queue.includes(componentInstance)) {

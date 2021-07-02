@@ -1,44 +1,47 @@
 <template>
-  <div
-    v-loading="loading"
-    class="SupplierItem"
-    @click="showDetail"
-  >
-    <div class="listItemLeft">
-      <div class="orgTop">
-        <div
-          class="orgTopImg"
-          :class="[provideData.theme+'-logo']"
-        >
-          {{ item.comp_name&&item.comp_name.substring(0,1) }}
-        </div>
-        <div class="orgDes">
-          <div class="orgDesTitle">
-            <div class="titleName">
-              {{ item.comp_name }}
+  <div>
+    <div
+      v-loading="loading"
+      class="SupplierItem"
+      @click="showDetail"
+    >
+      <div class="listItemLeft">
+        <div class="orgTop">
+          <div
+            class="orgTopImg"
+            :class="[provideData.theme+'-logo']"
+          >
+            {{ item.comp_name&&item.comp_name.substring(0,1) }}
+          </div>
+          <div class="orgDes">
+            <div class="orgDesTitle">
+              <div class="titleName">
+                {{ item.comp_name }}
+              </div>
+              <Location :item="item" />
             </div>
-            <Location :item="item" />
-          </div>
-          <div>
-            <HitTag :data="item" />
+            <div>
+              <HitTag :data="item" />
+            </div>
           </div>
         </div>
+        <OrgProperty
+          :type="'supplier'"
+          :datalist="item"
+        />
       </div>
-      <OrgProperty
-        :type="'supplier'"
-        :datalist="item"
-      />
-    </div>
-    <div class="listItemRight">
-      <SupplierCaseItem
-        :item="item.cases"
-        :type="'supplier'"
-      />
+      <div class="listItemRight">
+        <SupplierCaseItem
+          :item="item.cases"
+          :type="'supplier'"
+        />
+      </div>
     </div>
     <template v-if="show">
       <SupplierDetail
         :provide-data="useData"
-        @cancel="changeShow"
+        :visibles="show"
+        @cancel="cancel"
       />
     </template>
   </div>
@@ -74,7 +77,7 @@ export default {
     }
   },
   methods: {
-    changeShow() {
+    cancel() {
       this.show = false
     },
     showDetail() {

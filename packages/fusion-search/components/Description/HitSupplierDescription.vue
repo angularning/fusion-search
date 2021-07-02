@@ -47,7 +47,7 @@
         />
       </div>
     </div>
-    <SameProductList :list="list" />
+    <SameProductList :type="'supplier'" :list="list" />
   </div>
 </template>
 

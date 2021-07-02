@@ -6,6 +6,7 @@
     >
       <div
         v-for="(tag, j) in data&&(data.org_tag||data.supplementary_label||data.case_tag)"
+        v-show="getValue(tag) !== ''"
         :key="j"
         :class="[provideData.theme + '-color1', provideData.theme + '-background16']"
         class="tag"

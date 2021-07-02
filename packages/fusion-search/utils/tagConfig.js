@@ -4090,8 +4090,6 @@ export function getNames(id) {
   tagConfig.map(item => {
     if (item.id === id) {
       res = item.name
-    } else if (id.includes(item.id)) {
-      res = item.name
     }
   })
   return res

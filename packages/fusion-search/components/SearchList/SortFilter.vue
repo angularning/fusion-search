@@ -1,17 +1,19 @@
 <template>
   <div class="SortFilter">
-    <span class="label1">服务地区筛选</span>
-    <el-cascader
-      ref="myCascader"
-      v-model="value"
-      size="mini"
-      style="margin-left: 20px;margin-right: 20px;"
-      :popper-class="provideData.theme+'-popperSelect'"
-      :class="[provideData.theme+'-select']"
-      clearable
-      :options="provinceCity"
-      @change="handleChange(value)"
-    />
+    <template v-if="provideData.hit ==='supplier'">
+      <span class="label1">服务地区筛选</span>
+      <el-cascader
+        ref="myCascader"
+        v-model="value"
+        size="mini"
+        style="margin-left: 20px;margin-right: 20px;"
+        :popper-class="provideData.theme+'-popperSelect'"
+        :class="[provideData.theme+'-select']"
+        clearable
+        :options="provinceCity"
+        @change="handleChange(value)"
+      />
+    </template>
     <!--    <el-select-->
     <!--      v-model="searchParams.province"-->
     <!--      class="sortSelect"-->

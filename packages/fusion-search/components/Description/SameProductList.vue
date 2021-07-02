@@ -2,7 +2,7 @@
   <div class="SameProductList">
     <div style="margin-bottom: 15px;">
       <div class="publicDesTitle">
-        相似的产品
+        {{ type==='supplier'?'采购内容':'相似的产品' }}
       </div>
     </div>
     <div class="listRepeat">
@@ -46,6 +46,10 @@ export default {
     list: {
       type: Array,
       default: () => []
+    },
+    type: {
+      type: String,
+      default: () => 'supplier'
     }
   },
   data() {

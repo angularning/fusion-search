@@ -64,7 +64,7 @@
     </div>
     <!--    完全不命中-->
     <div v-if="hit==='completeNoHit'">
-      <NoResult />
+      <NoResult v-loading="loadingHit" />
     </div>
   </div>
 </template>
@@ -127,6 +127,7 @@ export default {
       loadingCard: false,
       loadingList: false,
       loadingChart: false,
+      loadingHit: false, // 无搜索
       instance_type: null,
       count: '1',
       hitConfig: {
@@ -191,6 +192,7 @@ export default {
   },
   methods: {
     fusionSearch(val) {
+      this.loadingHit = true
       this.keyword = val || this.searchValue
       // 获取到搜索的值，做请求
       this.mixSearch(this.keyword)
@@ -204,8 +206,11 @@ export default {
         const { data } = item
         this.hit = this.hitConfig[data.instance_type]
         this.instance_type = data.instance_type
+        this.loadingHit = false
         // 根据获取到的hit值去做不同的请求
         this.getSearchCard()
+      }).catch(() => {
+        this.loadingHit = false
       })
     },
     getSearchCard() {

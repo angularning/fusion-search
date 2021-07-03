@@ -331,15 +331,15 @@ export default {
   },
   methods: {
     getCaseNumValue() {
-      if (JSON.stringify(this.data) === '{}') return
+      if (JSON.stringify(this.data) === '{}') return []
       return this.data.case_num.map(item => item.value)
     },
     getCaseNumName() {
-      if (JSON.stringify(this.data) === '{}') return
+      if (JSON.stringify(this.data) === '{}') return []
       return this.data.case_num.map(item => item.name)
     },
     getData() {
-      if (JSON.stringify(this.data) === '{}') return
+      if (JSON.stringify(this.data) === '{}') return []
       return this.data.supplier_reg_cap.map(item => {
         return { ...item }
       })
@@ -359,7 +359,6 @@ export default {
           })
         }
       }
-      console.log(res)
       return res
     },
     getMaxCount () {

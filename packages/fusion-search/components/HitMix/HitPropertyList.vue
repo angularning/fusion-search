@@ -169,9 +169,7 @@ export default {
   },
   computed: {
     supplierProperties() {
-      console.log(this.from)
       const temp = this.from === 'modal' ? this.supplierDetailMap : this.supplierDetailMap
-      console.log(temp)
       return temp.map((item) => {
         const { label, prop } = item
         let value

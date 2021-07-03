@@ -2,6 +2,7 @@
   <div class="SortFilter">
     <template v-if="!(provideData.hit ==='purchaser' && type ==='supplier')">
       <span class="label1">服务地区筛选</span>
+      {{value}}
       <el-cascader
         ref="myCascader"
         v-model="value"
@@ -108,6 +109,10 @@ export default {
     type: {
       type: String,
       default: () => 'supplier'
+    },
+    search: {
+      type: Boolean,
+      default: () => false
     }
   },
   data() {
@@ -122,101 +127,6 @@ export default {
         province: null,
         city: null,
         cityData: []
-      },
-      sortList: {
-        supplier: [
-          // {
-          //   type: 'supplier',
-          //   name: '综合排序',
-          //   prop: '-default'
-          // },
-          /*  {
-            type: 'supplier',
-            name: '综合升序',
-            prop: 'default'
-          }, */
-          // {
-          //   type: 'supplier',
-          //   name: '成交数量降序',
-          //   prop: '-establish_time'
-          // },
-          /*  {
-            type: 'supplier',
-            name: '成交数量升序',
-            prop: 'deal_count'
-          }, */
-          {
-            type: 'supplier',
-            name: '最近成交日期降序',
-            prop: '-register_capital'
-          },
-          /*  {
-            type: 'supplier',
-            name: '最近成交日期升序',
-            prop: 'deal_date'
-          }, */
-          {
-            type: 'supplier',
-            name: '注册资本降序',
-            prop: '-register_capital'
-          }
-          /*    {
-            type: 'supplier',
-            name: '注册资本升序',
-            prop: 'reg_cap'
-          } */
-        ],
-        case: [
-          {
-            type: 'case',
-            name: '发布时间降序',
-            prop: '-publish_time'
-          },
-          {
-            type: 'case',
-            name: '成交金额降序',
-            prop: '-case_winamount_sum'
-          }
-          /* {
-            type: 'case',
-            name: '案例区域',
-            prop: 'case_location_code'
-          } */
-        ],
-        purchaser: [
-          {
-            type: 'purchaser',
-            name: '最近采购日期降序',
-            prop: '-establish_time'
-          },
-          {
-            type: 'purchaser',
-            name: '注册资本降序',
-            prop: '-register_capital'
-          }
-          // {
-          //   type: 'purchaser',
-          //   name: '注册资本升序',
-          //   prop: 'reg_cap'
-          // },
-          // {
-          //   type: 'purchaser',
-          //   name: '采购数量降序',
-          //   prop: '-purchaser_case_cnt'
-          // }
-        ],
-        same_supplier: [
-          {
-            type: 'same_supplier',
-            name: '综合排序',
-            prop: '-default'
-          },
-          {
-            type: 'same_supplier',
-            name: '注册资本降序',
-            prop: '-reg_cap'
-          }
-        ]
       },
       tagFilterList: {
         supplier: [
@@ -265,6 +175,19 @@ export default {
             ]
           }
         ]
+      }
+    }
+  },
+  watch: {
+    search: {
+      deep: true,
+      immediate: true,
+      handler(value) {
+        if (value) {
+          this.value = null
+          this.searchParams.money1 = null
+          this.searchParams.money2 = null
+        }
       }
     }
   },

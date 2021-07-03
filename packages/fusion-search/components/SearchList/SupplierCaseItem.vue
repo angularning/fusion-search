@@ -119,7 +119,9 @@ export default {
   },
   methods: {
     toSeeDetail() {
-      const tempData = Object.assign(this.item[this.currentPage])
+      const p = JSON.parse(JSON.stringify(this.provideData))
+      delete p['uuid']
+      const tempData = Object.assign(this.item[this.currentPage], p)
       tempData.instance_type = 'case'
       tempData.word = this.item[this.currentPage].case_name || this.item[this.currentPage].project_name
       tempData.uuid = this.item[this.currentPage].uuid

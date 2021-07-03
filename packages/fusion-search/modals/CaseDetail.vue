@@ -47,7 +47,7 @@
             <div style="font-weight: bold;">
               案例时间
             </div>
-            <div>{{ result_dict.publish_time }}</div>
+            <div>{{ (result_dict.publish_time && result_dict.publish_time.substring(0, 10)) }}</div>
           </div>
           <div
             v-if="hasPurchaser(result_dict.pur_unit_name)"
@@ -195,7 +195,6 @@ export default {
     getDetails() {
       this.loading = true
       this.$get(this.provideData.baseUrl + 'search/detail/?graph_id=1&keyword=' + this.provideData.word + '&instance_type=' + this.provideData.instance_type + '&uuid=' + this.provideData.uuid).then(res => {
-        console.log(res)
         if (res) {
           const { data } = res
           this.hasData = JSON.stringify(data) !== '{}'
@@ -236,14 +235,7 @@ export default {
       }
     },
     doPurchaser(val) {
-      return val.join('')
-    },
-    toSort(con) {
-      if (con) {
-        const re = JSON.parse(JSON.stringify(con))
-        re.sort()
-        return re
-      }
+      return Array.isArray(val) ? val.join('') : val
     },
     viewDetail () {
       if (this.anno_content_url) {

@@ -82,7 +82,7 @@ export default {
     toSeeDetail() {
       const provideData = this.provideData
       provideData.instance_type = 'case'
-      provideData.uuid = this.item.uuid
+      provideData.uuid = this.item.uuid || this.item.case_code
       provideData.word = this.item.case_name || this.item.project_name
       this.useData = provideData
       this.show = true

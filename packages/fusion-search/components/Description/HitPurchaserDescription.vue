@@ -1,14 +1,11 @@
 <template>
   <div
     v-loading="loading"
-    class="HitSupplierDescription"
+    class="HitPurchaserDescription"
   >
     <div
       class="hitProductWrap"
     >
-      <!--      <div class="publicDesTitle">-->
-      <!--        服务概览-->
-      <!--      </div>-->
       <div
         class="publicDesTitle"
         style="margin-top: 20px;"
@@ -19,14 +16,14 @@
         合作供应商区域分布
       </div>
       <div class="chartWrap">
-        <ZbChart :options="options" />
+        <ZbChart :options="options1" />
       </div>
       <div class="desNormalTitle">
         采购产品占比
       </div>
       <div class="chartWrap">
         <ZbChart
-          :options="optionsSupplier"
+          :options="optionsPurchaser"
           :height="'200px'"
         />
       </div>
@@ -65,10 +62,10 @@ export default {
     }
   },
   computed: {
-    regOrder() {
+    regOrder1() {
       return ['5000万以上', '1000-5000万', '500-1000万', '200-500万', '100-200万', '100万以下']
     },
-    optionsSupplier() {
+    optionsPurchaser() {
       const option = {
         grid: {
           top: '2%',
@@ -94,7 +91,7 @@ export default {
               fontSize: '12'
             }
           },
-          data: (this.getDataSupplier() && this.getDataSupplier()).map(item => item.name) || []
+          data: this.getDataPurchaser() && this.getDataPurchaser().map(item => item.name)
         }, {
           axisTick: 'none',
           axisLine: 'none',
@@ -105,7 +102,7 @@ export default {
               fontSize: '12'
             }
           },
-          data: (this.getDataSupplier() && this.getDataSupplier()).map(item => (item.value * 100).toFixed(2) + '%') || []
+          data: this.getDataPurchaser() && this.getDataPurchaser().map(item => (item.value * 100).toFixed(2) + '%')
         }],
         series: [
           {
@@ -128,7 +125,7 @@ export default {
             },
             barWidth: 8,
             silent: true,
-            data: ((this.getDataSupplier() && this.getDataSupplier()) || []).map(item => {
+            data: this.getDataPurchaser() && this.getDataPurchaser().map(item => {
               return { name: item.name, value: item.value }
             })
           }
@@ -136,10 +133,10 @@ export default {
       }
       return option
     },
-    options() {
+    options1() {
       const legendData = this.getData()
       if (this.reg) {
-        legendData.sort((a, b) => this.regOrder.indexOf(a) - this.regOrder.indexOf(b))
+        legendData.sort((a, b) => this.regOrder1.indexOf(a) - this.regOrder1.indexOf(b))
       }
       const option = {
         color: ['#3CD3A7', '#F8C51E', '#E89B55', '#3A72FF'],
@@ -200,39 +197,25 @@ export default {
   },
   methods: {
     getMaxCountSupplier () {
-      if (JSON.stringify(this.data) === '{}' || this.data === '') return
+      if (JSON.stringify(this.data) === '{}' || this.data === '') return []
       const lists = this.data && this.data.product_percent.map(item => item.value)
       const max = Math.max.apply(null, lists)
       return new Array(lists.length).fill(max)
     },
-    getDataSupplier () {
-      if (JSON.stringify(this.data) === '{}' || this.data === '') return
+    getDataPurchaser () {
+      if (JSON.stringify(this.data) === '{}' || this.data === '') return []
       return this.data && this.data.product_percent.map(item => {
         return { name: item.name, value: item.value }
       }).reverse()
     },
-    getCaseNumValue() {
-      if (JSON.stringify(this.data) === '{}' || this.data === '') return
-      return this.data && this.data.product_percent.map(item => item.value)
-    },
-    getCaseNumName() {
-      if (JSON.stringify(this.data) === '{}') return
-      return this.data && this.data.product_percent.map(item => item.name)
-    },
     getData() {
-      if (JSON.stringify(this.data) === '{}' || this.data === '') return
+      if (JSON.stringify(this.data) === '{}' || this.data === '') return []
       return this.data && this.data.supplier_location.map(item => {
         return {
           name: city_group[item.name],
           value: item.value
         }
       }).slice(0, 8)
-    },
-    getMaxCount () {
-      if (JSON.stringify(this.data) === '{}' || this.data === '') return
-      const lists = (this.data && this.data.supplier_location).map(o => o.value)
-      const max = Math.max.apply(null, lists)
-      return max
     }
   }
 }
@@ -245,7 +228,7 @@ export default {
   border-radius: 4px;
   margin: 10px 0;
 }
-.HitSupplierDescription {
+.HitPurchaserDescription {
   .hitProductWrap {
     background: #ffffff;
     padding: 20px;

@@ -22,12 +22,12 @@
         <!--        v-loading="loading"-->
         <div class="sortList">
           <SortList
-            :search="search"
+            :search="filterStatus"
             :type="defaultType"
             @sort-list="toSortList"
           />
           <SortFilter
-            :search="search"
+            :search="filterStatus"
             :type="defaultType"
             @filter-list="toFilterList"
           />
@@ -86,6 +86,8 @@ export default {
       type: null,
       active: 0,
       total: 0,
+      againLoading: false,
+      filterStatus: false, // 用于清除筛选
       cpage: false, // 用于page = 1
       additional: {}, // 用户保存上一次的条件
       loading: false,
@@ -274,7 +276,6 @@ export default {
     },
     hit: {
       handler(value) {
-        console.log(value)
         if (value) {
           this.initData()
           this.getDefaultList()
@@ -301,8 +302,10 @@ export default {
       this.getReloadList({ type: value.type })
     },
     toFilterList(value) {
-      this.searchFields[this.hit][value.type].fields.location = value.location
-      this.searchFields[this.hit][value.type].fields[this.searchFields[this.hit][value.type].amount] = value.money
+      const temp = this.searchFields[this.hit][value.type]
+      temp.fields.location = value.location
+      temp.fields[temp.amount] = value.money
+      this.filterStatus = false
       this.cpage = true
       this.getReloadList({ type: value.type })
     },
@@ -314,12 +317,10 @@ export default {
       this.type = value.key
       this.active = i
       // 触发搜索其它
-      this.$nextTick(() => {
-        this.getDefaultList()
-      })
+      this.getDefaultList()
     },
     getDefaultList() {
-      // console.log(this.searchFields[this.hit])
+      this.filterStatus = true // 清除地区金额
       this.data = {}
       // TODO: 优化查询 把命中的词与当前tab建立关系，如果有关系则下次不查询 0627
       this.loading = true
@@ -332,7 +333,10 @@ export default {
         page_size: 15
       }
       const data = Object.assign(selection, this.searchFields[this.hit][this.defaultType].fields)
-      // console.log('data', data)
+      this.removeKey(data, 'location')
+      this.removeKey(data, 'register_capital')
+      this.removeKey(data, 'bid_winning_amount')
+      console.log('data', data)
       this.$post(this.provideData.baseUrl + 'search/main/', data).then(item => {
         const { data } = item
         this.data = data
@@ -345,6 +349,15 @@ export default {
         this.loading = false
       })
     },
+    removeKey(obj, key) {
+      if (obj.hasOwnProperty(key)) {
+        for (let i in obj) {
+          if (i === key) {
+            delete obj[key]
+          }
+        }
+      }
+    },
     getReloadList(additional) {
       this.data = {}
       this.loading = true
@@ -353,10 +366,6 @@ export default {
         keyword: this.search,
         instance_type: this.hit === 'noHit' ? 'bottom_hit' : this.hit,
         info_type: additional.type,
-        // location: '360400',
-        // tags: 'FW010105',
-        // reg_cap: '120000,',
-        // order: order[this.type],
         page: additional.page || 1,
         page_size: 15
       }

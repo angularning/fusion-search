@@ -14,7 +14,7 @@
       </div>
       <div class="locationTag">
         <DescriptionTag
-          :list="locations()"
+          :list="locations"
         />
       </div>
       <!--      <div class="desNormalTitle">-->
@@ -47,7 +47,10 @@
         />
       </div>
     </div>
-    <SameProductList :type="'supplier'" :list="list" />
+    <SameProductList
+      :type="'supplier'"
+      :list="list"
+    />
   </div>
 </template>
 
@@ -215,13 +218,17 @@ export default {
         ]
       }
       return option
+    },
+    locations() {
+      if (JSON.stringify(this.data) === '{}' || this.data === '') return []
+      return (this.data && this.data.service_area).map(item => {
+        if (item !== '0000') {
+          return city_group[item]
+        }
+      })
     }
   },
   methods: {
-    locations() {
-      if (JSON.stringify(this.data) === '{}' || this.data === '') return
-      return this.data && this.data.service_area.map(item => city_group[item])
-    },
     getMaxCountSupplier () {
       if (JSON.stringify(this.data) === '{}' || this.data === '') return
       const lists = this.data.product_count.map(item => item.value)
@@ -229,21 +236,21 @@ export default {
       return new Array(lists.length).fill(max)
     },
     getDataSupplier () {
-      if (JSON.stringify(this.data) === '{}' || this.data === '') return
-      return this.data.product_count.map(item => {
+      if (JSON.stringify(this.data) === '{}' || this.data === '') return []
+      return (this.data && this.data.product_count).map(item => {
         return { name: item.name, value: item.value }
       }).reverse()
     },
     getCaseNumValue() {
-      if (JSON.stringify(this.data) === '{}' || this.data === '') return
+      if (JSON.stringify(this.data) === '{}' || this.data === '') return []
       return this.data.product_count.map(item => item.value)
     },
     getCaseNumName() {
-      if (JSON.stringify(this.data) === '{}' || this.data === '') return
+      if (JSON.stringify(this.data) === '{}' || this.data === '') return []
       return this.data.product_count.map(item => item.name)
     },
     getData() {
-      if (JSON.stringify(this.data) === '{}' || this.data === '') return
+      if (JSON.stringify(this.data) === '{}' || this.data === '') return []
       return this.data.purchaser_location.map(item => {
         return {
           name: city_group[item.name],

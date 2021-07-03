@@ -15,12 +15,15 @@
         <div class="item-label">
           {{ item.label }}
         </div>
-        <div :title="item.value" v-if="item.label !== '机构官网'">
+        <div
+          v-if="item.label !== '机构官网'"
+          :title="item.value"
+        >
           {{ item.value }}
         </div>
         <div
-          :title="item.value"
           v-else
+          :title="item.value"
         >
           <a
             :class="[provideData.theme + '-color1']"
@@ -56,7 +59,6 @@ export default {
       {
         label: '成立时间',
         prop: 'establish_time'
-        // calc: datalist => this.est_date(datalist.est_date)
       },
       {
         label: '机构官网',
@@ -78,6 +80,16 @@ export default {
           value = calc ? calc(this.datalist) : this.setRegCap(this.datalist && this.datalist[prop])
         } else {
           value = calc ? calc(this.datalist) : this.datalist && this.datalist[prop]
+        }
+        if (prop === 'establish_time') {
+          console.log()
+          if (this.datalist[prop] === null) {
+            value = ''
+          } else {
+            if ((this.datalist[prop]).includes('Z')) {
+              value = (this.datalist && this.datalist[prop]).substring(0, 10)
+            }
+          }
         }
         return {
           label,

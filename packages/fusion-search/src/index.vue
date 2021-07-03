@@ -13,6 +13,7 @@
     <!--    命中显示-->
     <div
       v-if="hit==='product'||hit==='supplier'||hit==='purchaser'"
+      v-loading="againLoading"
       class="fusionContent"
     >
       <div class="fusionLeft">
@@ -47,6 +48,7 @@
     <div
       v-if="hit==='noHit'"
       class="fusionContent"
+      v-loading="againLoading"
     >
       <div class="fusionLeft">
         <div class="tipTitle">
@@ -192,6 +194,7 @@ export default {
   },
   methods: {
     fusionSearch(val) {
+      this.againLoading = true
       this.loadingHit = true
       this.keyword = val || this.searchValue
       // 获取到搜索的值，做请求
@@ -207,6 +210,7 @@ export default {
         this.hit = this.hitConfig[data.instance_type]
         this.instance_type = data.instance_type
         this.loadingHit = false
+        this.againLoading = false
         // 根据获取到的hit值去做不同的请求
         this.getSearchCard()
       }).catch(() => {

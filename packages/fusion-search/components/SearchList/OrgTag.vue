@@ -6,6 +6,7 @@
     >
       <div
         v-for="(tag, j) in (data.winbid||data.pur_unit_name)"
+        v-show="tag !== null"
         :key="j"
         :class="[provideData.theme + '-color1', provideData.theme + '-background16']"
         class="tag"

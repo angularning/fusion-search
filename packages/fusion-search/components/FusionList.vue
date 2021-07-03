@@ -32,10 +32,9 @@
             @filter-list="toFilterList"
           />
         </div>
-        <div>
+        <div v-loading="loading">
           <component
             :is="activeComponent"
-            v-loading="loading"
             :data="data"
             :loading="loading"
             @reload-list="reloadList"
@@ -97,21 +96,24 @@ export default {
             fields: {
               // supplier_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
               // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
-              order: '-register_capital'
-            }
+              order: 'default'
+            },
+            amount: 'register_capital'
           },
           case: {
             fields: {
               // supplier_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
               // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
-              order: '-case_winamount_sum'
-            }
+              order: '-publish_time'
+            },
+            amount: 'case_winamount_sum'
           },
           purchaser: {
             fields: {
               // purchaser_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
               order: '-register_capital'
-            }
+            },
+            amount: 'register_capital'
           }
         },
         supplier: {
@@ -126,15 +128,17 @@ export default {
             fields: {
               // fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,case_winamount_sum,object,winbid',
               // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
-              order: '-case_winamount_sum' // default/-case_release_date/-case_winamount_sum
-            }
+              order: '-publish_time' // default/-case_release_date/-case_winamount_sum
+            },
+            amount: 'case_winamount_sum'
           },
           purchaser: {
             fields: {
               // purchaser_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
               // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,winbid,object,case_winamount_sum'
-              order: '-publish_time' // 排序规则-case_release_date/-case_winamount_sum
-            }
+              order: '-register_capital' // 排序规则-case_release_date/-case_winamount_sum
+            },
+            amount: 'case_winamount_sum'
           }
         },
         purchaser: {
@@ -143,35 +147,40 @@ export default {
               // supplier_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
               // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,winbid,object',
               order: '-register_capital' // default/-case_release_date/-est_date
-            }
+            },
+            amount: 'register_capital'
           },
           case: {
             fields: {
               // fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,case_winamount_sum,case_tag,object,winbid',
               // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
-              order: '-case_winamount_sum' // default/-case_release_date/-case_winamount_sum
-            }
+              order: '-publish_time' // default/-case_release_date/-case_winamount_sum
+            },
+            amount: 'case_winamount_sum'
           }
         },
         noHit: {
           supplier: {
             fields: {
               // fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
-              order: '-establish_time' // -reg_cap/-est_date
-            }
+              order: '-register_capital' // -reg_cap/-est_date
+            },
+            amount: 'register_capital'
           },
           case: {
             fields: {
               // fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,case_winamount_sum,object',
               // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
               order: '-publish_time' // 排序规则-case_release_date/-case_winamount_sum
-            }
+            },
+            amount: 'bid_winning_amount'
           },
           purchaser: {
             fields: {
               // fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
-              order: '-establish_time' // 排序规则-case_release_date/-reg_cap
-            }
+              order: '-register_capital' // 排序规则-case_release_date/-reg_cap
+            },
+            amount: 'register_capital'
           }
         }
       },
@@ -293,7 +302,7 @@ export default {
     },
     toFilterList(value) {
       this.searchFields[this.hit][value.type].fields.location = value.location
-      this.searchFields[this.hit][value.type].fields.reg_cap = value.reg_cap
+      this.searchFields[this.hit][value.type].fields[this.searchFields[this.hit][value.type].amount] = value.money
       this.cpage = true
       this.getReloadList({ type: value.type })
     },
@@ -319,9 +328,6 @@ export default {
         keyword: this.search,
         instance_type: this.hit === 'noHit' ? 'bottom_hit' : this.hit,
         info_type: this.type || this.tabNav[this.hit][0].key,
-        // location: '360400',
-        // tags: 'FW010105',
-        // reg_cap: '120000,',
         page: 1,
         page_size: 15
       }

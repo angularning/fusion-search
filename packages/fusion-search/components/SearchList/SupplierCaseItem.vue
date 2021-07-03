@@ -1,60 +1,76 @@
 <template>
-  <div
-    v-if="item[currentPage]&&item[currentPage].project_name"
-    v-loading="loading"
-    class="SupplierCaseItem"
-  >
-    <div class="sCaseTop">
-      <span :class="[provideData.theme + '-color1']">成交案例</span>
-      <span v-html="shortWordStringAndHeight(item[currentPage]&&item[currentPage].project_name)" />
-    </div>
-    <div class="sCaseTime">
-      <span>案例时间</span>
-      <span>{{ item[currentPage]&&item[currentPage].publish_time }}</span>
-    </div>
-    <div class="sCaseCon">
-      <div class="sCaseLastDes">
-        <template v-if="type === 'supplier' && provideData.hit === 'supplier'">
-          <span>成交业主</span>
-          <span
-            v-html="filterData(item[currentPage]&&item[currentPage].pur_unit_name)"
-          />
-        </template>
-        <template v-if="type === 'purchaser' && provideData.hit === 'supplier'">
-          <span>供应商</span>
-          <span
-            v-html="filterData(item[currentPage]&&item[currentPage].winbid)"
-          />
-        </template>
-        <template v-if="type === 'supplier' && provideData.hit === 'purchaser'">
-          <span>成交内容你那个</span>
-          <span
-            v-html="filterData(item[currentPage]&&item[currentPage].object)"
-          />
-        </template>
+  <div>
+    <div
+      v-if="item[currentPage]&&item[currentPage].project_name"
+      v-loading="loading"
+      class="SupplierCaseItem"
+      @click.stop="toSeeDetail"
+    >
+      <div class="sCaseTop">
+        <span :class="[provideData.theme + '-color1']">成交案例</span>
+        <span v-html="shortWordStringAndHeight(item[currentPage]&&item[currentPage].project_name)" />
       </div>
-      <div class="sCasePage">
-        <span
-          class="sCaseLeftClick"
-          @click.stop="pagePre"
-        ><img
-          src="../../static/pagesIcon.png"
-          alt=""
-        ></span>
+      <div class="sCaseTime">
+        <span>案例时间</span>
+        <span>{{ item[currentPage]&&item[currentPage].publish_time }}</span>
+      </div>
+      <div class="sCaseCon">
+        <div class="sCaseLastDes">
+          <template v-if="type === 'supplier' && (provideData.hit === 'product')">
+            <span>成交业主</span>
+            <span
+              v-html="filterData(item[currentPage]&&item[currentPage].pur_unit_name)"
+            />
+          </template>
+          <template v-if="type === 'purchaser' && provideData.hit === 'product'">
+            <span>供应商</span>
+            <span
+              v-html="filterData(item[currentPage]&&item[currentPage].winbid)"
+            />
+          </template>
+          <template v-if="type === 'purchaser' && provideData.hit === 'supplier'">
+            <span>成交内容</span>
+            <span
+              v-html="filterData(item[currentPage]&&item[currentPage].object)"
+            />
+          </template>
+          <template v-if="type === 'supplier' && provideData.hit === 'purchaser'">
+            <span>成交内容</span>
+            <span
+              v-html="filterData(item[currentPage]&&item[currentPage].object)"
+            />
+          </template>
+        </div>
+        <div class="sCasePage">
+          <span
+            class="sCaseLeftClick"
+            @click.stop="pagePre"
+          ><img
+            src="../../static/pagesIcon.png"
+            alt=""
+          ></span>
 
-        <span
-          class="sCaseCurrentPage"
-          :class="[provideData.theme + '-color1']"
-        >{{ currentPage+1 }}</span>
-        <span
-          class="sCaseRightClick"
-          @click.stop="pageNext"
-        ><img
-          src="../../static/pagesIcon.png"
-          alt=""
-        ></span>
+          <span
+            class="sCaseCurrentPage"
+            :class="[provideData.theme + '-color1']"
+          >{{ currentPage+1 }}</span>
+          <span
+            class="sCaseRightClick"
+            @click.stop="pageNext"
+          ><img
+            src="../../static/pagesIcon.png"
+            alt=""
+          ></span>
+        </div>
       </div>
     </div>
+    <template v-if="show">
+      <CaseDetail
+        :provide-data="useData"
+        :visibles="show"
+        @cancel="cancel"
+      />
+    </template>
   </div>
 </template>
 
@@ -62,11 +78,14 @@
 // import HitTag from '../HitMix/HitTag'
 // import Location from './Location'
 // import OrgProperty from './OrgProperty'
+import CaseDetail from '../../modals/CaseDetail'
 
 export default {
   name: 'SupplierCaseItem',
   inject: ['provideData'],
-  components: {},
+  components: {
+    CaseDetail
+  },
   props: {
     item: {
       type: Array,
@@ -79,6 +98,8 @@ export default {
   },
   data() {
     return {
+      show: false,
+      useData: {},
       loading: false,
       currentPage: 0,
       totalList: JSON.parse(JSON.stringify(this.item)),
@@ -97,6 +118,17 @@ export default {
     this.setPageList()
   },
   methods: {
+    toSeeDetail() {
+      const tempData = Object.assign(this.item[this.currentPage])
+      tempData.instance_type = 'case'
+      tempData.word = this.item[this.currentPage].case_name || this.item[this.currentPage].project_name
+      tempData.uuid = this.item[this.currentPage].uuid
+      this.useData = tempData
+      this.show = true
+    },
+    cancel() {
+      this.show = false
+    },
     setPageList() {
       this.total = this.item.length
       this.list = this.item

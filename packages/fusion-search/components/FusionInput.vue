@@ -59,6 +59,15 @@ export default {
   watch: {
     keyword(value) {
       this.keywordCopy = JSON.parse(JSON.stringify(value))
+    },
+    $route: {
+      deep: true,
+      immediate: true,
+      handler(value) {
+        if (value && value.query) {
+          this.keywordCopy = value.query.q
+        }
+      }
     }
   },
   mounted() {

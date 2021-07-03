@@ -1,16 +1,16 @@
 <template>
   <div class="home">
     <!--    使用自有搜索框-->
-    <input
-      v-model="keywordProjectUse"
-      type="text"
-    >
-    <button
-      style="cursor: pointer;"
-      @click="toSearch"
-    >
-      触发
-    </button>
+<!--    <input-->
+<!--      v-model="keywordProjectUse"-->
+<!--      type="text"-->
+<!--    >-->
+<!--    <button-->
+<!--      style="cursor: pointer;"-->
+<!--      @click="toSearch"-->
+<!--    >-->
+<!--      触发-->
+<!--    </button>-->
     <!--    使用自有搜索框-->
 
     <!--    使用组件-->

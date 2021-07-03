@@ -94,7 +94,7 @@ export default {
               fontSize: '12'
             }
           },
-          data: this.getDataSupplier().map(item => item.name) || []
+          data: (this.getDataSupplier() && this.getDataSupplier()).map(item => item.name) || []
         }, {
           axisTick: 'none',
           axisLine: 'none',
@@ -105,7 +105,7 @@ export default {
               fontSize: '12'
             }
           },
-          data: this.getDataSupplier().map(item => (item.value * 100).toFixed(2) + '%') || []
+          data: (this.getDataSupplier() && this.getDataSupplier()).map(item => (item.value * 100).toFixed(2) + '%') || []
         }],
         series: [
           {
@@ -128,7 +128,7 @@ export default {
             },
             barWidth: 8,
             silent: true,
-            data: this.getDataSupplier() && this.getDataSupplier().map(item => {
+            data: ((this.getDataSupplier() && this.getDataSupplier()) || []).map(item => {
               return { name: item.name, value: item.value }
             })
           }
@@ -200,19 +200,19 @@ export default {
   },
   methods: {
     getMaxCountSupplier () {
-      if (JSON.stringify(this.data) === '{}') return
+      if (JSON.stringify(this.data) === '{}' || this.data === '') return
       const lists = this.data && this.data.product_percent.map(item => item.value)
       const max = Math.max.apply(null, lists)
       return new Array(lists.length).fill(max)
     },
     getDataSupplier () {
-      if (JSON.stringify(this.data) === '{}') return
+      if (JSON.stringify(this.data) === '{}' || this.data === '') return
       return this.data && this.data.product_percent.map(item => {
         return { name: item.name, value: item.value }
       }).reverse()
     },
     getCaseNumValue() {
-      if (JSON.stringify(this.data) === '{}') return
+      if (JSON.stringify(this.data) === '{}' || this.data === '') return
       return this.data && this.data.product_percent.map(item => item.value)
     },
     getCaseNumName() {
@@ -220,7 +220,7 @@ export default {
       return this.data && this.data.product_percent.map(item => item.name)
     },
     getData() {
-      if (JSON.stringify(this.data) === '{}') return
+      if (JSON.stringify(this.data) === '{}' || this.data === '') return
       return this.data && this.data.supplier_location.map(item => {
         return {
           name: city_group[item.name],
@@ -229,7 +229,7 @@ export default {
       }).slice(0, 8)
     },
     getMaxCount () {
-      if (JSON.stringify(this.data) === '{}') return
+      if (JSON.stringify(this.data) === '{}' || this.data === '') return
       const lists = (this.data && this.data.supplier_location).map(o => o.value)
       const max = Math.max.apply(null, lists)
       return max

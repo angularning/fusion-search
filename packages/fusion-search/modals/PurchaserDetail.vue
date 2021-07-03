@@ -10,7 +10,7 @@
       slot="title"
       class="dialog-header"
     >
-      <span :class="[provideData.theme+'-color1']">供应商详情</span>
+      <span :class="[provideData.theme+'-color1']">业主详情</span>
       <a
         class="toDetails"
         :class="[provideData.theme+'-buttonPlain']"
@@ -53,9 +53,9 @@
 </template>
 <script>
 import SupplierDetailOrg from '../components/HitMix/SupplierDetailOrg'
-import LocationTag from '../components/Description/LocationTag'
-import DescriptionTag from '../components/Description/DescriptionTag'
-import PlanCommonTag from '../components/Description/PlanCommonTag'
+// import LocationTag from '../components/Description/LocationTag'
+// import DescriptionTag from '../components/Description/DescriptionTag'
+// import PlanCommonTag from '../components/Description/PlanCommonTag'
 // import { getColors, getNames } from '~/constant/ListTagConfig'
 // eslint-disable-next-line camelcase
 import { city_group } from '../common/city'
@@ -64,8 +64,8 @@ export default {
   name: 'PurchaserDetail',
   components: {
     SupplierDetailOrg,
-    LocationTag,
-    DescriptionTag,
+    // LocationTag,
+    // DescriptionTag,
     NoResult
   },
   props: {
@@ -106,7 +106,6 @@ export default {
   },
   created () {
     this.getDetails()
-    this.detailData.type_own = 'supplier'
   },
   methods: {
     toDetail() {
@@ -123,6 +122,7 @@ export default {
           const { data } = res
           this.hasData = JSON.stringify(data) !== '{}'
           this.detailData = data
+          this.detailData.type_own = 'purchaser'
           this.loading = false
         } else {
           this.hasData = false

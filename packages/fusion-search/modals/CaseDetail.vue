@@ -10,7 +10,7 @@
       class="dialog-header"
     >
       <div>
-        {{ (result_dict&&result_dict.case_name) }}
+        {{ (result_dict&&(result_dict.case_name||result_dict.project_name)) }}
       </div>
       <div
         v-if="result_dict&&result_dict.owned_item"
@@ -21,6 +21,7 @@
         <!--          :key="index"-->
         <!--          class="item-class-tag ml10  defalutColor"-->
         <!--        >-->
+        <!--          getValue(con)-->
         <!--        </div>-->
       </div>
       <div
@@ -40,7 +41,7 @@
       <div>
         <div class="dialog-body-top">
           <div
-            v-if="result_dict.hasOwnProperty('case_release_date')"
+            v-if="result_dict.hasOwnProperty('publish_time')"
             class="product-property-item"
           >
             <div style="font-weight: bold;">
@@ -58,7 +59,7 @@
             <div>{{ doPurchaser(result_dict.pur_unit_name) }}</div>
           </div>
           <div
-            v-if="result_dict.hasOwnProperty('case_province_code')"
+            v-if="result_dict.hasOwnProperty('location')"
             class="product-property-item"
           >
             <div style="font-weight: bold;">
@@ -77,11 +78,11 @@
               <span>内容详情{{ index+1 }}</span>
             </div>
             <div
-              v-if="item.subcontract_win_amount"
+              v-if="item.win_amount"
               class="packageAmountBlack"
             >
               <span>中标金额</span>
-              <span>{{ (item.subcontract_win_amount/10000).toFixed(2) }}万元</span>
+              <span>{{ (item.win_amount/10000).toFixed(2) }}万元</span>
             </div>
             <!-- <div v-if="item.win_amount" class="packageAmount">
                <span>中标金额</span>
@@ -89,7 +90,7 @@
              </div>-->
             <div class="packageProduct">
               <span
-                v-for="productItem in item.subcontract_content"
+                v-for="productItem in item.product"
                 :key="productItem"
               >
                 {{ productItem }}
@@ -97,7 +98,7 @@
             </div>
             <div class="packageWinbid">
               <span
-                v-for="winbidItem in item.other_suppliers"
+                v-for="winbidItem in item.winbid"
                 :key="winbidItem"
               >
                 {{ winbidItem }}
@@ -142,7 +143,7 @@ export default {
       hasData: true,
       case_content: '',
       anno_content_url: '',
-      result_dict: [],
+      result_dict: {},
       item: {},
       loading: false
     }
@@ -150,7 +151,7 @@ export default {
   computed: {
     isActive: {
       get() {
-        return this.result_dict.anno_content_url
+        return this.anno_content_url
       }
     }
   },
@@ -159,6 +160,9 @@ export default {
       deep: true,
       immediate: true,
       handler(value) {
+        if (value) {
+          this.getDetails()
+        }
         this.visible = JSON.parse(JSON.stringify(value))
       }
     }
@@ -186,12 +190,12 @@ export default {
   //   }
   // },
   created () {
-    this.getDetails()
   },
   methods: {
     getDetails() {
       this.loading = true
       this.$get(this.provideData.baseUrl + 'search/detail/?graph_id=1&keyword=' + this.provideData.word + '&instance_type=' + this.provideData.instance_type + '&uuid=' + this.provideData.uuid).then(res => {
+        console.log(res)
         if (res) {
           const { data } = res
           this.hasData = JSON.stringify(data) !== '{}'
@@ -232,7 +236,7 @@ export default {
       }
     },
     doPurchaser(val) {
-      return val
+      return val.join('')
     },
     toSort(con) {
       if (con) {

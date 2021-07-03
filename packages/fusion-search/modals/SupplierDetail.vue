@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="supplierDetailLocation">
-          <div class="supplierDetailTitle">
+          <div class="supplierDetailTitle" v-show="detailData.service_area.length>0">
             服务过的地区
           </div>
           <LocationTag :list="detailData.service_area" />

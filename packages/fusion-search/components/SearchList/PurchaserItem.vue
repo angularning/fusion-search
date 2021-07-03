@@ -82,15 +82,9 @@ export default {
       provideData.instance_type = 'purchaser'
       provideData.uuid = this.item.uuid
       provideData.comp_name = this.item.purchase_name
+      provideData.type_own = 'purchaser'
       this.useData = provideData
       this.show = true
-      // this.$modal('SupplierDetail', {
-      //   propsData: {
-      //     provideData
-      //   },
-      //   $store: this.$store,
-      //   $router: this.$router
-      // })
     }
   }
 }

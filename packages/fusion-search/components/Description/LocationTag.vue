@@ -1,11 +1,12 @@
 <template>
   <div class="LocationTag">
     <div
-      v-if="list"
+      v-if="list&&list.length>0"
       class="tags-container"
     >
       <div
         v-for="(tag, j) in list"
+        v-show="getValue(tag)!==''||tag==='0000'"
         :key="j"
         class="tag"
       >

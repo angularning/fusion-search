@@ -1,6 +1,6 @@
 <template>
   <div class="SortFilter">
-    <template v-if="provideData.hit ==='supplier'">
+    <template v-if="!(provideData.hit ==='purchaser' && type ==='supplier')">
       <span class="label1">服务地区筛选</span>
       <el-cascader
         ref="myCascader"
@@ -114,6 +114,7 @@ export default {
     return {
       provinceCity: null,
       value: null,
+      money: null,
       searchParams: {
         tagFilter: null,
         money1: null,
@@ -165,17 +166,22 @@ export default {
             prop: 'reg_cap'
           } */
         ],
-        same_supplier: [
+        case: [
           {
-            type: 'same_supplier',
-            name: '综合排序',
-            prop: '-default'
+            type: 'case',
+            name: '发布时间降序',
+            prop: '-publish_time'
           },
           {
-            type: 'same_supplier',
-            name: '注册资本降序',
-            prop: '-reg_cap'
+            type: 'case',
+            name: '成交金额降序',
+            prop: '-case_winamount_sum'
           }
+          /* {
+            type: 'case',
+            name: '案例区域',
+            prop: 'case_location_code'
+          } */
         ],
         purchaser: [
           {
@@ -199,22 +205,17 @@ export default {
           //   prop: '-purchaser_case_cnt'
           // }
         ],
-        case: [
+        same_supplier: [
           {
-            type: 'case',
-            name: '发布时间降序',
-            prop: '-publish_time'
+            type: 'same_supplier',
+            name: '综合排序',
+            prop: '-default'
           },
           {
-            type: 'case',
-            name: '成交金额降序',
-            prop: '-case_winamount_sum'
+            type: 'same_supplier',
+            name: '注册资本降序',
+            prop: '-reg_cap'
           }
-          /* {
-            type: 'case',
-            name: '案例区域',
-            prop: 'case_location_code'
-          } */
         ]
       },
       tagFilterList: {
@@ -284,15 +285,15 @@ export default {
         const n = this.$refs.myCascader.getCheckedNodes()[0]
         const location = n && n.data.code
         this.location = location
-        this.$emit('filter-list', { location, type: this.type, reg_cap: this.reg_cap })
+        this.$emit('filter-list', { location, type: this.type, money: this.money })
       }
     },
     toSearchList() {
       // eslint-disable-next-line camelcase
-      const reg_cap = this.searchParams.money1 + ',' + this.searchParams.money2
+      const money = this.searchParams.money1 + ',' + this.searchParams.money2
       // eslint-disable-next-line camelcase
-      this.reg_cap = reg_cap
-      this.$emit('filter-list', { reg_cap, type: this.type, location: this.location })
+      this.money = money
+      this.$emit('filter-list', { money, type: this.type, location: this.location })
     },
     setCityData() {
       this.provinceCity.forEach((item) => {

@@ -3,9 +3,11 @@
     <div
       v-loading="loading"
       class="SupplierItem"
-      @click="showDetail"
     >
-      <div class="listItemLeft">
+      <div
+        class="listItemLeft"
+        @click.stop="showDetail"
+      >
         <div class="orgTop">
           <div
             class="orgTopImg"

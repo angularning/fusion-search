@@ -10,7 +10,7 @@
       @change="toSort"
     >
       <el-option
-        v-for="(item, i) in sortList[type]"
+        v-for="(item, i) in sortList[provideData.hit][type]"
         :key="i"
         :label="item.name"
         :value="item.prop"
@@ -38,74 +38,201 @@ export default {
       active: 0,
       current: null,
       sortList: {
-        supplier: [
-          {
-            type: 'supplier',
-            name: '综合排序',
-            prop: 'default'
-          },
-          {
-            type: 'supplier',
-            name: '注册资本降序',
-            prop: '-reg_cap'
-          },
-          {
-            type: 'supplier',
-            name: '最近成立时间降序',
-            prop: '-est_date'
-          }
-        ],
-        sameSupplier: [
-          {
-            type: 'sameSupplier',
-            name: '综合排序',
-            prop: '-default'
-          },
-          {
-            type: 'sameSupplier',
-            name: '注册资本降序',
-            prop: '-reg_cap'
-          }
-        ],
-        purchaser: [
-          {
-            type: 'purchaser',
-            name: '注册资本降序',
-            prop: '-reg_cap'
-          },
-          {
-            type: 'purchaser',
-            name: '注册资本升序',
-            prop: 'reg_cap'
-          },
-          {
-            type: 'purchaser',
-            name: '最近采购日期降序',
-            prop: '-purchaser_recent_date'
-          },
-          {
-            type: 'purchaser',
-            name: '采购数量降序',
-            prop: '-purchaser_case_cnt'
-          }
-        ],
-        case: [
-          {
-            type: 'case',
-            name: '发布时间降序',
-            prop: '-case_release_date'
-          },
-          {
-            type: 'case',
-            name: '发布时间升序',
-            prop: 'case_release_date'
-          }
-          /* {
-            type: 'case',
-            name: '案例区域',
-            prop: 'case_location_code'
-          } */
-        ]
+        product: {
+          supplier: [
+            {
+              type: 'supplier',
+              name: '综合排序',
+              prop: 'default'
+            },
+            {
+              type: 'supplier',
+              name: '注册资本降序',
+              prop: '-register_capital'
+            },
+            {
+              type: 'supplier',
+              name: '注册资本升序',
+              prop: 'register_capital'
+            },
+            {
+              type: 'supplier',
+              name: '最近成立时间升序',
+              prop: 'establish_time'
+            },
+            {
+              type: 'supplier',
+              name: '最近成交日期降序',
+              prop: '-publish_time'
+            }
+          ],
+          case: [
+            {
+              type: 'case',
+              name: '发布时间降序',
+              prop: '-publish_time'
+            },
+            {
+              type: 'case',
+              name: '按中标金额升序',
+              prop: 'case_winamount_sum'
+            },
+            {
+              type: 'case',
+              name: '按中标金额降序',
+              prop: '-case_winamount_sum'
+            }
+          ],
+          purchaser: [
+            {
+              type: 'purchaser',
+              name: '注册资本降序',
+              prop: '-register_capital'
+            },
+            {
+              type: 'purchaser',
+              name: '最近采购日期降序',
+              prop: '-publish_time'
+            }
+          ]
+        },
+        supplier: {
+          case: [
+            {
+              type: 'case',
+              name: '发布时间降序',
+              prop: '-publish_time'
+            },
+            {
+              type: 'case',
+              name: '按中标金额升序',
+              prop: 'case_winamount_sum'
+            },
+            {
+              type: 'case',
+              name: '按中标金额降序',
+              prop: '-case_winamount_sum'
+            }
+          ],
+          purchaser: [
+            {
+              type: 'purchaser',
+              name: '注册资本降序',
+              prop: '-register_capital'
+            },
+            {
+              type: 'purchaser',
+              name: '最近采购日期降序',
+              prop: '-publish_time'
+            }
+          ]
+        },
+        purchaser: {
+          case: [
+            {
+              type: 'case',
+              name: '发布时间降序',
+              prop: '-publish_time'
+            },
+            {
+              type: 'case',
+              name: '按中标金额升序',
+              prop: 'case_winamount_sum'
+            },
+            {
+              type: 'case',
+              name: '按中标金额降序',
+              prop: '-case_winamount_sum'
+            }
+          ],
+          supplier: [
+            // {
+            //   type: 'supplier',
+            //   name: '综合排序',
+            //   prop: 'default'
+            // },
+            {
+              type: 'supplier',
+              name: '注册资本降序',
+              prop: '-register_capital'
+            },
+            {
+              type: 'supplier',
+              name: '注册资本升序',
+              prop: 'register_capital'
+            },
+            {
+              type: 'supplier',
+              name: '最近成立时间升序',
+              prop: 'establish_time'
+            },
+            {
+              type: 'supplier',
+              name: '最近成交日期降序',
+              prop: '-publish_time'
+            }
+          ]
+        },
+        noHit: {
+          supplier: [
+            {
+              type: 'supplier',
+              name: '注册资本降序',
+              prop: '-register_capital'
+            },
+            {
+              type: 'supplier',
+              name: '注册资本升序',
+              prop: 'register_capital'
+            },
+            {
+              type: 'supplier',
+              name: '最近成立时间升序',
+              prop: 'establish_time'
+            },
+            {
+              type: 'supplier',
+              name: '最近成立时间降序',
+              prop: '-establish_time'
+            }
+          ],
+          purchaser: [
+            {
+              type: 'purchaser',
+              name: '注册资本降序',
+              prop: '-register_capital'
+            },
+            {
+              type: 'purchaser',
+              name: '注册资本升序',
+              prop: 'register_capital'
+            }
+          ],
+          case: [
+            {
+              type: 'case',
+              name: '发布时间降序',
+              prop: '-publish_time'
+            },
+            {
+              type: 'case',
+              name: '发布时间升序',
+              prop: 'publish_time'
+            },
+            {
+              type: 'case',
+              name: '按中标金额升序',
+              prop: 'case_winamount_sum'
+            },
+            {
+              type: 'case',
+              name: '按中标金额降序',
+              prop: '-case_winamount_sum'
+            }
+          ]
+        },
+        completeNoHit: {
+        }
       }
     }
   },
@@ -113,7 +240,7 @@ export default {
     type: {
       immediate: true,
       handler() {
-        this.current = this.sortList[this.type][0]['prop']
+        this.current = this.sortList[this.provideData.hit][this.type][0]['prop']
       }
     }
   },

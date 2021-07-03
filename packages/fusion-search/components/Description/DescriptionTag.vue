@@ -6,6 +6,7 @@
     >
       <div
         v-for="(tag, j) in list"
+        v-show="getValue(tag) !==''"
         :key="j"
         :class="[provideData.theme + '-color1', provideData.theme + '-background16']"
         class="tag"

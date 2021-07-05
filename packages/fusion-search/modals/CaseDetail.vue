@@ -223,7 +223,11 @@ export default {
           return city_group[location]
         } else {
           const l = String(location).substring(0, 2) + '0000'
-          return city_group[l] + '-' + city_group[location]
+          if (city_group[location]) {
+            return city_group[l] + '-' + city_group[location] || ''
+          } else {
+            return city_group[l]
+          }
         }
       }
     },

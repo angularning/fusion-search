@@ -22,7 +22,7 @@
               v-html="filterData(item[currentPage]&&item[currentPage].pur_unit_name)"
             />
           </template>
-          <template v-if="type === 'purchaser' && provideData.hit === 'product'">
+          <template v-if="type === 'purchaser' && provideData.hit === 'product' && item[currentPage].winbid.length>0">
             <span>供应商</span>
             <span
               v-html="filterData(item[currentPage]&&item[currentPage].winbid)"

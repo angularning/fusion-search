@@ -56,18 +56,28 @@
           </el-button>
         </div>
       </div>
+      <SubmitModal
+        :provide-data="provideData"
+        :visibles="show"
+        @cancel="cancel"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import SubmitModal from './SubmitModal'
 export default {
   name: 'NoHitRight',
   inject: ['provideData'],
+  components: {
+    SubmitModal
+  },
   props: {
   },
   data() {
     return {
+      show: false,
       first_list: [],
       second_list: [],
       tagList: ['供应商', '案例'],
@@ -83,6 +93,7 @@ export default {
   watch: {},
   methods: {
     cancel() {
+      this.show = false
       this.demand = null
       this.mobile = null
     },
@@ -96,7 +107,8 @@ export default {
       }
       this.$post(this.provideData.baseUrl + 'adviser/', data).then(item => {
         if (item) {
-          this.$message.success('提交成功')
+          this.show = true
+          // this.$message.success('提交成功')
           setTimeout(() => {
             this.demand = null
             this.mobile = null

@@ -2,7 +2,6 @@
   <div class="SortFilter">
     <template v-if="!(provideData.hit ==='purchaser' && type ==='supplier')">
       <span class="label1">服务地区筛选</span>
-      {{value}}
       <el-cascader
         ref="myCascader"
         v-model="value"

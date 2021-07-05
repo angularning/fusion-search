@@ -104,7 +104,11 @@ export default {
   },
   methods: {
     setRegCap(value) {
-      return value && (value / 10000).toFixed(1) + '万'
+      if (value) {
+        return value + '万'
+      } else {
+        return ''
+      }
     }
   }
 }

@@ -3,9 +3,11 @@
     <div
       v-loading="loading"
       class="PurchaserItem"
-      @click="showDetail"
     >
-      <div class="listItemLeft">
+      <div
+        class="listItemLeft"
+        @click="showDetail"
+      >
         <div class="orgTop">
           <div
             class="orgTopImg"
@@ -25,9 +27,14 @@
             </div>
           </div>
         </div>
-        <OrgProperty :type="'purchaser'" :datalist="item" />
+        <OrgProperty
+          :type="'purchaser'"
+          :datalist="item"
+        />
       </div>
-      <div class="listItemRight">
+      <div
+        class="listItemRight"
+      >
         <SupplierCaseItem
           :item="item.cases"
           :type="'purchaser'"

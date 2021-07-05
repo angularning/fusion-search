@@ -1,12 +1,17 @@
 <template>
   <div class="MallCaseLocation">
-    <div v-show="item.case_province_code || item.case_location_code || item.location"
-      ><img src="../../static/location@2x.png" alt="" /><span>{{
+    <div
+      v-show="item.case_province_code || item.case_location_code || item.location"
+    >
+      <img
+        src="../../static/location@2x.png"
+        alt=""
+      ><span>{{
         city_name(item.case_province_code) ||
           city_name(item.location) ||
           city_name(item.case_location_code)
-      }}</span></div
-    >
+      }}</span>
+    </div>
   </div>
 </template>
 
@@ -33,7 +38,11 @@ export default {
           return city_group[location]
         } else {
           const l = String(location).substring(0, 2) + '0000'
-          return city_group[l] + '-' + city_group[location]
+          if (city_group[location]) {
+            return city_group[l] + '-' + city_group[location] || ''
+          } else {
+            return city_group[l]
+          }
         }
       }
     }

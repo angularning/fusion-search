@@ -41,7 +41,7 @@
           <div class="supplierDetailTitle">
             服务领域
           </div>
-          <DescriptionTag :list="detailData.supplementary_label" />
+          <ServiceTag :list="detailData.supplementary_label" />
         </div>
         <div>
           <PlanCommonTag
@@ -68,7 +68,7 @@
 <script>
 import SupplierDetailOrg from '../components/HitMix/SupplierDetailOrg'
 import LocationTag from '../components/Description/LocationTag'
-import DescriptionTag from '../components/Description/DescriptionTag'
+import ServiceTag from '../components/Description/ServiceTag'
 import PlanCommonTag from '../components/Description/PlanCommonTag'
 // import { getColors, getNames } from '~/constant/ListTagConfig'
 // eslint-disable-next-line camelcase
@@ -79,7 +79,7 @@ export default {
   components: {
     SupplierDetailOrg,
     LocationTag,
-    DescriptionTag,
+    ServiceTag,
     PlanCommonTag,
     NoResult
   },

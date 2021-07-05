@@ -10,7 +10,7 @@
       @change="toSort"
     >
       <el-option
-        v-for="(item, i) in sortList[provideData.hit][type]"
+        v-for="(item, i) in sortList[Object.keys(type)][Object.values(type)]"
         :key="i"
         :label="item.name"
         :value="item.prop"
@@ -25,8 +25,8 @@ export default {
   inject: ['provideData'],
   props: {
     type: {
-      type: String,
-      default: () => 'supplier'
+      type: Object,
+      default: () => {}
     }
     // search: {
     //   type: String,
@@ -36,6 +36,8 @@ export default {
   data() {
     return {
       active: 0,
+      msg0: null,
+      msg1: null,
       current: null,
       sortList: {
         product: {
@@ -239,20 +241,19 @@ export default {
   watch: {
     type: {
       immediate: true,
-      handler() {
-        this.current = this.sortList[this.provideData.hit][this.type][0]['prop']
+      deep: true,
+      handler(value) {
+        this.current = null
+        this.current = this.sortList[Object.keys(value)][Object.values(value)][0]['prop']
       }
     }
   },
   created() {
-    // current(){
-    //   return this.sortList[this.type][0].prop
-    // }
   },
   methods: {
     toSort(item, i) {
       this.active = i
-      this.$emit('sort-list', { order: this.current, type: this.type })
+      this.$emit('sort-list', { order: this.current, type: this.type[this.provideData.hit] })
     }
   }
 }

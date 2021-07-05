@@ -1,6 +1,6 @@
 {
   "name": "vue-fusion-search",
-  "version": "0.0.21",
+  "version": "0.0.29",
   "description": "fusion-search",
   "private": false,
   "author": "weining@chinasofti.com",
@@ -40,8 +40,7 @@
     "uv": "cross-env node ./script/update.version.js"
   },
   "dependencies": {
-    "generate-source-map": "^0.0.5",
-    "rollup-plugin-require-context": "^1.0.1"
+    "generate-source-map": "^0.0.5"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.1.0",

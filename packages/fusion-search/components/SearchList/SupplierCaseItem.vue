@@ -17,7 +17,7 @@
       <div class="sCaseCon">
         <div class="sCaseLastDes">
           <template v-if="type === 'supplier' && (provideData.hit === 'product')">
-            <span>成交业主</span>
+            <span>采购业主</span>
             <span
               v-html="filterData(item[currentPage]&&item[currentPage].pur_unit_name)"
             />

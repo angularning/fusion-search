@@ -26,8 +26,8 @@ export default {
       default: () => 0
     },
     type: {
-      type: String,
-      default: () => null
+      type: Object,
+      default: () => {}
     },
     cpage: {
       type: Boolean,
@@ -56,7 +56,7 @@ export default {
   methods: {
     handleCurrentChange(value) {
       this.page = value
-      this.$emit('change-page', { page: value, type: this.type })
+      this.$emit('change-page', { page: value, type: Object.values(this.type).join() })
     }
   }
 }

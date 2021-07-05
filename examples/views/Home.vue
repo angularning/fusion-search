@@ -37,7 +37,7 @@ export default {
       searchStatus: false, // 搜索框搜索的状态，默认为 false
       config: { // 基础配置项
         THEME: 'JFH', // 配置化主题 支持 JFH/XUNYUAN
-        baseUrl: 'http://192.168.41.84:8000/v1/api/', // 接口请求域名
+        baseUrl: 'https://caigou-api-test.jfh.com/v1/api/', // 接口请求域名
         LOGIN: true, // 暂未开放
         showInput: true, // 是否显示搜索框
         showMix: true, // 是否显示命中详情

@@ -186,6 +186,100 @@ export default {
           }
         }
       },
+      defaultSearchField: {
+        product: {
+          supplier: {
+            fields: {
+              // supplier_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
+              // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
+              order: 'default'
+            },
+            amount: 'register_capital'
+          },
+          case: {
+            fields: {
+              // supplier_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
+              // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
+              order: '-publish_time'
+            },
+            amount: 'case_winamount_sum'
+          },
+          purchaser: {
+            fields: {
+              // purchaser_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
+              order: '-register_capital'
+            },
+            amount: 'register_capital'
+          }
+        },
+        supplier: {
+          // supplier: {
+          //   fields: {
+          //     supplier_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
+          //     case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
+          //     order: '-reg_cap'
+          //   }
+          // },
+          case: {
+            fields: {
+              // fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,case_winamount_sum,object,winbid',
+              // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
+              order: '-publish_time' // default/-case_release_date/-case_winamount_sum
+            },
+            amount: 'case_winamount_sum'
+          },
+          purchaser: {
+            fields: {
+              // purchaser_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
+              // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,winbid,object,case_winamount_sum'
+              order: '-register_capital' // 排序规则-case_release_date/-case_winamount_sum
+            },
+            amount: 'case_winamount_sum'
+          }
+        },
+        purchaser: {
+          supplier: {
+            fields: {
+              // supplier_fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
+              // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,winbid,object',
+              order: '-register_capital' // default/-case_release_date/-est_date
+            },
+            amount: 'register_capital'
+          },
+          case: {
+            fields: {
+              // fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,case_winamount_sum,case_tag,object,winbid',
+              // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
+              order: '-publish_time' // default/-case_release_date/-case_winamount_sum
+            },
+            amount: 'case_winamount_sum'
+          }
+        },
+        noHit: {
+          supplier: {
+            fields: {
+              // fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
+              order: '-register_capital' // -reg_cap/-est_date
+            },
+            amount: 'register_capital'
+          },
+          case: {
+            fields: {
+              // fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,case_winamount_sum,object',
+              // case_fields: 'id,case_name,case_url,case_release_date,purchaser,case_location_code,object',
+              order: '-publish_time' // 排序规则-case_release_date/-case_winamount_sum
+            },
+            amount: 'bid_winning_amount'
+          },
+          purchaser: {
+            fields: {
+              // fields: 'id,org_name,location,org_tag,reg_cap,est_date,org_url',
+              order: '-register_capital' // 排序规则-case_release_date/-reg_cap
+            },
+            amount: 'register_capital'
+          }
+        }
+      },
       tabNav: {
         noHit: [
           {
@@ -260,7 +354,9 @@ export default {
       return this.tabNav[this.provideData.hit][this.active].name
     },
     defaultType() {
-      return this.type || this.tabNav[this.provideData.hit][0].key
+      return {
+        [this.provideData.hit]: this.type || this.tabNav[this.provideData.hit][0].key
+      }
     }
   },
   watch: {
@@ -332,11 +428,10 @@ export default {
         page: 1,
         page_size: 15
       }
-      const data = Object.assign(selection, this.searchFields[this.hit][this.defaultType].fields)
+      const data = Object.assign(selection, this.defaultSearchField[this.hit][this.defaultType[this.hit]].fields)
       this.removeKey(data, 'location')
       this.removeKey(data, 'register_capital')
       this.removeKey(data, 'bid_winning_amount')
-      console.log('data', data)
       this.$post(this.provideData.baseUrl + 'search/main/', data).then(item => {
         const { data } = item
         this.data = data

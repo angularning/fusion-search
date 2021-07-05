@@ -6,7 +6,7 @@
     >
       <div
         v-for="(tag, j) in list"
-        v-show="typeof tag !== 'undefined'"
+        v-show="String(getValue(tag)) !=='undefined'"
         :key="j"
         :class="[provideData.theme + '-color1', provideData.theme + '-background16']"
         class="tag"
@@ -57,7 +57,7 @@ export default {
   watch: {},
   methods: {
     getValue(value) {
-      return getNames(value)
+      return getNames(value) || undefined
     }
   }
 }

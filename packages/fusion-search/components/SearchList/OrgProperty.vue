@@ -27,8 +27,7 @@
         >
           <a
             :class="[provideData.theme + '-color1']"
-            :href="item.value"
-            target="_blank"
+            @click.stop="toUrl(item.value)"
           >{{
             item.value
           }}</a>
@@ -82,11 +81,10 @@ export default {
           value = calc ? calc(this.datalist) : this.datalist && this.datalist[prop]
         }
         if (prop === 'establish_time') {
-          console.log()
           if (this.datalist[prop] === null) {
             value = ''
           } else {
-            if ((this.datalist[prop]).includes('Z')) {
+            if ((this.datalist && this.datalist[prop]).includes('Z')) {
               value = (this.datalist && this.datalist[prop]).substring(0, 10)
             }
           }
@@ -103,6 +101,9 @@ export default {
     }
   },
   methods: {
+    toUrl(value) {
+      window.open(value, '_blank')
+    },
     setRegCap(value) {
       if (value) {
         return value + '万'

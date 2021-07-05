@@ -14,49 +14,8 @@
         @change="handleChange(value)"
       />
     </template>
-    <!--    <el-select-->
-    <!--      v-model="searchParams.province"-->
-    <!--      class="sortSelect"-->
-    <!--      size="mini"-->
-    <!--      placeholder="请选择"-->
-    <!--      @change="setCityData"-->
-    <!--    >-->
-    <!--      <el-option-->
-    <!--        v-for="item in provinceCity"-->
-    <!--        :key="item.code"-->
-    <!--        :label="item.label"-->
-    <!--        :value="item.code"-->
-    <!--      />-->
-    <!--    </el-select>-->
-    <!--    <el-select-->
-    <!--      v-model="searchParams.city"-->
-    <!--      class="sortSelect"-->
-    <!--      style="margin-left: 30px;"-->
-    <!--      size="mini"-->
-    <!--      placeholder="请选择"-->
-    <!--    >-->
-    <!--      <el-option-->
-    <!--        v-for="item in searchParams.cityData"-->
-    <!--        :key="item.code"-->
-    <!--        :label="item.label"-->
-    <!--        :value="item.code"-->
-    <!--      />-->
-    <!--    </el-select>-->
-
-    <!--    <el-cascader-->
-    <!--      v-model="searchParams.tagFilter"-->
-    <!--      class="sortSelect"-->
-    <!--      multiple-->
-    <!--      :options="tagFilterList[type]"-->
-    <!--      :class="[provideData.theme+'-select']"-->
-    <!--      :popper-class="provideData.theme+'-popperSelect'"-->
-    <!--      style="margin-left: 20px;margin-right: 20px;"-->
-    <!--      size="mini"-->
-    <!--      placeholder="请选择"-->
-    <!--    >-->
-    <!--    </el-cascader>-->
     <span
-      v-if="type === 'supplier' || type === 'sameSupplier'"
+      v-if="Object.values(type).join() === 'supplier' || Object.values(type).join() === 'purchaser'"
       class="label2"
     >注册资本</span>
     <span
@@ -106,8 +65,8 @@ export default {
   inject: ['provideData'],
   props: {
     type: {
-      type: String,
-      default: () => 'supplier'
+      type: Object,
+      default: () => {}
     },
     search: {
       type: Boolean,
@@ -207,7 +166,7 @@ export default {
         const n = this.$refs.myCascader.getCheckedNodes()[0]
         const location = n && n.data.code
         this.location = location
-        this.$emit('filter-list', { location, type: this.type, money: this.money })
+        this.$emit('filter-list', { location, type: Object.values(this.type).join(), money: this.money })
       }
     },
     toSearchList() {
@@ -215,7 +174,7 @@ export default {
       const money = this.searchParams.money1 + ',' + this.searchParams.money2
       // eslint-disable-next-line camelcase
       this.money = money
-      this.$emit('filter-list', { money, type: this.type, location: this.location })
+      this.$emit('filter-list', { money, type: Object.values(this.type).join(), location: this.location })
     },
     setCityData() {
       this.provinceCity.forEach((item) => {

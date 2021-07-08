@@ -40,6 +40,7 @@
             v-loading="loadingChart"
             :data="chartData"
             :list="relateList"
+            :hit="hit"
           />
         </template>
       </div>
@@ -47,8 +48,8 @@
     <!--    未命中-->
     <div
       v-if="hit==='noHit'"
-      class="fusionContent"
       v-loading="againLoading"
+      class="fusionContent"
     >
       <div class="fusionLeft">
         <div class="tipTitle">
@@ -236,7 +237,9 @@ export default {
     getRelatedList() {
       this.$get(this.config.baseUrl + 'search/related_product/?graph_id=1&keyword=' + this.keyword + '&instance_type=' + this.instance_type + '&uuid=' + this.cardData.uuid).then(item => {
         const { data } = item
-        this.relateList = data
+        this.$nextTick(() => {
+          this.relateList = data
+        })
         // eslint-disable-next-line handle-callback-err
       }).catch(err => {
       })
@@ -245,7 +248,9 @@ export default {
       this.loadingChart = true
       this.$get(this.config.baseUrl + 'search/statistics/?graph_id=1&keyword=' + this.keyword + '&instance_type=' + this.instance_type + '&uuid=' + this.cardData.uuid).then(item => {
         const { data } = item
-        this.chartData = data
+        this.$nextTick(() => {
+          this.chartData = data
+        })
         this.loadingChart = false
         // eslint-disable-next-line handle-callback-err
       }).catch(err => {

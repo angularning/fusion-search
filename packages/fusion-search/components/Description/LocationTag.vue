@@ -6,7 +6,7 @@
     >
       <div
         v-for="(tag, j) in list"
-        v-show="getValue(tag)!==''||tag==='0000'"
+        v-show="(getValue(tag)!==undefined) || tag !== '0000'"
         :key="j"
         class="tag"
       >

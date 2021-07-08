@@ -29,7 +29,7 @@
             />
           </template>
           <template v-if="type === 'purchaser' && provideData.hit === 'supplier'">
-            <span>成交内容</span>
+            <span>成交产品</span>
             <span
               v-html="filterData(item[currentPage]&&item[currentPage].object)"
             />

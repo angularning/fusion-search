@@ -102,7 +102,7 @@ export default {
               fontSize: '12'
             }
           },
-          data: this.getDataPurchaser() && this.getDataPurchaser().map(item => (item.value * 100).toFixed(2) + '%')
+          data: this.getDataPurchaser().map(item => (item.value * 100).toFixed(2) + '%')
         }],
         series: [
           {
@@ -125,7 +125,7 @@ export default {
             },
             barWidth: 8,
             silent: true,
-            data: this.getDataPurchaser() && this.getDataPurchaser().map(item => {
+            data: this.getDataPurchaser().map(item => {
               return { name: item.name, value: item.value }
             })
           }
@@ -196,20 +196,26 @@ export default {
     }
   },
   methods: {
+    notEmptyArray(value) {
+      return (value && value.length > 0)
+    },
     getMaxCountSupplier () {
-      if (JSON.stringify(this.data) === '{}' || this.data === '') return []
+      if (JSON.stringify(this.data) === '{}' || this.data === '') return
+      if (!this.notEmptyArray(this.data.product_percent)) return
       const lists = this.data && this.data.product_percent.map(item => item.value)
       const max = Math.max.apply(null, lists)
       return new Array(lists.length).fill(max)
     },
     getDataPurchaser () {
-      if (JSON.stringify(this.data) === '{}' || this.data === '') return []
+      if (JSON.stringify(this.data) === '{}' || this.data === '') return
+      if (!this.notEmptyArray(this.data.product_percent)) return
       return this.data && this.data.product_percent.map(item => {
         return { name: item.name, value: item.value }
       }).reverse()
     },
     getData() {
-      if (JSON.stringify(this.data) === '{}' || this.data === '') return []
+      if (JSON.stringify(this.data) === '{}' || this.data === '') return
+      if (!this.notEmptyArray(this.data.supplier_location)) return
       return this.data && this.data.supplier_location.map(item => {
         return {
           name: city_group[item.name],

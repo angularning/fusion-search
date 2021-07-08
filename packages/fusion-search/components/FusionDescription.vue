@@ -1,7 +1,7 @@
 <template>
   <div class="FusionDescription">
     <component
-      :is="configList[provideData.hit]"
+      :is="configList[hit]"
       :data="data"
       :list="list"
     />
@@ -28,6 +28,10 @@ export default {
     list: {
       type: Array,
       default: () => []
+    },
+    hit: {
+      type: String,
+      default: () => ''
     }
   },
   data() {

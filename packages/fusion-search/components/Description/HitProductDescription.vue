@@ -38,7 +38,10 @@
         />
       </div>
     </div>
-    <SameProductList :type="'product'" :list="list" />
+    <SameProductList
+      :type="'product'"
+      :list="list"
+    />
   </div>
 </template>
 
@@ -330,23 +333,30 @@ export default {
   created() {
   },
   methods: {
+    notEmptyArray(value) {
+      return (value && value.length > 0)
+    },
     getCaseNumValue() {
-      if (JSON.stringify(this.data) === '{}') return []
+      if (JSON.stringify(this.data) === '{}') return
+      if (!this.notEmptyArray(this.data.case_num)) return
       return this.data.case_num.map(item => item.value)
     },
     getCaseNumName() {
-      if (JSON.stringify(this.data) === '{}') return []
+      if (JSON.stringify(this.data) === '{}') return
+      if (!this.notEmptyArray(this.data.case_num)) return
       return this.data.case_num.map(item => item.name)
     },
     getData() {
-      if (JSON.stringify(this.data) === '{}') return []
+      if (JSON.stringify(this.data) === '{}') return
+      if (!this.notEmptyArray(this.data.supplier_reg_cap)) return
       return this.data.supplier_reg_cap.map(item => {
         return { ...item }
       })
     },
     convertData () {
       if (JSON.stringify(this.data) === '{}') return
-      const data = this.data && this.data.supplier_location
+      if (!this.notEmptyArray(this.data.supplier_location)) return
+      const data = this.data.supplier_location
       const res = []
       for (let i = 0; i < data.length; i++) {
         const code = data[i].name
@@ -363,6 +373,7 @@ export default {
     },
     getMaxCount () {
       if (JSON.stringify(this.data) === '{}') return
+      if (!this.notEmptyArray(this.data.supplier_location)) return
       const lists = (this.data && this.data.supplier_location).map(o => o.value)
       const max = Math.max.apply(null, lists)
       return max

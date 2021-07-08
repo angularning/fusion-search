@@ -14,17 +14,9 @@
       </div>
       <div class="locationTag">
         <DescriptionTag
-          :list="locations"
+          :list="this.locations()"
         />
       </div>
-      <!--      <div class="desNormalTitle">-->
-      <!--        服务领域-->
-      <!--      </div>-->
-      <!--      <div class="locationTag">-->
-      <!--        <DescriptionTag-->
-      <!--          :list="list"-->
-      <!--        />-->
-      <!--      </div>-->
       <div
         class="publicDesTitle"
         style="margin-top: 20px;"
@@ -116,7 +108,7 @@ export default {
               fontSize: '12'
             }
           },
-          data: this.getDataSupplier() && this.getDataSupplier().map(item => item.name)
+          data: this.getDataSupplierValue()
         }, {
           axisTick: 'none',
           axisLine: 'none',
@@ -127,7 +119,7 @@ export default {
               fontSize: '12'
             }
           },
-          data: this.getDataSupplier() && this.getDataSupplier().map(item => item.value)
+          data: this.getDataSupplierValue()
         }],
         series: [
           {
@@ -150,9 +142,7 @@ export default {
             },
             barWidth: 8,
             silent: true,
-            data: this.getDataSupplier() && this.getDataSupplier().map(item => {
-              return { name: item.name, value: item.value }
-            })
+            data: this.getDataSupplier()
           }
         ]
       }
@@ -218,40 +208,67 @@ export default {
         ]
       }
       return option
-    },
-    locations() {
-      if (JSON.stringify(this.data) === '{}' || this.data === '') return []
-      return (this.data && this.data.service_area).map(item => {
-        if (item !== '0000') {
-          return city_group[item]
-        }
-      })
     }
   },
   methods: {
+    locations() {
+      if (this.data && this.data.hasOwnProperty('service_area')) {
+        const temp = this.data.service_area
+        if (!this.notEmptyArray(temp)) return
+        return temp && temp.map(item => {
+          if (item !== '0000') {
+            return city_group[item]
+          }
+        })
+      }
+    },
+    hasData() {
+      return !(this.data === null || this.data === undefined || this.data === '' || JSON.stringify(this.data) === '{}')
+    },
+    notEmptyArray(value) {
+      return (value && value.length > 0)
+    },
     getMaxCountSupplier () {
-      if (JSON.stringify(this.data) === '{}' || this.data === '') return
-      const lists = this.data.product_count.map(item => item.value)
+      this.hasData()
+      const temp = this.data.product_count
+      if (!this.notEmptyArray(temp)) return
+      const lists = temp.map(item => item.value) || []
       const max = Math.max.apply(null, lists)
       return new Array(lists.length).fill(max)
     },
     getDataSupplier () {
-      if (JSON.stringify(this.data) === '{}' || this.data === '') return []
-      return (this.data && this.data.product_count).map(item => {
+      this.hasData()
+      const temp = this.data.product_count
+      if (!this.notEmptyArray(temp)) return
+      return temp.map(item => {
         return { name: item.name, value: item.value }
       }).reverse()
     },
+    getDataSupplierValue () {
+      this.hasData()
+      const temp = this.data.product_count
+      if (!this.notEmptyArray(temp)) return
+      return temp.map(item => {
+        return { value: item.value }
+      }).reverse()
+    },
     getCaseNumValue() {
-      if (JSON.stringify(this.data) === '{}' || this.data === '') return []
-      return this.data.product_count.map(item => item.value)
+      this.hasData()
+      const temp = this.data.product_count
+      if (!this.notEmptyArray(temp)) return
+      return temp.map(item => item.value)
     },
     getCaseNumName() {
-      if (JSON.stringify(this.data) === '{}' || this.data === '') return []
-      return this.data.product_count.map(item => item.name)
+      this.hasData()
+      const temp = this.data.product_count
+      if (!this.notEmptyArray(temp)) return
+      return temp.map(item => item.name)
     },
     getData() {
-      if (JSON.stringify(this.data) === '{}' || this.data === '') return []
-      return this.data.purchaser_location.map(item => {
+      this.hasData()
+      const temp = this.data.purchaser_location
+      if (!this.notEmptyArray(temp)) return
+      return temp.map(item => {
         return {
           name: city_group[item.name],
           value: item.value
@@ -259,8 +276,10 @@ export default {
       }).slice(0, 8)
     },
     getMaxCount () {
-      if (JSON.stringify(this.data) === '{}' || this.data === '') return
-      const lists = (this.data && this.data.supplier_location).map(o => o.value)
+      this.hasData()
+      const temp = this.data.supplier_location
+      if (!this.notEmptyArray(temp)) return
+      const lists = temp.map(o => o.value)
       const max = Math.max.apply(null, lists)
       return max
     }

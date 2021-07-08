@@ -214,6 +214,7 @@ export default {
         // 根据获取到的hit值去做不同的请求
         this.getSearchCard()
       }).catch(() => {
+        this.againLoading = false
         this.loadingHit = false
       })
     },

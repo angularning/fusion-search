@@ -252,7 +252,6 @@ export default {
   methods: {
     toSort(item, i) {
       this.active = i
-      console.log(this.type)
       const temp = this.sortList[Object.keys(this.type)][Object.values(this.type)].find(it => { return it.name === item })
       const current = temp.prop
       this.$emit('sort-list', { order: current, type: this.type[this.provideData.hit] })

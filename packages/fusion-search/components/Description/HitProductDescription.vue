@@ -38,7 +38,7 @@
         />
       </div>
     </div>
-    <SameProductList :list="list" />
+    <SameProductList :type="'product'" :list="list" />
   </div>
 </template>
 

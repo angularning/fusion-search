@@ -1,8 +1,11 @@
 /** 全局变量设置和配置**/
 
-import axios from 'axios' // 引用axios
+import newAxios from 'axios' // 引用axios
 
-axios.defaults.timeout = 500000 // 设置接口响应时间
+const axios = newAxios.create({
+  timeout: 500000
+})
+// eslint-disable-next-line new-cap
 axios.interceptors.request.use(
   config => {
     config.headers = {

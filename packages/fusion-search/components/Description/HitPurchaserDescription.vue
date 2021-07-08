@@ -91,7 +91,7 @@ export default {
               fontSize: '12'
             }
           },
-          data: this.getDataPurchaser() && this.getDataPurchaser().map(item => item.name)
+          data: this.getDataPurchaserName()
         }, {
           axisTick: 'none',
           axisLine: 'none',
@@ -102,7 +102,7 @@ export default {
               fontSize: '12'
             }
           },
-          data: this.getDataPurchaser().map(item => (item.value * 100).toFixed(2) + '%')
+          data: this.getDataPurchaserValue()
         }],
         series: [
           {
@@ -125,9 +125,7 @@ export default {
             },
             barWidth: 8,
             silent: true,
-            data: this.getDataPurchaser().map(item => {
-              return { name: item.name, value: item.value }
-            })
+            data: this.getDataPurchaser()
           }
         ]
       }
@@ -211,6 +209,20 @@ export default {
       if (!this.notEmptyArray(this.data.product_percent)) return
       return this.data && this.data.product_percent.map(item => {
         return { name: item.name, value: item.value }
+      }).reverse()
+    },
+    getDataPurchaserName () {
+      if (JSON.stringify(this.data) === '{}' || this.data === '') return
+      if (!this.notEmptyArray(this.data.product_percent)) return
+      return this.data && this.data.product_percent.map(item => {
+        return item.name
+      })
+    },
+    getDataPurchaserValue () {
+      if (JSON.stringify(this.data) === '{}' || this.data === '') return
+      if (!this.notEmptyArray(this.data.product_percent)) return
+      return this.data && this.data.product_percent.map(item => {
+        return { value: (item.value * 100).toFixed(2) + '%' }
       }).reverse()
     },
     getData() {

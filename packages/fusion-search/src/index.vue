@@ -260,6 +260,8 @@ export default {
   }
 }
 </script>
+<!--<script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
+<!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
 <style lang="scss">
 @import "../common/common";
 

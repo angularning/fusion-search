@@ -1,8 +1,6 @@
 import FusionSearch from '../packages/fusion-search/index'
 import { version } from '../package.json'
-// import element from 'element-ui'
 import { $post, $get } from '../packages/fusion-search/utils/axios'
-// import 'element-ui/lib/theme-chalk/index.css'
 const components = [FusionSearch]
 const install = function(Vue) {
   Vue.prototype.$EventBus = new Vue()

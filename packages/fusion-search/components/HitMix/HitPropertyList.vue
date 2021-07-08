@@ -16,7 +16,16 @@
         <div class="item-label">
           {{ item.label }}
         </div>
+        <template v-if="item.label==='地区'">
+          <div
+            class="shortWord75"
+            :title="item.value"
+          >
+            {{ getCityName(item.value) }}
+          </div>
+        </template>
         <div
+          v-else
           class="shortWord75"
           :title="item.value"
         >
@@ -28,6 +37,9 @@
 </template>
 
 <script>
+// eslint-disable-next-line camelcase
+import { city_group } from '../../common/city'
+
 export default {
   name: 'HitPropertyList',
   inject: ['provideData'],
@@ -189,6 +201,21 @@ export default {
     }
   },
   methods: {
+    getCityName(location) {
+      if (location) {
+        if (String(location).includes('0000')) {
+          return city_group[location]
+        } else {
+          const l = String(location).substring(0, 2) + '0000'
+
+          if (city_group[location]) {
+            return city_group[l] + '-' + city_group[location] || ''
+          } else {
+            return city_group[l]
+          }
+        }
+      }
+    },
     getNames(value) {
       return value
     }

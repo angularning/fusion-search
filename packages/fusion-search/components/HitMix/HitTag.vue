@@ -48,6 +48,8 @@ export default {
 <style scoped lang="scss">
 @import '../../common/common';
 .HitTag {
+  //max-height: 140px;
+  //overflow: auto;
   .tags-container {
     font-size: 12px;
     .tag {

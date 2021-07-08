@@ -13,7 +13,7 @@
         v-for="(item, i) in sortList[Object.keys(type)][Object.values(type)]"
         :key="i"
         :label="item.name"
-        :value="item.prop"
+        :value="item.name"
       />
     </el-select>
   </div>
@@ -243,8 +243,7 @@ export default {
       immediate: true,
       deep: true,
       handler(value) {
-        this.current = null
-        this.current = this.sortList[Object.keys(value)][Object.values(value)][0]['prop']
+        this.current = this.sortList[Object.keys(value)][Object.values(value)][0]['name']
       }
     }
   },
@@ -253,7 +252,10 @@ export default {
   methods: {
     toSort(item, i) {
       this.active = i
-      this.$emit('sort-list', { order: this.current, type: this.type[this.provideData.hit] })
+      console.log(this.type)
+      const temp = this.sortList[Object.keys(this.type)][Object.values(this.type)].find(it => { return it.name === item })
+      const current = temp.prop
+      this.$emit('sort-list', { order: current, type: this.type[this.provideData.hit] })
     }
   }
 }

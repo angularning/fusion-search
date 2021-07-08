@@ -1,6 +1,14 @@
-## vue-fusion-search
+## ## vue-fusion-search
 
 寻源融合搜索组件，支持主题配置，组件控制等。
+
+在项目中引入element ui的cdn链接。Echarts的cdn链接。
+
+同时目前是在axios的实例上做了扩展。
+
+const axios = newAxios.create({
+timeout: 5000
+})
 
 #### 使用方法如下：
 
@@ -10,23 +18,26 @@
    ```
 2. package.json中引入相关依赖
    ```javascript
-    "element-ui": "^2.12.0",
-    "echarts": "^4.9.0",
-    "axios": "^0.21.1",
+   "axios": "^0.21.1"
    ```
-3. 在main.js中使用如下
+3. 引入cdn链接
+   ```html
+   <!-- 引入样式 -->
+   <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+   <!-- 引入组件库 -->
+   <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+   
+   <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+   ```
+4. 在main.js中使用如下
    ```javascript
-   import ElementUI from "element-ui";
-   import "element-ui/lib/theme-chalk/index.css";
    import axios from "axios";
    import FusionSearch from "vue-fusion-search";
    import "vue-fusion-search/lib/theme/index.css";
-   Vue.config.productionTip = false;
    Vue.prototype.$axios = axios;
-   Vue.use(ElementUI, { size: "small", zIndex: 3000 });
    Vue.use(FusionSearch);
    ```
-4. 在相关使用的组件中使用如下
+5. 在相关使用的组件中使用如下
    ```javascript
    <FusionSearch
          :config="config"
@@ -51,7 +62,7 @@
        };
      },
    ```
-5. 如果选择使用自定义搜索框，不使用组件自带搜索框则需要做以下操作
+6. 如果选择使用自定义搜索框，不使用组件自带搜索框则需要做以下操作
    ```javascript
    methods: {
     // 需要配置搜索方法，主要是把搜索状态重置。
@@ -68,33 +79,36 @@
       this.keywordProjectUse = value.keyword
       this.keyword = value.keyword
     }
-}
+   }
    ```
-6. 完整示例如下
-   ```html
+7. 完整示例如下
+```html
+   
    <template>
-  <div class="home">
-    <!--    使用自有搜索框-->
-    <input
-      v-model="keywordProjectUse"
-      type="text"
-    >
-    <button
-      style="cursor: pointer;"
-      @click="toSearch"
-    >
-      触发
-    </button>
-    <!--    使用自有搜索框-->
-
+<div class="home">
+ <!--    使用自有搜索框-->
+ <input
+   v-model="keywordProjectUse"
+   type="text"
+ >
+ <button
+   style="cursor: pointer;"
+   @click="toSearch"
+ >
+   触发
+ </button>
+ <!--    使用自有搜索框-->
+   
     <!--    使用组件-->
+   
     <FusionSearch
-      :config="config"
-      :search-value="keyword"
-      :emit-search="searchStatus"
-      @receive-search="receiveSearch"
-    />
-  </div>
+   :config="config"
+   :search-value="keyword"
+   :emit-search="searchStatus"
+   @receive-search="receiveSearch"
+ />
+   
+   </div>
 </template>
 
 <script>
@@ -139,7 +153,6 @@ export default {
 }
 </script>
 
-   
    ```
 7. .
 8. .
